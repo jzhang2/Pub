@@ -77,6 +77,9 @@ namespace LeaRun.Application.Web.Controllers
         {
             return View();
         }
+        public ActionResult Index() {
+            return View();
+        }
         #endregion
 
         #region 提交数据
