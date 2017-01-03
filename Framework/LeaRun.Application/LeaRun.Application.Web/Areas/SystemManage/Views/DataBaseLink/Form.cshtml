@@ -47,6 +47,14 @@
             });
         }
     }
+    //测试连接
+    function btn_TestConnection() {
+        $.SaveForm({
+            url: "../../SystemManage/DataBaseLink/TestConnection",
+            param: { F_DatabaseLinkId: keyValue, F_DbType: $("#F_DbType").attr('data-value'), F_DbConnection: $("#F_DbConnection").val() },
+            close: false
+        });
+    }
     //保存表单
     function AcceptClick() {
         if (!$('#form1').Validform()) {

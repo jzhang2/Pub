@@ -7,9 +7,9 @@
     $(function () {
         initialPage();
         GetModuleTree();
-        GetModuleButtonTree();
-        GetModuleColumnTree();
-        GetOrganizeTree();
+        //GetModuleButtonTree();
+        //GetModuleColumnTree();
+        //GetOrganizeTree();
     })
     //初始化页面
     function initialPage() {
@@ -174,9 +174,9 @@
     <div id="wizard" class="wizard" data-target="#wizard-steps" style="border-left: none; border-top: none; border-right: none;">
         <ul class="steps">
             <li data-target="#step-1" class="active"><span class="step">1</span>系统功能<span class="chevron"></span></li>
-            <li data-target="#step-2"><span class="step">2</span>系统按钮<span class="chevron"></span></li>
+            @*<li data-target="#step-2"><span class="step">2</span>系统按钮<span class="chevron"></span></li>
             <li data-target="#step-3"><span class="step">3</span>系统视图<span class="chevron"></span></li>
-            <li data-target="#step-4"><span class="step">4</span>数据权限<span class="chevron"></span></li>
+            <li data-target="#step-4"><span class="step">4</span>数据权限<span class="chevron"></span></li>*@
         </ul>
     </div>
     <div class="step-content" id="wizard-steps" style="border-left: none; border-bottom: none; border-right: none;">
@@ -189,7 +189,7 @@
         <div class="step-pane" id="step-3">
             <div id="ModuleColumnTree" style="margin: 10px;"></div>
         </div>
-        <div class="step-pane" id="step-4" style="margin: 15px; margin-bottom: 0px;">
+        @*<div class="step-pane" id="step-4" style="margin: 15px; margin-bottom: 0px;">
             <div>
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -236,13 +236,13 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div>*@
     </div>
 </div>
 <div class="form-button" id="wizard-actions">
-    <a id="btn_last" disabled class="btn btn-default btn-prev">上一步</a>
-    <a id="btn_next" class="btn btn-default btn-next">下一步</a>
-    <a id="btn_finish" disabled class="btn btn-success">完成</a>
+    @*<a id="btn_last" disabled class="btn btn-default btn-prev">上一步</a>
+    <a id="btn_next" class="btn btn-default btn-next">下一步</a>*@
+    <a id="btn_finish" class="btn btn-success">完成</a>
 </div>
 
 

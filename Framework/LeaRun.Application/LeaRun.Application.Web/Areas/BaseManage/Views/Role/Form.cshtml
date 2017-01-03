@@ -10,12 +10,6 @@
     })
     //初始化控件
     function initControl() {
-        //所在公司
-        $("#OrganizeId").ComboBoxTree({
-            url: "../../BaseManage/Organize/GetTreeJson",
-            description: "==请选择==",
-            height: "200px"
-        });
         //获取表单
         if (!!keyValue) {
             $.SetForm({
@@ -45,13 +39,6 @@
 </script>
 <div style="margin-left: 10px; margin-top: 20px; margin-right: 30px;">
     <table class="form">
-        <tr>
-            <th class="formTitle">所在公司<font face="宋体">*</font></th>
-            <td class="formValue">
-                <div id="OrganizeId" type="selectTree" class="ui-select" isvalid="yes" checkexpession="NotNull">
-                </div>
-            </td>
-        </tr>
         <tr>
             <td class="formTitle">角色编号<font face="宋体">*</font></td>
             <td class="formValue">

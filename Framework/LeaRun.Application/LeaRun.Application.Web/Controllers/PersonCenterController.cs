@@ -118,6 +118,22 @@ namespace LeaRun.Application.Web.Controllers
             Session.Abandon(); Session.Clear();
             return Success("密码修改成功，请牢记新密码。\r 将会自动安全退出。");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AjaxOnly]
+        public ActionResult SaveForm(string keyValue, string strUserEntity) {
+            UserEntity userEntity = strUserEntity.ToObject<UserEntity>();
+            if (keyValue == OperatorProvider.Provider.Current().UserId)
+            {
+                userBLL.SaveForm(keyValue, userEntity);
+                return Success("操作成功。");
+            }
+            else
+            {
+                return Error("error");
+            }            
+        }
         #endregion
     }
 }

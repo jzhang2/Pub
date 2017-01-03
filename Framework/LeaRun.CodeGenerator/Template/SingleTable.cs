@@ -33,13 +33,13 @@ namespace LeaRun.CodeGenerator.Template
 
             sb.Append("namespace LeaRun.Application.Entity." + baseConfigModel.OutputAreas + "\r\n");
             sb.Append("{\r\n");
-            sb.Append("    /// <summary>\r\n");
-            sb.Append("    /// 版 本\r\n");
-            sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
-            sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
-            sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
-            sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
-            sb.Append("    /// </summary>\r\n");
+            //sb.Append("    /// <summary>\r\n");
+            //sb.Append("    /// 版 本\r\n");
+            //sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
+            //sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
+            //sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
+            //sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
+            //sb.Append("    /// </summary>\r\n");
             sb.Append("    public class " + baseConfigModel.EntityClassName + " : BaseEntity\r\n");
             sb.Append("    {\r\n");
             sb.Append("        #region 实体成员\r\n");
@@ -156,13 +156,13 @@ namespace LeaRun.CodeGenerator.Template
 
             sb.Append("namespace LeaRun.Application.Mapping." + baseConfigModel.OutputAreas + "\r\n");
             sb.Append("{\r\n");
-            sb.Append("    /// <summary>\r\n");
-            sb.Append("    /// 版 本\r\n");
-            sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
-            sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
-            sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
-            sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
-            sb.Append("    /// </summary>\r\n");
+            //sb.Append("    /// <summary>\r\n");
+            //sb.Append("    /// 版 本\r\n");
+            //sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
+            //sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
+            //sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
+            //sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
+            //sb.Append("    /// </summary>\r\n");
             sb.Append("    public class " + baseConfigModel.MapClassName + " : EntityTypeConfiguration<" + baseConfigModel.EntityClassName + ">\r\n");
             sb.Append("    {\r\n");
             sb.Append("        public " + baseConfigModel.MapClassName + "()\r\n");
@@ -201,13 +201,13 @@ namespace LeaRun.CodeGenerator.Template
 
             sb.Append("namespace LeaRun.Application.Service." + baseConfigModel.OutputAreas + "\r\n");
             sb.Append("{\r\n");
-            sb.Append("    /// <summary>\r\n");
-            sb.Append("    /// 版 本 6.1\r\n");
-            sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
-            sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
-            sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
-            sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
-            sb.Append("    /// </summary>\r\n");
+            //sb.Append("    /// <summary>\r\n");
+            //sb.Append("    /// 版 本 6.1\r\n");
+            //sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
+            //sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
+            //sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
+            //sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
+            //sb.Append("    /// </summary>\r\n");
             sb.Append("    public class " + baseConfigModel.ServiceClassName + " : RepositoryFactory<" + baseConfigModel.EntityClassName + ">, " + baseConfigModel.IServiceClassName + "\r\n");
             sb.Append("    {\r\n");
 
@@ -295,13 +295,13 @@ namespace LeaRun.CodeGenerator.Template
 
             sb.Append("namespace LeaRun.Application.IService." + baseConfigModel.OutputAreas + "\r\n");
             sb.Append("{\r\n");
-            sb.Append("    /// <summary>\r\n");
-            sb.Append("    /// 版 本 6.1\r\n");
-            sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
-            sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
-            sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
-            sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
-            sb.Append("    /// </summary>\r\n");
+            //sb.Append("    /// <summary>\r\n");
+            //sb.Append("    /// 版 本 6.1\r\n");
+            //sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
+            //sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
+            //sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
+            //sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
+            //sb.Append("    /// </summary>\r\n");
             sb.Append("    public interface " + baseConfigModel.IServiceClassName + "\r\n");
             sb.Append("    {\r\n");
             sb.Append("        #region 获取数据\r\n");
@@ -367,13 +367,13 @@ namespace LeaRun.CodeGenerator.Template
 
             sb.Append("namespace LeaRun.Application.Busines." + baseConfigModel.OutputAreas + "\r\n");
             sb.Append("{\r\n");
-            sb.Append("    /// <summary>\r\n");
-            sb.Append("    /// 版 本 6.1\r\n");
-            sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
-            sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
-            sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
-            sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
-            sb.Append("    /// </summary>\r\n");
+            //sb.Append("    /// <summary>\r\n");
+            //sb.Append("    /// 版 本 6.1\r\n");
+            //sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
+            //sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
+            //sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
+            //sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
+            //sb.Append("    /// </summary>\r\n");
             sb.Append("    public class " + baseConfigModel.BusinesClassName + "\r\n");
             sb.Append("    {\r\n");
             sb.Append("        private " + baseConfigModel.IServiceClassName + " service = new " + baseConfigModel.ServiceClassName + "();\r\n\r\n");
@@ -470,13 +470,13 @@ namespace LeaRun.CodeGenerator.Template
 
             sb.Append("namespace LeaRun.Application.Web.Areas." + baseConfigModel.OutputAreas + ".Controllers\r\n");
             sb.Append("{\r\n");
-            sb.Append("    /// <summary>\r\n");
-            sb.Append("    /// 版 本 6.1\r\n");
-            sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
-            sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
-            sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
-            sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
-            sb.Append("    /// </summary>\r\n");
+            //sb.Append("    /// <summary>\r\n");
+            //sb.Append("    /// 版 本 6.1\r\n");
+            //sb.Append("    /// Copyright (c) 2013-2016 上海力软信息技术有限公司\r\n");
+            //sb.Append("    /// 创 建：" + baseConfigModel.CreateUser + "\r\n");
+            //sb.Append("    /// 日 期：" + baseConfigModel.CreateDate + "\r\n");
+            //sb.Append("    /// 描 述：" + baseConfigModel.Description + "\r\n");
+            //sb.Append("    /// </summary>\r\n");
             sb.Append("    public class " + baseConfigModel.ControllerName + " : MvcControllerBase\r\n");
             sb.Append("    {\r\n");
             sb.Append("        private " + baseConfigModel.BusinesClassName + " " + baseConfigModel.BusinesClassName.ToLower() + " = new " + baseConfigModel.BusinesClassName + "();\r\n\r\n");
@@ -609,11 +609,11 @@ namespace LeaRun.CodeGenerator.Template
         {
             var areasUrl = baseConfigModel.OutputAreas + "/" + CommonHelper.DelLastLength(baseConfigModel.ControllerName, 10);
             StringBuilder sb = new StringBuilder();
-            sb.Append("@{;\r\n");
+            sb.Append("@{\r\n");
             sb.Append("    ViewBag.Title = \"列表页面\";\r\n");
             sb.Append("    Layout = \"~/Views/Shared/_Index.cshtml\";\r\n");
             sb.Append("}\r\n");
-            sb.Append("<script>;\r\n");
+            sb.Append("<script>\r\n");
             sb.Append("    $(function () {\r\n");
             sb.Append("        InitialPage();\r\n");
             sb.Append("        GetGrid();\r\n");
@@ -698,7 +698,7 @@ namespace LeaRun.CodeGenerator.Template
             sb.Append("    }\r\n");
             sb.Append("    //编辑\r\n");
             sb.Append("    function btn_edit() {\r\n");
-            sb.Append("        var keyValue = jqGridRowValue('#gridTable', '" + baseConfigModel.DataBaseTablePK + "');\r\n");
+            sb.Append("        var keyValue = $(\"#gridTable\").jqGridRowValue(\"" + baseConfigModel.DataBaseTablePK + "\");\r\n");
             sb.Append("        if (checkedRow(keyValue)) {\r\n");
             sb.Append("            dialogOpen({\r\n");
             sb.Append("                id: 'Form',\r\n");
@@ -714,7 +714,7 @@ namespace LeaRun.CodeGenerator.Template
             sb.Append("    }\r\n");
             sb.Append("    //删除\r\n");
             sb.Append("    function btn_delete() {\r\n");
-            sb.Append("        var keyValue = jqGridRowValue('#gridTable', '" + baseConfigModel.DataBaseTablePK + "');\r\n");
+            sb.Append("        var keyValue = $(\"#gridTable\").jqGridRowValue(\"" + baseConfigModel.DataBaseTablePK + "\");\r\n");
             sb.Append("        if (keyValue) {\r\n");
             sb.Append("            $.RemoveForm({\r\n");
             sb.Append("                url: '../../" + areasUrl + "/RemoveForm',\r\n");
@@ -743,7 +743,7 @@ namespace LeaRun.CodeGenerator.Template
             sb.Append("    </div>\r\n");
             sb.Append("    <div class=\"toolbar\">\r\n");
             sb.Append("        <div class=\"btn-group\">\r\n");
-            sb.Append("            <a id=\"lr-replace\" class=\"btn btn-default\" onclick=\"Reload()\"><i class=\"fa fa-refresh\"></i>★刷新</a>\r\n");
+            sb.Append("            <a id=\"lr-replace\" class=\"btn btn-default\" onclick=\"reload()\"><i class=\"fa fa-refresh\"></i>★刷新</a>\r\n");
             sb.Append("            <a id=\"lr-add\" class=\"btn btn-default\" onclick=\"btn_add()\"><i class=\"fa fa-plus\"></i>★新增</a>\r\n");
             sb.Append("            <a id=\"lr-edit\" class=\"btn btn-default\" onclick=\"btn_edit()\"><i class=\"fa fa-pencil-square-o\"></i>★编辑</a>\r\n");
             sb.Append("            <a id=\"lr-delete\" class=\"btn btn-default\" onclick=\"btn_delete()\"><i class=\"fa fa-trash-o\"></i>★删除</a>\r\n");
@@ -771,7 +771,7 @@ namespace LeaRun.CodeGenerator.Template
         {
             var areasUrl = baseConfigModel.OutputAreas + "/" + CommonHelper.DelLastLength(baseConfigModel.ControllerName, 10);
             StringBuilder sb = new StringBuilder();
-            sb.Append("@{;\r\n");
+            sb.Append("@{\r\n");
             sb.Append("    ViewBag.Title = \"表单页面\";\r\n");
             sb.Append("    Layout = \"~/Views/Shared/_Form.cshtml\";\r\n");
             sb.Append("}\r\n");

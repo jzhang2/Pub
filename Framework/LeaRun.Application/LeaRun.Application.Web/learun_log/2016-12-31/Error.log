@@ -1,0 +1,48 @@
+1. 调试: >> 操作时间: 12/31/2016 7:18:10 PM   操作人: System（超级管理员） 
+2. 地址: /ExtendManage/Suggestion/GetReply?keyValue=f2f487f1-c5d1-4761-a1f4-1b17bc2576b0    
+3. 类名: LeaRun.Application.Web.Areas.ExtendManage.Controllers.SuggestionController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: The entity type SuggestionAnswerEntity is not part of the model for the current context.
+-----------------------------------------------------------------------------------------------------------------------------
+1. 调试: >> 操作时间: 12/31/2016 7:18:38 PM   操作人: System（超级管理员） 
+2. 地址: /ExtendManage/Suggestion/GetReply?keyValue=f2f487f1-c5d1-4761-a1f4-1b17bc2576b0    
+3. 类名: LeaRun.Application.Web.Areas.ExtendManage.Controllers.SuggestionController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: The entity type SuggestionAnswerEntity is not part of the model for the current context.
+-----------------------------------------------------------------------------------------------------------------------------
+1. 调试: >> 操作时间: 12/31/2016 7:20:21 PM   操作人: System（超级管理员） 
+2. 地址: /ExtendManage/Suggestion/GetReply?keyValue=f2f487f1-c5d1-4761-a1f4-1b17bc2576b0    
+3. 类名: LeaRun.Application.Web.Areas.ExtendManage.Controllers.SuggestionController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: The entity type SuggestionAnswerEntity is not part of the model for the current context.
+-----------------------------------------------------------------------------------------------------------------------------
+1. 调试: >> 操作时间: 12/31/2016 7:26:13 PM   操作人: System（超级管理员） 
+2. 地址: /ExtendManage/Suggestion/GetReply?keyValue=f2f487f1-c5d1-4761-a1f4-1b17bc2576b0    
+3. 类名: LeaRun.Application.Web.Areas.ExtendManage.Controllers.SuggestionController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: The entity type SuggestionAnswerEntity is not part of the model for the current context.
+-----------------------------------------------------------------------------------------------------------------------------
+1. 调试: >> 操作时间: 12/31/2016 7:27:09 PM   操作人: System（超级管理员） 
+2. 地址: /ExtendManage/Suggestion/GetReply?keyValue=f2f487f1-c5d1-4761-a1f4-1b17bc2576b0    
+3. 类名: LeaRun.Application.Web.Areas.ExtendManage.Controllers.SuggestionController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: The entity type SuggestionAnswerEntity is not part of the model for the current context.
+-----------------------------------------------------------------------------------------------------------------------------
+1. 调试: >> 操作时间: 12/31/2016 7:36:49 PM   操作人: System（超级管理员） 
+2. 地址: /ExtendManage/Suggestion/SaveReply?keyValue=f2f487f1-c5d1-4761-a1f4-1b17bc2576b0&reply=111    
+3. 类名: LeaRun.Application.Web.Areas.ExtendManage.Controllers.SuggestionController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: The required anti-forgery form field "__RequestVerificationToken" is not present.
+-----------------------------------------------------------------------------------------------------------------------------
+1. 调试: >> 操作时间: 12/31/2016 7:47:31 PM   操作人: System（超级管理员） 
+2. 地址: /ExtendManage/Suggestion/SaveReply    
+3. 类名: LeaRun.Application.Web.Areas.ExtendManage.Controllers.SuggestionController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------------------------------------------------------
+1. 调试: >> 操作时间: 12/31/2016 7:52:42 PM   操作人: System（超级管理员） 
+2. 地址: /ExtendManage/Suggestion/SaveReply    
+3. 类名: LeaRun.Application.Web.Areas.ExtendManage.Controllers.SuggestionController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------------------------------------------------------

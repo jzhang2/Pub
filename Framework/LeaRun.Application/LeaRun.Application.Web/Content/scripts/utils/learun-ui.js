@@ -953,7 +953,7 @@ changeUrlParam = function (url, key, value) {
 
 $.currentIframe = function () {
     if ($.isbrowsername() == "Chrome" || $.isbrowsername() == "FF") {
-        return top.frames[tabiframeId()].contentWindow;
+        return top.frames[tabiframeId()];
     }
     else {
         return top.frames[tabiframeId()];

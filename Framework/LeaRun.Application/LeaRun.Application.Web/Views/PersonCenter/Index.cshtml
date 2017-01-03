@@ -17,8 +17,7 @@
             url: "../../BaseManage/User/GetFormJson",
             param: { keyValue: keyValue },
             success: function (data) {
-                if (data != null)
-                {
+                if (data != null) {
                     $("#layout").SetWebControls(data);
                     if (data.HeadIcon) {
                         document.getElementById('uploadPreview').src = top.contentPath + data.HeadIcon;
@@ -283,6 +282,20 @@
             }).trigger('reloadGrid');
         }
     }
+    function SaveContactPanel() {
+        if (!$('#form_user_info').Validform()) {
+            return false;
+        }
+        var postData = $("#form_user_info").GetWebControls(keyValue);
+
+        $.SaveForm({
+            url: "/PersonCenter/SaveForm",
+            param: { "keyValue": keyValue, "strUserEntity": JSON.stringify(postData)},
+            loading: "正在保存数据...",
+            success: function (data) {
+            }
+        })
+    }
 </script>
 <div class="ui-layout" id="layout" style="height: 100%; width: 100%;">
     <div class="ui-layout-west">
@@ -291,7 +304,7 @@
                 <ul style="padding-top: 20px;">
                     <li class="active" onclick="profileSwitch('BaseInfo')">基本信息</li>
                     <li onclick="profileSwitch('ContactInfo')">联系方式</li>
-                    <li onclick="profileSwitch('MyheadIcon')">我的头像</li>
+                    @*<li onclick="profileSwitch('MyheadIcon')">我的头像</li>*@
                     <li onclick="profileSwitch('RevisePassword')">修改密码</li>
                     <div class="divide"></div>
                     <li onclick="profileSwitch('SystemLog')">系统日志</li>
@@ -301,6 +314,7 @@
     </div>
     <div class="ui-layout-center">
         <div class="center-Panel">
+
             <div class="profile-content" style="background: #fff;">
                 <div id="BaseInfo" class="flag">
                     <div class="title">
@@ -313,12 +327,12 @@
                                 <input id="Account" readonly type="text" class="form-control input-profile" />
                             </td>
                         </tr>
-                        <tr>
-                            <td class="formTitle">工号</td>
-                            <td class="formValue">
-                                <input id="EnCode" readonly type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
+                        @*<tr>
+                                <td class="formTitle">工号</td>
+                                <td class="formValue">
+                                    <input id="EnCode" readonly type="text" class="form-control input-profile" />
+                                </td>
+                            </tr>*@
                         <tr>
                             <td class="formTitle">姓名</td>
                             <td class="formValue">
@@ -340,36 +354,36 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="formTitle">公司</td>
-                            <td class="formValue">
-                                <input id="CompanyName" readonly type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle">部门</td>
-                            <td class="formValue">
-                                <input id="DepartmentName" readonly type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle">主管</td>
-                            <td class="formValue">
-                                <input id="ManagerName" readonly type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle">岗位</td>
-                            <td class="formValue">
-                                <input id="DutyName" readonly type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle">职位</td>
-                            <td class="formValue">
-                                <input id="PostName" readonly type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
+                        @*<tr>
+                                <td class="formTitle">公司</td>
+                                <td class="formValue">
+                                    <input id="CompanyName" readonly type="text" class="form-control input-profile" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="formTitle">部门</td>
+                                <td class="formValue">
+                                    <input id="DepartmentName" readonly type="text" class="form-control input-profile" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="formTitle">主管</td>
+                                <td class="formValue">
+                                    <input id="ManagerName" readonly type="text" class="form-control input-profile" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="formTitle">岗位</td>
+                                <td class="formValue">
+                                    <input id="DutyName" readonly type="text" class="form-control input-profile" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="formTitle">职位</td>
+                                <td class="formValue">
+                                    <input id="PostName" readonly type="text" class="form-control input-profile" />
+                                </td>
+                            </tr>*@
                         <tr>
                             <td class="formTitle">角色</td>
                             <td class="formValue">
@@ -385,71 +399,73 @@
                     </table>
                 </div>
                 <div id="ContactInfo" class="flag" style="display: none;">
-                    <div class="title">
-                        联系方式
-                    </div>
-                    <table class="form" style="margin-top: 20px;">
-                        <tr>
-                            <td class="formTitle">手机</td>
-                            <td class="formValue">
-                                <input id="Mobile" type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle">电话</td>
-                            <td class="formValue">
-                                <input id="Telephone" type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle">邮箱</td>
-                            <td class="formValue">
-                                <input id="Email" type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle">微信</td>
-                            <td class="formValue">
-                                <input id="WeChat" type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle">QQ</td>
-                            <td class="formValue">
-                                <input id="OICQ" type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle">MSN</td>
-                            <td class="formValue">
-                                <input id="MSN" type="text" class="form-control input-profile" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="formTitle"></td>
-                            <td class="formValue">
-                                <br />
-                                <a class="btn btn-primary" onclick="SaveContactPanel()"><i class="fa fa-save"></i>&nbsp;保&nbsp;存</a>
-                            </td>
-                        </tr>
-                    </table>
+                    <form id="form_user_info">
+                        <div class="title">
+                            联系方式
+                        </div>
+                        <table class="form" style="margin-top: 20px;">
+                            <tr>
+                                <td class="formTitle">手机</td>
+                                <td class="formValue">
+                                    <input id="Mobile" type="text" class="form-control input-profile" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="formTitle">电话</td>
+                                <td class="formValue">
+                                    <input id="Telephone" type="text" class="form-control input-profile" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="formTitle">邮箱</td>
+                                <td class="formValue">
+                                    <input id="Email" type="text" class="form-control input-profile" />
+                                </td>
+                            </tr>
+                            @*<tr>
+                                    <td class="formTitle">微信</td>
+                                    <td class="formValue">
+                                        <input id="WeChat" type="text" class="form-control input-profile" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="formTitle">QQ</td>
+                                    <td class="formValue">
+                                        <input id="OICQ" type="text" class="form-control input-profile" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="formTitle">MSN</td>
+                                    <td class="formValue">
+                                        <input id="MSN" type="text" class="form-control input-profile" />
+                                    </td>
+                                </tr>*@
+                            <tr>
+                                <td class="formTitle"></td>
+                                <td class="formValue">
+                                    <br />
+                                    <a class="btn btn-primary" onclick="SaveContactPanel()"><i class="fa fa-save"></i>&nbsp;保&nbsp;存</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
-                <div id="MyheadIcon" class="flag" style="display: none;">
-                    <div class="title">
-                        我的头像
-                    </div>
-                    <div style="width: 300px;">
-                        <div style="margin-top: 40px; text-align: center;">
-                            <div class="file" style="width: 100px; height: 100px;">
-                                <img id="uploadPreview" style="width: 100px; height: 100px; border-radius: 100px;" src="~/Content/images/logo-headere47d5.png" />
-                                <input type="file" name="uploadFile" id="uploadFile">
-                            </div>
-                            <div style="margin-top: 30px; line-height: 14px; color: #75777A; text-align: center;">
-                                建议上传图片尺寸为100x100，大小不超过2M。
+                @*<div id="MyheadIcon" class="flag" style="display: none;">
+                        <div class="title">
+                            我的头像
+                        </div>
+                        <div style="width: 300px;">
+                            <div style="margin-top: 40px; text-align: center;">
+                                <div class="file" style="width: 100px; height: 100px;">
+                                    <img id="uploadPreview" style="width: 100px; height: 100px; border-radius: 100px;" src="~/Content/images/logo-headere47d5.png" />
+                                    <input type="file" name="uploadFile" id="uploadFile">
+                                </div>
+                                <div style="margin-top: 30px; line-height: 14px; color: #75777A; text-align: center;">
+                                    建议上传图片尺寸为100x100，大小不超过2M。
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>*@
                 <div id="RevisePassword" class="flag" style="display: none;">
                     <div class="title">
                         修改密码
@@ -490,7 +506,7 @@
                                 </div>
                                 <div style="float: left; width: 200px;">
                                     <img src="~/PersonCenter/VerifyCode" id="VerifyCodeImag" width="100" height="30" alt="点击切换验证码"
-                                        title="点击切换验证码" style="cursor: pointer; padding-top: 2px; padding-left: 5px;" />
+                                         title="点击切换验证码" style="cursor: pointer; padding-top: 2px; padding-left: 5px;" />
                                 </div>
                                 <div class="VerifyCodemsg" style="width: 300px; float: left"></div>
                             </td>
@@ -528,11 +544,11 @@
                                                             <td class="formValue">
                                                                 <input id="Category" type="hidden" value="1" />
                                                                 <div style="float: left; width: 45%;">
-                                                                    <input id="StartTime" readonly type="text" value="@LeaRun.Util.Time.GetDate(-7)" class="form-control input-wdatepicker" onfocus="WdatePicker({maxDate:'%y-%M-%d'})">
+                                                                    <input id="StartTime" readonly type="text" value="@LeaRun.Util.Time.GetDate(-7)" class="form-control input-wdatepicker" onfocus="WdatePicker({ maxDate: '%y-%M-%d' })">
                                                                 </div>
                                                                 <div style="float: left; width: 10%; text-align: center;">至</div>
                                                                 <div style="float: left; width: 45%;">
-                                                                    <input id="EndTime" readonly type="text" value="@LeaRun.Util.Time.GetToday()" class="form-control input-wdatepicker" onfocus="WdatePicker({maxDate:'%y-%M-%d'})">
+                                                                    <input id="EndTime" readonly type="text" value="@LeaRun.Util.Time.GetToday()" class="form-control input-wdatepicker" onfocus="WdatePicker({ maxDate: '%y-%M-%d' })">
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -582,16 +598,17 @@
                 </div>
 
                 @*<div id="SafetyVerify" class="flag" style="display: none;">
-                    <div class="title">
-                        安全验证
+                        <div class="title">
+                            安全验证
+                        </div>
                     </div>
-                </div>
-                <div id="SetLanguage" class="flag" style="display: none;">
-                    <div class="title">
-                        语言设置
-                    </div>
-                </div>*@
+                    <div id="SetLanguage" class="flag" style="display: none;">
+                        <div class="title">
+                            语言设置
+                        </div>
+                    </div>*@
             </div>
+
         </div>
     </div>
 </div>

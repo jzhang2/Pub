@@ -92,11 +92,11 @@ namespace LeaRun.Application.Web.Areas.SystemManage.Controllers
         {
             var data = databaseLinkBLL.GetList();
             //测试环境防止用户获得连接串
-            foreach (var item in data)
-            {
-                item.ServerAddress = "******";
-                item.DbConnection = "******";
-            }
+            //foreach (var item in data)
+            //{
+            //    item.ServerAddress = "******";
+            //    item.DbConnection = "******";
+            //}
             return ToJsonResult(data);
         }
         /// <summary>
@@ -141,11 +141,6 @@ namespace LeaRun.Application.Web.Areas.SystemManage.Controllers
         [AjaxOnly]
         public ActionResult SaveForm(string keyValue, DataBaseLinkEntity databaseLinkEntity)
         {
-            //测试环境防止用户修改连接串
-            if (!string.IsNullOrEmpty(keyValue))
-            {
-                return Success("测试环境，修改数据库连接无效。");
-            }
             databaseLinkBLL.SaveForm(keyValue, databaseLinkEntity);
             return Success("操作成功。");
         }

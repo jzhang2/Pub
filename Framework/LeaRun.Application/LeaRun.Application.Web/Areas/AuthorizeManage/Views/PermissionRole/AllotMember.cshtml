@@ -7,7 +7,7 @@
     $(function () {
         InitialPage();
         GetMember();
-        GetTree();
+        //GetTree();
     });
     //初始化页面
     function InitialPage() {
@@ -91,7 +91,7 @@
                 Loading(true);
             }
         });
-        //模糊查询用户（注：这个方法是理由jquery查询）
+        //模糊查询用户（注：这个方法是由jquery查询）
         $("#txt_TreeKeyword").keyup(function () {
             var value = $(this).val();
             if (value != "") {
@@ -126,11 +126,11 @@
     }
 </script>
 <div class="ui-layout" id="layout" style="height: 100%; width: 100%;">
-    <div class="ui-layout-west">
+    @*<div class="ui-layout-west">
         <div class="west-Panel" style="margin: 0px; border-top: none; border-left: none; border-bottom: none;">
             <div id="itemTree"></div>
         </div>
-    </div>
+    </div>*@
     <div class="ui-layout-center">
         <div class="treesearch">
             <input id="txt_TreeKeyword" type="text" class="form-control" style="border-top: none;" placeholder="请输入要查询关键字" />

@@ -1,0 +1,6 @@
+1. 调试: >> 操作时间: 12/28/2016 12:16:08 AM   操作人: System（超级管理员） 
+2. 地址: /BaseManage/User/SaveForm    
+3. 类名: LeaRun.Application.Web.Areas.BaseManage.Controllers.UserController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------------------------------------------------------

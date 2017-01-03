@@ -60,6 +60,8 @@
     <Compile Include="CustomerManage\OrderEntity.cs" />
     <Compile Include="CustomerManage\OrderEntryEntity.cs" />
     <Compile Include="CustomerManage\ViewModel\ReceivableReportModel.cs" />
+    <Compile Include="ExtendManage\SuggestionAnswerEntity.cs" />
+    <Compile Include="ExtendManage\SuggestionEntity.cs" />
     <Compile Include="FlowManage\WFDelegateRecordEntity.cs" />
     <Compile Include="FlowManage\WFDelegateRuleEntity.cs" />
     <Compile Include="FlowManage\WFDelegateRuleSchemeInfoEntity.cs" />

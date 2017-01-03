@@ -58,6 +58,8 @@
     <Compile Include="CustomerManage\CustomerContactBLL.cs" />
     <Compile Include="CustomerManage\OrderBLL.cs" />
     <Compile Include="CustomerManage\OrderEntryBLL.cs" />
+    <Compile Include="ExtendManage\SuggestionAnswerBLL.cs" />
+    <Compile Include="ExtendManage\SuggestionBLL.cs" />
     <Compile Include="FlowManage\WFDelegate.cs" />
     <Compile Include="FlowManage\WFRuntimeBLL.cs" />
     <Compile Include="FlowManage\WFSchemeInfoBLL.cs" />

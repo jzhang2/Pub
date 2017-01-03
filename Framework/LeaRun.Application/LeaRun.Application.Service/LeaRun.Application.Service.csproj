@@ -62,6 +62,8 @@
     <Compile Include="CustomerManage\OrderEntryService.cs" />
     <Compile Include="CustomerManage\OrderService.cs" />
     <Compile Include="CustomerManage\ReceivableReportService.cs" />
+    <Compile Include="ExtendManage\SuggestionAnswerService.cs" />
+    <Compile Include="ExtendManage\SuggestionService.cs" />
     <Compile Include="FlowManage\WFDelegateRecordService.cs" />
     <Compile Include="FlowManage\WFDelegateRuleService.cs" />
     <Compile Include="FlowManage\WFProcessInstanceService.cs" />

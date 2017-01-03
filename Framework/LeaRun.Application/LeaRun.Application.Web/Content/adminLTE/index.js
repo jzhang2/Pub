@@ -345,13 +345,19 @@
                 var row = data[i];
                 if (row.ParentId == "0") {
                     if (i == 0) {
-                        _html += '<li class="treeview active">';
+                        _html += '<li class="treeview">';
                     } else {
                         _html += '<li class="treeview">';
                     }
-                    _html += '<a href="#">'
-                    _html += '<i class="' + row.Icon + '"></i><span>' + row.FullName + '</span><i class="fa fa-angle-left pull-right"></i>'
-                    _html += '</a>'
+                    if (row.Target == "iframe" && row.IsMenu == "1" && row.UrlAddress!=null) {
+                        _html += '<a class="menuItem" data-id="' + row.ModuleId + '" href="' + row.UrlAddress + '">'
+                        _html += '<i class="' + row.Icon + '"></i><span>' + row.FullName + '</span>'
+                        _html += '</a>'
+                    } else {
+                        _html += '<a href="#">'
+                        _html += '<i class="' + row.Icon + '"></i><span>' + row.FullName + '</span><i class="fa fa-angle-left pull-right"></i>'
+                        _html += '</a>'
+                    }
                     var childNodes = $.learunindex.jsonWhere(data, function (v) { return v.ParentId == row.ModuleId });
                     if (childNodes.length > 0) {
                         _html += '<ul class="treeview-menu">';

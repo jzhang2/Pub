@@ -1,0 +1,7 @@
+1. 调试: >> 操作时间: 12/27/2016 11:30:50 PM   操作人: System（超级管理员） 
+2. 地址: /WeChatManage/App/MenuListToListTreeJson    
+3. 类名: LeaRun.Application.Web.Areas.WeChatManage.Controllers.AppController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: Value cannot be null.
+Parameter name: source
+-----------------------------------------------------------------------------------------------------------------------------

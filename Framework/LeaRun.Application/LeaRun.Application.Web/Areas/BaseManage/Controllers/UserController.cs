@@ -240,12 +240,12 @@ namespace LeaRun.Application.Web.Areas.BaseManage.Controllers
         public ActionResult SaveForm(string keyValue, string strUserEntity, string FormInstanceId, string strModuleFormInstanceEntity)
         {
             UserEntity userEntity = strUserEntity.ToObject<UserEntity>();
-            ModuleFormInstanceEntity moduleFormInstanceEntity = strModuleFormInstanceEntity.ToObject<ModuleFormInstanceEntity>();
+            //ModuleFormInstanceEntity moduleFormInstanceEntity = strModuleFormInstanceEntity.ToObject<ModuleFormInstanceEntity>();
                 
 
             string objectId =  userBLL.SaveForm(keyValue, userEntity);
-            moduleFormInstanceEntity.ObjectId = objectId;
-            moduleFormInstanceBll.SaveEntity(FormInstanceId, moduleFormInstanceEntity);
+            //moduleFormInstanceEntity.ObjectId = objectId;
+            //moduleFormInstanceBll.SaveEntity(FormInstanceId, moduleFormInstanceEntity);
             return Success("操作成功。");
         }
         /// <summary>

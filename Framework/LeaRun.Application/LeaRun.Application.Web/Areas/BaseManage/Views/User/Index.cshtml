@@ -38,27 +38,13 @@
                     }
                 },
                 { label: '手机', name: 'Mobile', index: 'Mobile', width: 100, align: 'center' },
-                {
-                    label: '公司', name: 'OrganizeId', index: 'OrganizeId', width: 200, align: 'left',
-                    formatter: function (cellvalue, options, rowObject) {
-                        return top.clientorganizeData[cellvalue] == null ? "" : top.clientorganizeData[cellvalue].FullName;
-                    }
-                },
-                {
-                    label: '部门', name: 'DepartmentId', index: 'DepartmentId', width: 100, align: 'left',
-                    formatter: function (cellvalue, options, rowObject) {
-                        return top.clientdepartmentData[cellvalue] == null ? "" : top.clientdepartmentData[cellvalue].FullName;
-                    }
-                },
-                { label: '岗位', name: 'DutyName', index: 'DutyName', width: 100, align: 'left' },
-                { label: '职位', name: 'PostName', index: 'PostName', width: 100, align: 'left' },
+                
                 {
                     label: '角色', name: 'RoleId', index: 'RoleId', width: 100, align: 'left',
                     formatter: function (cellvalue, options, rowObject) {
                         return top.clientroleData[cellvalue] == null ? "" : top.clientroleData[cellvalue].FullName;
                     }
                 },
-                { label: '主管', name: 'Manager', index: 'Manager', width: 100, align: 'left' },
                 {
                     label: "状态", name: "EnabledMark", index: "EnabledMark", width: 50, align: "center",
                     formatter: function (cellvalue, options, rowObject) {
@@ -86,7 +72,7 @@
                 $("#" + this.id).setSelection(selectedRowIndex, false);
             }
         });
-        $gridTable.authorizeColModel()
+        //$gridTable.authorizeColModel()
         //查询条件
         $("#queryCondition .dropdown-menu li").click(function () {
             var text = $(this).find('a').html();
@@ -117,7 +103,7 @@
             title: '添加用户',
             url: '/BaseManage/User/Form',
             width: "750px",
-            height: "550px",
+            height: "400px",
             callBack: function (iframeId) {
                 top.frames[iframeId].AcceptClick();
             }
@@ -132,7 +118,7 @@
                 title: '修改用户',
                 url: '/BaseManage/User/Form?keyValue=' + keyValue,
                 width: "750px",
-                height: "550px",
+                height: "400px",
                 callBack: function (iframeId) {
                     top.frames[iframeId].AcceptClick();
                 }
