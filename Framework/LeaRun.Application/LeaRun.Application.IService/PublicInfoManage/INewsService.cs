@@ -43,5 +43,7 @@ namespace LeaRun.Application.IService.PublicInfoManage
         /// <returns></returns>
         void SaveForm(string keyValue, NewsEntity newsEntity);
         #endregion
+
+        void UpdateState(string keyValue, int state);
     }
 }

@@ -1,0 +1,12 @@
+1. 调试: >> 操作时间: 1/5/2017 11:05:14 PM   操作人: System（超级管理员） 
+2. 地址: /AuthorizeManage/Module/RemoveForm    
+3. 类名: LeaRun.Application.Web.Areas.AuthorizeManage.Controllers.ModuleController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: 当前所选数据有子节点数据！
+-----------------------------------------------------------------------------------------------------------------------------
+1. 调试: >> 操作时间: 1/5/2017 11:06:18 PM   操作人: System（超级管理员） 
+2. 地址: /AuthorizeManage/Module/RemoveForm    
+3. 类名: LeaRun.Application.Web.Areas.AuthorizeManage.Controllers.ModuleController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.7   浏览器: Chrome 55.0    
+5. 异常: 当前所选数据有子节点数据！
+-----------------------------------------------------------------------------------------------------------------------------

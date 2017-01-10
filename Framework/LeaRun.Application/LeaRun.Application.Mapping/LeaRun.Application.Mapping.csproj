@@ -66,6 +66,7 @@
     <Compile Include="CustomerManage\CustomerMap.cs" />
     <Compile Include="CustomerManage\OrderEntryMap.cs" />
     <Compile Include="CustomerManage\OrderMap.cs" />
+    <Compile Include="ExtendManage\ContributionMap.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerMap.cs" />
     <Compile Include="ExtendManage\SuggestionMap.cs" />
     <Compile Include="FlowManage\WFDelegateRecordMap.cs" />

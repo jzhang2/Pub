@@ -38,7 +38,10 @@ namespace LeaRun.Application.Service.PublicInfoManage
                 string Category = queryParam["Category"].ToString();
                 expression = expression.And(t => t.Category == Category);
             }
-            expression = expression.And(t => t.TypeId == 1);
+            if (!queryParam["TypeId"].IsEmpty()) {
+                string TypeId = queryParam["TypeId"].ToString();
+                expression = expression.And(t => t.TypeId.ToString() == TypeId);
+            }
             return this.BaseRepository().FindList(expression, pagination);
         }
         /// <summary>
@@ -72,15 +75,26 @@ namespace LeaRun.Application.Service.PublicInfoManage
             if (!string.IsNullOrEmpty(keyValue))
             {
                 newsEntity.Modify(keyValue);
-                newsEntity.TypeId = 1;
+                //newsEntity.TypeId = 1;
                 this.BaseRepository().Update(newsEntity);
             }
             else
             {
                 newsEntity.Create();
-                newsEntity.TypeId = 1;
+                //newsEntity.TypeId = 1;
                 this.BaseRepository().Insert(newsEntity);
             }
+        }
+        /// <summary>
+        /// 修改用户状态
+        /// </summary>
+        /// <param name="keyValue">主键值</param>
+        /// <param name="State">状态：1-启动；0-禁用</param>
+        public void UpdateState(string keyValue, int State) {
+            NewsEntity userEntity = new NewsEntity();
+            userEntity.Modify(keyValue);
+            userEntity.EnabledMark = State;
+            this.BaseRepository().Update(userEntity);
         }
         #endregion
     }

@@ -66,5 +66,8 @@ namespace LeaRun.Application.IService.CustomerManage
         /// <param name="moduleId">Ä£¿é</param>
         void SaveForm(string keyValue, CustomerEntity entity,string moduleId);
         #endregion
+
+        bool ExistEmail(string fullName, string keyValue);
+        bool ExistMobile(string fullName, string keyValue);
     }
 }

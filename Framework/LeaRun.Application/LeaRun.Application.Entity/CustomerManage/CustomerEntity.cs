@@ -183,6 +183,15 @@ namespace LeaRun.Application.Entity.CustomerManage
         /// </summary>
         /// <returns></returns>
         public string ModifyUserName { get; set; }
+
+        /// <summary>
+        /// 性别
+        /// </summary>		
+        public int? Gender { get; set; }
+        /// <summary>
+        /// 生日
+        /// </summary>		
+        public DateTime? Birthday { get; set; }
         #endregion
 
         #region 扩展操作

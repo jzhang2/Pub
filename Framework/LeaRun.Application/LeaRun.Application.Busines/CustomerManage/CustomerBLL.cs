@@ -59,6 +59,12 @@ namespace LeaRun.Application.Busines.CustomerManage
         {
             return service.ExistFullName(fullName, keyValue);
         }
+        public bool ExistEmail(string fullName, string keyValue) {
+            return service.ExistEmail(fullName, keyValue);
+        }
+        public bool ExistMobile(string fullName, string keyValue) {
+            return service.ExistMobile(fullName, keyValue);
+        }
         #endregion
 
         #region 提交数据

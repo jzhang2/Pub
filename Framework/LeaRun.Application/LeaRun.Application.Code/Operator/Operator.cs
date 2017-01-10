@@ -76,5 +76,7 @@ namespace LeaRun.Application.Code
         /// 用户数据权限
         /// </summary>
         public AuthorizeDataModel DataAuthorize { get; set; }
+
+        public string RealName { get; set; }
     }
 }

@@ -96,6 +96,22 @@ namespace LeaRun.Application.Service.CustomerManage
             }
             return this.BaseRepository().IQueryable(expression).Count() == 0 ? true : false;
         }
+        public bool ExistEmail(string fullName, string keyValue) {
+            var expression = LinqExtensions.True<CustomerEntity>();
+            expression = expression.And(t => t.Email == fullName);
+            if (!string.IsNullOrEmpty(keyValue)) {
+                expression = expression.And(t => t.CustomerId != keyValue);
+            }
+            return this.BaseRepository().IQueryable(expression).Count() == 0 ? true : false;
+        }
+        public bool ExistMobile(string fullName, string keyValue) {
+            var expression = LinqExtensions.True<CustomerEntity>();
+            expression = expression.And(t => t.Mobile == fullName);
+            if (!string.IsNullOrEmpty(keyValue)) {
+                expression = expression.And(t => t.CustomerId != keyValue);
+            }
+            return this.BaseRepository().IQueryable(expression).Count() == 0 ? true : false;
+        }
         #endregion
 
         #region 提交数据
@@ -139,7 +155,7 @@ namespace LeaRun.Application.Service.CustomerManage
                 {
                     entity.Create();
                     //获得指定模块或者编号的单据号
-                    entity.EnCode = coderuleService.SetBillCode(entity.CreateUserId, SystemInfo.CurrentModuleId, "", db);
+                    //entity.EnCode = coderuleService.SetBillCode(entity.CreateUserId, SystemInfo.CurrentModuleId, "", db);
                     db.Insert(entity);
                     db.Commit();
                 }

@@ -18,7 +18,7 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         /// </summary>		
         public string NewsId { get; set; }
         /// <summary>
-        /// 类型（1-新闻2-公告）
+        /// 类型（1-新闻2-公告3-西图动态4-地图文化5-电子书6-实体书7-业务服务8-关于我们）
         /// </summary>		
         public int? TypeId { get; set; }
         /// <summary>
@@ -117,6 +117,16 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         /// 修改用户
         /// </summary>		
         public string ModifyUserName { get; set; }
+
+        public string NewsImage { get; set; }
+
+        public string NewsLink { get; set; }
+
+        public string BuyLink { get; set; }
+
+        public int? IsRecommend { get; set; }
+
+
         #endregion
 
         #region 扩展操作

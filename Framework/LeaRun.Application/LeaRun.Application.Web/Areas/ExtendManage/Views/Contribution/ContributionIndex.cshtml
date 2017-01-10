@@ -1,0 +1,144 @@
+@{
+    ViewBag.Title = "列表页面";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    $(function () {
+        InitialPage();
+        GetGrid();
+    });
+    //初始化页面
+    function InitialPage() {
+        //resize重设布局;
+        $(window).resize(function (e) {
+            window.setTimeout(function () {
+                $('#gridTable').setGridWidth(($('.gridPanel').width()));
+                $('#gridTable').setGridHeight($(window).height() - 108.5);
+            }, 200);
+            e.stopPropagation();
+        });
+    }
+    //加载表格
+    function GetGrid() {
+        var selectedRowIndex = 0;
+        var $gridTable = $('#gridTable');
+        $gridTable.jqGrid({
+            autowidth: true,
+            height: $(window).height() - 169.5,
+            url: "../../ExtendManage/Contribution/GetListJson",
+            datatype: "json",
+            colModel: [
+                { label: 'ContributionId', name: 'ContributionId', index: 'ContributionId', width: 100, align: 'left',sortable: true ,hidden: true },
+                { label: '标题', name: 'Title', index: 'Title', width: 100, align: 'left',sortable: true  },
+                {
+                    label: "稿件", name: "FileName", index: "FileName", width: 100, align: "center",
+                    formatter: function (cellvalue, options, rowObject) {
+                        return '<a style=\"color:#337ab7\" href=\"javascript:;\" onclick=\"btn_download(\'' + rowObject.ContributionId + '\')\" style=\"cursor: pointer;\">' + rowObject.FileName.substring(0, rowObject.FileName.lastIndexOf('.')) + '</a>';
+                    }
+                },
+                { label: '备注', name: 'Description', index: 'Description', width: 100, align: 'left', sortable: true },
+                {
+                    label: "状态", name: "ContributionStatus", index: "ContributionStatus", width: 100, align: "center",
+                    formatter: function (cellvalue, options, rowObject) {
+                        if (cellvalue != null) {
+                            return '<span onclick=\"btn_edit(\'' + rowObject.ContributionId + '\')\" class=\"label label-success\" style=\"cursor: pointer;\">' + rowObject.ContributionStatus + '</span>';
+                        } else {
+                            return '<span onclick=\"btn_edit(\'' + rowObject.ContributionId + '\')\" class=\"label label-default\" style=\"cursor: pointer;\">未处理</span>';
+                        }
+                       
+                    }
+                },
+                { label: '投稿日期', name: 'CreateDate', index: 'CreateDate', width: 100, align: 'left',sortable: true  },
+            ],
+            viewrecords: true,
+            rowNum: 30,
+            rowList: [30, 50, 100],
+            pager: "#gridPager",
+            sortname: 'CreateDate',
+            sortorder: 'desc',
+            rownumbers: true,
+            shrinkToFit: false,
+            gridview: true,
+            onSelectRow: function () {
+                selectedRowIndex = $('#' + this.id).getGridParam('selrow');
+            },
+            gridComplete: function () {
+                $('#' + this.id).setSelection(selectedRowIndex, false);
+            }
+        });
+    }
+    //新增
+    function btn_add() {
+        dialogOpen({
+            id: 'Form',
+            title: '添加Contribution',
+            url: '/ExtendManage/Contribution/ContributionForm',
+            width: 'px',
+            height: 'px',
+            callBack: function (iframeId) {
+                top.frames[iframeId].AcceptClick();
+            }
+        });
+    }
+    //编辑
+    function btn_edit(keyValue) {
+        if (keyValue == undefined) {
+            keyValue = $("#gridTable").jqGridRowValue("ContributionId");
+        }
+        if (checkedRow(keyValue)) {
+            dialogOpen({
+                id: 'Form',
+                title: '投稿处理',
+                url: '/ExtendManage/Contribution/Reply?keyValue=' + keyValue,
+                width: '500px',
+                height: '380px',
+                callBack: function (iframeId) {
+                    top.frames[iframeId].AcceptClick();
+                }
+            })
+        }
+    }
+    //删除
+    function btn_delete() {
+        var keyValue = $("#gridTable").jqGridRowValue("ContributionId");
+        if (keyValue) {
+            $.RemoveForm({
+                url: '../../ExtendManage/Contribution/RemoveForm',
+                param: { keyValue: keyValue },
+                success: function (data) {
+                    $('#gridTable').trigger('reloadGrid');
+                }
+            })
+        } else {
+            dialogMsg('请选择需要删除的Contribution！', 0);
+        }
+    }
+    function btn_download(keyValue) {
+        $.download("../../ExtendManage/Contribution/DownloadFile", "keyValue=" + keyValue, 'post');
+
+    }
+
+</script>
+<div class="titlePanel">
+    <div class="title-search">
+        <table>
+            <tr>
+                <td>
+                    <input id="txt_Keyword" type="text" class="form-control" placeholder="请输入要查询关键字" style="width: 200px;" />
+                </td>
+                <td style="padding-left: 5px;">
+                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>查询</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="toolbar">
+        <div class="btn-group">
+            <a id="lr-replace" class="btn btn-default" onclick="reload()"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+        </div>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridTable"></table>
+    <div id="gridPager"></div>
+</div>

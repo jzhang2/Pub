@@ -154,6 +154,7 @@ namespace LeaRun.Application.Web.Controllers
                     operators.Secretkey = userEntity.Secretkey;
                     operators.CompanyId = userEntity.OrganizeId;
                     operators.DepartmentId = userEntity.DepartmentId;
+                    operators.RealName = userEntity.RealName;
                     operators.IPAddress = Net.Ip;
                     operators.IPAddressName = IPLocation.GetLocation(Net.Ip);
                     operators.ObjectId = new PermissionBLL().GetObjectStr(userEntity.UserId);

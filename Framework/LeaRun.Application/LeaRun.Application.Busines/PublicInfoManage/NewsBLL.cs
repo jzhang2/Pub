@@ -78,5 +78,15 @@ namespace LeaRun.Application.Busines.PublicInfoManage
             }
         }
         #endregion
+
+        public void UpdateState(string keyValue, int State)
+        {
+            try {
+                service.UpdateState(keyValue, State);
+            }
+            catch (Exception) {
+                throw;
+            }
+        }
     }
 }

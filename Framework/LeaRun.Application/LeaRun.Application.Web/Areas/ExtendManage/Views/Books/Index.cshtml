@@ -1,0 +1,246 @@
+﻿@{
+    ViewBag.Title = "电子书库";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+<script>
+    var EnCode = request('EnCode');
+    var TypeId = request('TypeId');
+    $(function () {
+        InitialPage();
+        GetTree();
+        GetGrid();
+    });
+    //初始化页面
+    function InitialPage() {
+        //layout布局
+        $('#layout').layout({
+            applyDemoStyles: true,
+            onresize: function () {
+                $(window).resize()
+            }
+        });
+        //resize重设(表格、树形)宽高
+        $(window).resize(function (e) {
+            window.setTimeout(function () {
+                $('#gridTable').setGridWidth(($('.gridPanel').width()));
+                $("#gridTable").setGridHeight($(window).height() - 169.5);
+                $("#itemTree").setTreeHeight($(window).height() - 52);
+            }, 200);
+            e.stopPropagation();
+        });
+    }
+    //加载树
+    var _Category;
+    function GetTree() {
+        var item = {
+            height: $(window).height() - 52,
+            param: { EnCode: EnCode },
+            url: "../../SystemManage/DataItemDetail/GetDataItemTreeJson",
+            onnodeclick: function (item) {
+                _Category = item.value;
+                $('#btn_Search').trigger("click");
+            }
+        };
+        //初始化
+        $("#itemTree").treeview(item);
+    }
+    //加载表格
+    function GetGrid() {
+        var selectedRowIndex = 0;
+        var $grid = $("#gridTable");
+        var queryJson = {
+            TypeId: TypeId
+        }
+        $grid.jqGrid({
+            url: "../../ExtendManage/Books/GetPageListJson",
+            postData: { queryJson: JSON.stringify(queryJson) },
+            datatype: "json",
+            height: $(window).height() - 169.5,
+            autowidth: true,
+            colModel: [
+                { label: '主键', name: 'NewsId', hidden: true },
+                { label: '书名', name: 'FullHead', index: 'FullHead', width: 500, align: 'left' },
+                { label: '作者', name: 'AuthorName', index: 'AuthorName', width: 100, align: 'left' },
+                { label: '分类', name: 'Category', index: 'Category', width: 100, align: 'left' },
+                {
+                    label: "发布时间", name: "ReleaseTime", index: "ReleaseTime", width: 140, align: "left",
+                    formatter: function (cellvalue, options, rowObject) {
+                        return formatDate(cellvalue, 'yyyy-MM-dd hh:mm');
+                    }
+                },
+                { label: '阅读次数', name: 'PV', index: 'PV', width: 80, align: 'center' },
+                {
+                    label: "状态", name: "EnabledMark", index: "EnabledMark", width: 50, align: "center",
+                    formatter: function (cellvalue, options, rowObject) {
+                        if (cellvalue == 1) {
+                            return '<span onclick=\"btn_disabled(\'' + rowObject.NewsId + '\')\" class=\"label label-success\" style=\"cursor: pointer;\">上架</span>';
+                        } else{
+                            return '<span onclick=\"btn_enabled(\'' + rowObject.NewsId + '\')\" class=\"label label-default\" style=\"cursor: pointer;\">下架</span>';
+                        }
+                    }
+                },
+            ],
+            viewrecords: true,
+            rowNum: 30,
+            rowList: [30, 50, 100],
+            pager: "#gridPager",
+            sortname: 'CreateDate',
+            sortorder: 'desc',
+            rownumbers: true,
+            shrinkToFit: false,
+            gridview: true,
+            onSelectRow: function () {
+                selectedRowIndex = $grid.getGridParam('selrow');
+            },
+            gridComplete: function () {
+                $grid.setSelection(selectedRowIndex, false);
+            }
+        });
+        //查询事件
+        $("#btn_Search").click(function () {
+            var queryJson = {
+                Category: _Category,
+                FullHead: $("#txt_Keyword").val(),
+                TypeId: TypeId
+            }
+            $grid.jqGrid('setGridParam', {
+                postData: { queryJson: JSON.stringify(queryJson) },
+            }).trigger('reloadGrid');
+        });
+    }
+    //新增
+    function btn_add() {
+        dialogOpen({
+            id: "Form",
+            title: '添加书籍',
+            url: '/ExtendManage/Books/Form?category=' + escape(_Category) + '&TypeId=' + TypeId + '&EnCode=' + EnCode,
+            width: "1000px",
+            height: "660px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].AcceptClick();
+            }
+        });
+    };
+    //编辑
+    function btn_edit() {
+        var keyValue = $("#gridTable").jqGridRowValue("NewsId");
+        if (checkedRow(keyValue)) {
+            dialogOpen({
+                id: "Form",
+                title: '修改书籍',
+                url: '/ExtendManage/Books/Form?keyValue=' + keyValue + '&TypeId=' + TypeId + '&EnCode=' + EnCode,
+                width: "1000px",
+                height: "660px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].AcceptClick();
+                }
+            });
+        }
+    }
+    //删除
+    function btn_delete() {
+        var keyValue = $("#gridTable").jqGridRowValue("NewsId");
+        if (keyValue) {
+            $.RemoveForm({
+                url: "../../ExtendManage/Books/RemoveForm",
+                param: { keyValue: keyValue },
+                success: function (data) {
+                    $("#gridTable").trigger("reloadGrid");
+                }
+            })
+        } else {
+            dialogMsg('请选择需要删除的书籍！', 0);
+        }
+    }
+    //新闻栏目
+    function btn_category() {
+        dialogOpen({
+            id: "DataItemList",
+            title: '分类',
+            url: '/SystemManage/DataItemList/Index?ItemCode=' + EnCode,
+            width: "800px",
+            height: "500px",
+            btn: null
+        });
+    }
+    //禁用
+    function btn_disabled(keyValue) {
+        if (keyValue == undefined) {
+            keyValue = $("#gridTable").jqGridRowValue("NewsId");
+        }
+        if (checkedRow(keyValue)) {
+            $.ConfirmAjax({
+                msg: "注：您确定要【下架】书籍？",
+                url: "../../ExtendManage/Books/DisabledAccount",
+                param: { keyValue: keyValue },
+                success: function (data) {
+                    $("#gridTable").trigger("reloadGrid");
+                }
+            })
+        }
+    }
+    //启用
+    function btn_enabled(keyValue) {
+        if (keyValue == undefined) {
+            keyValue = $("#gridTable").jqGridRowValue("NewsId");
+        }
+        if (checkedRow(keyValue)) {
+            $.ConfirmAjax({
+                msg: "注：您确定要【上架】书籍？",
+                url: "../../ExtendManage/Books/EnabledAccount",
+                param: { keyValue: keyValue },
+                success: function (data) {
+                    $("#gridTable").trigger("reloadGrid");
+                }
+            })
+        }
+    }
+</script>
+<div class="ui-layout" id="layout" style="height: 100%; width: 100%;">
+    <div class="ui-layout-west">
+        <div class="west-Panel">
+            <div class="panel-Title">分类</div>
+            <div id="itemTree"></div>
+        </div>
+    </div>
+    <div class="ui-layout-center">
+        <div class="center-Panel">
+            <div class="panel-Title">电子书管理</div>
+            <div class="titlePanel">
+                <div class="title-search">
+                    <table>
+                        <tr>
+                            <td>
+                                <input id="txt_Keyword" type="text" class="form-control" placeholder="请输入要查询关键字" style="width: 200px;" />
+                            </td>
+                            <td style="padding-left: 5px;">
+                                <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;查询</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="toolbar">
+                    <div class="btn-group">
+                        <a id="lr-replace" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+                        <a id="lr-add" class="btn btn-default" onclick="btn_add()"><i class="fa fa-plus"></i>&nbsp;新增</a>
+                        <a id="lr-edit" class="btn btn-default" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
+                        <a id="lr-delete" class="btn btn-default" onclick="btn_delete()"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="lr-enabled" class="btn btn-default" onclick="btn_enabled()"><i class="fa fa-arrow-up"></i>&nbsp;上架</a>
+                        <a id="lr-disabled" class="btn btn-default" onclick="btn_disabled()"><i class="fa fa-arrow-down"></i>&nbsp;下架</a>
+                    </div>
+                    <div class="btn-group">
+                        <a id="lr-category" class="btn btn-default" onclick="btn_category()"><i class="fa fa-tags"></i>&nbsp;分类</a>
+                    </div>
+                    <script>$('.toolbar').authorizeButton()</script>
+                </div>
+            </div>
+            <div class="gridPanel">
+                <table id="gridTable"></table>
+                <div id="gridPager"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
