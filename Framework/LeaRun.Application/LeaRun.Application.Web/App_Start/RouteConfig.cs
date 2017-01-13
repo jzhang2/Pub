@@ -8,11 +8,20 @@ namespace LeaRun.Application.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+                name: "SignUp",
+                url: "SignUp",
+                defaults: new { controller = "Default", action = "SignUp", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "SignIn",
+                url: "SignIn",
+                defaults: new { controller = "Default", action = "SignIn", id = UrlParameter.Optional }
+            );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

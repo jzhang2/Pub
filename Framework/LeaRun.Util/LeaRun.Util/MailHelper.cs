@@ -66,6 +66,34 @@ namespace LeaRun.Util
             }
         }
 
+        public static bool SendEmail(string to, string subject, string body, string encoding = "UTF-8", bool isBodyHtml = true, bool enableSsl = false) {
+            try {
+                MailMessage message = new MailMessage();
+                // 接收人邮箱地址
+                message.To.Add(new MailAddress(to));
+                message.From = new MailAddress("122343716@qq.com", MailName);
+                message.BodyEncoding = Encoding.GetEncoding(encoding);
+                message.Body = body;
+                //GB2312
+                message.SubjectEncoding = Encoding.GetEncoding(encoding);
+                message.Subject = subject;
+                message.IsBodyHtml = isBodyHtml;
+
+                SmtpClient smtpclient = new SmtpClient(MailServer, 465);
+                smtpclient.UseDefaultCredentials = false;
+                smtpclient.Credentials = new System.Net.NetworkCredential("122343716@qq.com", "c..h1170");
+                //SSL连接
+                smtpclient.EnableSsl = enableSsl;
+                smtpclient.Send(message);
+                return true;
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
+
+
         /// <summary>
         /// 异步发送邮件 独立线程
         /// </summary>

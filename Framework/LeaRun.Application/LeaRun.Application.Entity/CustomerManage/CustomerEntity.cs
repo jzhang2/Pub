@@ -33,6 +33,8 @@ namespace LeaRun.Application.Entity.CustomerManage
         /// </summary>
         /// <returns></returns>
         public string ShortName { get; set; }
+        public string Password { get; set; }
+        public string SecurityCode { get; set; }
         /// <summary>
         /// 客户行业
         /// </summary>
@@ -93,6 +95,7 @@ namespace LeaRun.Application.Entity.CustomerManage
         /// </summary>
         /// <returns></returns>
         public string Email { get; set; }
+        public string Secretkey { get; set; }
         /// <summary>
         /// 微信
         /// </summary>
@@ -158,6 +161,7 @@ namespace LeaRun.Application.Entity.CustomerManage
         /// </summary>
         /// <returns></returns>
         public DateTime? CreateDate { get; set; }
+        public DateTime? SecurityCodeDate { get; set; }
         /// <summary>
         /// 创建用户主键
         /// </summary>

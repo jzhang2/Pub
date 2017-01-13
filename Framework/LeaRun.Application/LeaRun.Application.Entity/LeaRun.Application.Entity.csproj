@@ -61,6 +61,7 @@
     <Compile Include="CustomerManage\OrderEntryEntity.cs" />
     <Compile Include="CustomerManage\ViewModel\ReceivableReportModel.cs" />
     <Compile Include="ExtendManage\ContributionEntity.cs" />
+    <Compile Include="ExtendManage\SecurityCodeEntity.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerEntity.cs" />
     <Compile Include="ExtendManage\SuggestionEntity.cs" />
     <Compile Include="FlowManage\WFDelegateRecordEntity.cs" />

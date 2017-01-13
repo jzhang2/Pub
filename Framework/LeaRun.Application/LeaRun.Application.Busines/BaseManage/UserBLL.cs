@@ -201,6 +201,7 @@ namespace LeaRun.Application.Busines.BaseManage
                     else
                     {
                         throw new Exception("密码和账户名不匹配");
+                        //throw new Exception("密码和账户名不匹配" + "|" + password + "|" + dbPassword);
                     }
                 }
                 else

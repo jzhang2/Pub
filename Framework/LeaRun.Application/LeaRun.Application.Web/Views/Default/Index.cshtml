@@ -9,16 +9,16 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js">
- <!--<![endif]-->
+<!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Estate &mdash; Free HTML5 Bootstrap Website Template by FreeHTML5.co</title>
+    <title>西安地图出版社</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
-    <meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
-    
-    
+    <meta name="description" content="西安地图出版社" />
+    <meta name="keywords" content="地图, 出版社, 西安, 电子书, 实体书" />
+
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="favicon.ico">
     <link href="/css/VarelaRound.css" rel="stylesheet" />
@@ -40,7 +40,7 @@
     <!--[if lt IE 9]>
     <script src="/js/respond.min.js"></script>
     <![endif]-->
-
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=SRkUQaDbD9KVsHZGmikTgCG1"></script>
 </head>
 <body>
 
@@ -50,18 +50,28 @@
             <div class="container">
                 <div class="row">
                     <div class="header-inner">
-                        <h1><a href="/"><img src="~/images/logo.bmp" /></a></h1>
+                        <h1 style="margin-top: 10px;"><a href="/"><img src="~/images/logo.bmp" /></a></h1>
                         <nav role="navigation">
-                            <ul>
-                                <li><a href="buy.html">首页</a></li>
+                            <ul class="sf-menu" id="fh5co-primary-menu">
+                                <li><a href="/" class="active">首页</a></li>
                                 <li><a href="buy.html">西图动态</a></li>
-                                <li><a href="rent.html">地图文化</a></li>
+                                <li>
+                                    <a href="rent.html" class="sf-with-ul">地图文化</a>
+                                    <ul class="fh5co-sub-menu">
+                                        <li><a href="#/preview/?item=build-free-html5-bootstrap-template" target="_blank">地图百科</a></li>
+                                        <li><a href="#/preview/?item=work-free-html5-template-bootstrap" target="_blank">地图故事</a></li>
+                                        <li><a href="#/preview/?item=light-free-html5-template-bootstrap" target="_blank">趣味地图</a></li>
+                                    </ul>
+
+
+
+                                </li>
                                 <li><a href="properties.html">网上书店</a></li>
                                 <li><a href="properties.html">产品定制</a></li>
-                                @*<li><a href="properties.html">业务服务</a></li>
-                                <li><a href="properties.html">关于我们</a></li>*@
-                                <li><a href="properties.html">登录</a></li>
-                                <li><a class="btn btn-primary" href="properties.html">注册</a></li>
+                                <li><a href="properties.html">业务服务</a></li>
+                                <li><a href="properties.html">关于我们</a></li>
+                                <li style="margin-left: 20px;"><a class="navbtn" href="/SignIn">登录</a></li>
+                                <li><a class="regbtn btn btn-primary " href="/SignUp">注册</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -70,26 +80,25 @@
         </header>
 
 
+
         <aside id="fh5co-hero" clsas="js-fullheight">
-            <div class="flexslider js-fullheight">
+            <div class="flexslider">
                 <ul class="slides">
-                    <li style="background-image: url(/images/slide_1.jpg);">
+                    <li style="background-image: url('/images/banner.png');">
                         <div class="container">
-                            <div class="col-md-12 text-center js-fullheight fh5co-property-brief slider-text">
+                            <div class="col-md-12 text-center  fh5co-property-brief slider-text">
                                 <div class="fh5co-property-brief-inner">
                                     <div class="fh5co-box">
 
-                                        <h3><a href="#">Villa In Hialeah, Dade County</a></h3>
-                                        <div class="price-status">
-                                            <span class="price">$540,000 <a href="#" class="tag">For Sale</a></span>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
+                                        <h2>区域概况 国家名片 图文并茂</h2>
+                                        <h2>地理概况 人文风俗 大美疆域</h2>
+                                        <h1>中国世界地图册</h1>
+                                        <h4>地图上那些事 随心所想 随意而行</h4>
+                                        <h4>一本通系列 新聆听 心感悟</h4>
 
-                                        <p class="fh5co-property-specification">
-                                            <span><strong>3500</strong> Sq Ft</span>  <span><strong>3</strong> Beds</span>  <span><strong>3.5</strong> Baths</span>  <span><strong>2</strong> Garages</span>
+                                        <p>
+                                            <a href="#" class="btn btn-primary slider-btn">点击查看</a>
                                         </p>
-
-                                        <p><a href="#" class="btn btn-primary">Learn more</a></p>
 
 
                                     </div>
@@ -97,39 +106,43 @@
                             </div>
                         </div>
                     </li>
-                    <li style="background-image: url(/images/slide_2.jpg);">
+                    <li style="background-image: url('/images/banner.png'); ">
                         <div class="container">
-                            <div class="col-md-12 text-center js-fullheight fh5co-property-brief slider-text">
+                            <div class="col-md-12 text-center  fh5co-property-brief slider-text">
                                 <div class="fh5co-property-brief-inner">
                                     <div class="fh5co-box">
-                                        <h3><a href="#">15 Apartments Of Type B</a></h3>
-                                        <div class="price-status">
-                                            <span class="price">$2,200<span class="per">/Month</span> <a href="#" class="tag">For Rent</a></span>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
-                                        <p class="fh5co-property-specification">
-                                            <span><strong>3500</strong> Sq Ft</span>  <span><strong>3</strong> Beds</span>  <span><strong>3.5</strong> Baths</span>  <span><strong>2</strong> Garages</span>
+
+                                        <h2>区域概况 国家名片 图文并茂</h2>
+                                        <h2>地理概况 人文风俗 大美疆域</h2>
+                                        <h1>中国世界地图册</h1>
+                                        <h4>地图上那些事 随心所想 随意而行</h4>
+                                        <h4>一本通系列 新聆听 心感悟</h4>
+
+                                        <p>
+                                            <a href="#" class="btn btn-primary slider-btn">点击查看</a>
                                         </p>
-                                        <p><a href="#" class="btn btn-primary">Learn more</a></p>
+
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <li style="background-image: url(/images/slide_3.jpg);">
+                    <li style="background-image: url('/images/banner.png');">
                         <div class="container">
-                            <div class="col-md-12 text-center js-fullheight fh5co-property-brief slider-text">
+                            <div class="col-md-12 text-center  fh5co-property-brief slider-text">
                                 <div class="fh5co-property-brief-inner">
                                     <div class="fh5co-box">
-                                        <h3><a href="#">401 Biscayne Boulevard, Miami</a></h3>
-                                        <div class="price-status">
-                                            <span class="price">$1,540,000 <a href="#" class="tag">For Sale</a></span>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
-                                        <p class="fh5co-property-specification">
-                                            <span><strong>3500</strong> Sq Ft</span>  <span><strong>3</strong> Beds</span>  <span><strong>3.5</strong> Baths</span>  <span><strong>2</strong> Garages</span>
+
+                                        <h2>区域概况 国家名片 图文并茂</h2>
+                                        <h2>地理概况 人文风俗 大美疆域</h2>
+                                        <h1>中国世界地图册</h1>
+                                        <h4>地图上那些事 随心所想 随意而行</h4>
+                                        <h4>一本通系列 新聆听 心感悟</h4>
+
+                                        <p>
+                                            <a href="#" class="btn btn-primary slider-btn">点击查看</a>
                                         </p>
-                                        <p><a href="#" class="btn btn-primary">Learn more</a></p>
 
 
                                     </div>
@@ -141,278 +154,335 @@
                 </ul>
             </div>
         </aside>
-        <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">企业网站模板</a></div>
-        <div id="best-deal">
+        <div id="quick-nav">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading animate-box" data-animate-effect="fadeIn">
-                        <h2>We are Offering the Best Real Estate Deals</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+                    <div class="header-quicknva">
+                        <ul>
+                            <li><a class="regbtn btn" href="javascript:;">快速业务</a></li>
+                            <li>
+                                <a href="/" class="active">
+                                    <img src="~/images/dz.bmp" />读者服务
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/" class="active">
+                                    <img src="~/images/zzfw.bmp" />作者服务
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/" class="active">
+                                    <img src="~/images/zzfw.bmp" />经销商服务
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/" class="active">
+                                    <img src="~/images/zzfw.bmp" />图书馆服务
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/" class="active">
+                                    <img src="~/images/zzfw.bmp" />农家书屋服务
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/" class="active">
+                                    <img src="~/images/zzfw.bmp" />社区书屋服务
+                                </a>
+                            </li>
+
+                        </ul>
                     </div>
-                    <div class="col-md-4 item-block animate-box" data-animate-effect="fadeIn">
-
-
+                </div>
+            </div>
+        </div>
+        <div id="best-deal">
+            <div class="container" style="background: white; padding: 35px 25px;">
+                <div class="row">
+                    <div class="col-md-6 text-left fh5co-heading animate-box" data-animate-effect="fadeIn">
+                        <h2>要闻快讯</h2>
+                        <p>西安地图出版社成立于1985年，是国务院新闻出版部署批准成立，国务院测绘地理信息行政主管部门核准的专业出版机构。 </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
                         <div class="fh5co-property">
+                            <div class="fh5co-property-title">
+                                <h5><a href="#">我社应邀参加第三届中国地图文化大会</a></h5>
+                                <p>2016-12-14 8:58</p>
+                            </div>
                             <figure>
                                 <img src="/images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
                                 <a href="#" class="tag">For Sale</a>
                             </figure>
                             <div class="fh5co-property-innter">
-                                <h3><a href="#">Villa In Hialeah, Dade County</a></h3>
+                                <p>第三届中国地图文化大会将于明日在江苏南京举办，我社应邀参加。本届大会是继2014年青岛、2015年南昌之后的又一届地图文化盛会。</p>
+                            </div>
+                            <p class="fh5co-property-specification">
+                                <span>作者：璋交易</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>2<i class="icon-comments"></i>10</span>
+                            </p>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
+                        <div class="fh5co-property">
+                            <div class="fh5co-property-title">
+                                <h5><a href="#">我社应邀参加第三届中国地图文化大会</a></h5>
+                                <p>2016-12-14 8:58</p>
+                            </div>
+                            <figure>
+                                <img src="/images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
+                                <a href="#" class="tag">For Sale</a>
+                            </figure>
+                            <div class="fh5co-property-innter">
+                                <p>第三届中国地图文化大会将于明日在江苏南京举办，我社应邀参加。本届大会是继2014年青岛、2015年南昌之后的又一届地图文化盛会。</p>
+                            </div>
+                            <p class="fh5co-property-specification">
+                                <span>作者：璋交易</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>2<i class="icon-comments"></i>10</span>
+                            </p>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
+                        <div class="fh5co-property">
+                            <div class="fh5co-property-title">
+                                <h5><a href="#">我社应邀参加第三届中国地图文化大会</a></h5>
+                                <p>2016-12-14 8:58</p>
+                            </div>
+                            <figure>
+                                <img src="/images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
+                                <a href="#" class="tag">For Sale</a>
+                            </figure>
+                            <div class="fh5co-property-innter">
+                                <p>第三届中国地图文化大会将于明日在江苏南京举办，我社应邀参加。本届大会是继2014年青岛、2015年南昌之后的又一届地图文化盛会。</p>
+                            </div>
+                            <p class="fh5co-property-specification">
+                                <span>作者：璋交易</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>2<i class="icon-comments"></i>10</span>
+                            </p>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
+                        <div class="fh5co-property">
+                            <div class="fh5co-property-title">
+                                <h5><a href="#">我社应邀参加第三届中国地图文化大会</a></h5>
+                                <p>2016-12-14 8:58</p>
+                            </div>
+                            <figure>
+                                <img src="/images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
+                            </figure>
+                            <div class="fh5co-property-innter">
+                                <p>第三届中国地图文化大会将于明日在江苏南京举办，我社应邀参加。本届大会是继2014年青岛、2015年南昌之后的又一届地图文化盛会。</p>
+                            </div>
+                            <p class="fh5co-property-specification">
+                                <span>作者：璋交易</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>2<i class="icon-comments"></i>10</span>
+                            </p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="fh5co-agents">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 text-center fh5co-heading white animate-box" data-animate-effect="fadeIn">
+                        <h2>地图文化展示</h2>
+                        <p>为配合“美丽陕西”建设，策划出版了“地图上的秦岭系列丛书”之《秦岭全景图记》《秦岭森林公园》《秦岭地质公园》等分册 </p>
+                    </div>
+                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
+
+                        <div class="fh5co-agent">
+                            <figure>
+                                <img class="img-responsive" src="/images/slide_2.jpg" alt="Free Website Template by FreeHTML5.co">
+                            </figure>
+                            <p>Veniam laudantium rem odio quod, beatae voluptates natus animi fugiat provident voluptatibus. Debitis assumenda, possimus ducimus omnis.</p>
+                            <p>
+                                <a href="#" class="btn btn-primary btn-outline">点击详情</a>
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
+
+                        <div class="fh5co-agent">
+                            <figure>
+                                <img class="img-responsive" src="/images/slide_2.jpg" alt="Free Website Template by FreeHTML5.co">
+                            </figure>
+                            <p>Veniam laudantium rem odio quod, beatae voluptates natus animi fugiat provident voluptatibus. Debitis assumenda, possimus ducimus omnis.</p>
+                            <p>
+                                <a href="#" class="btn btn-primary btn-outline">Contact Me</a>
+                            </p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
+
+                        <div class="fh5co-agent">
+                            <figure>
+                                <img class="img-responsive" src="/images/slide_2.jpg" alt="Free Website Template by FreeHTML5.co">
+                            </figure>
+                            <p>Veniam laudantium rem odio quod, beatae voluptates natus animi fugiat provident voluptatibus. Debitis assumenda, possimus ducimus omnis.</p>
+                            <p>
+                                <a href="#" class="btn btn-primary btn-outline">Contact Me</a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fh5co-agents" style="background: #F6F6F6">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 text-center fh5co-heading white animate-box" data-animate-effect="fadeIn">
+                        <h2>精品图书（推荐）</h2>
+                        <p>图书是人类用来记录一切成就的主要工具，也是人类交融感情，取得知识，传承经验的重要媒介。对人类文明的开展，贡献至钜。</p>
+                    </div>
+                    <div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">
+                        <div class="fh5co-property books">
+                            <figure>
+                                <img src="images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
+                                <a href="javascript:;" class="tag">推荐</a>
+                            </figure>
+                            <div class="fh5co-property-innter books">
+                                <h3>
+                                    <a href="#">Villa In Hialeah, Dade County</a>
+                                </h3>
                                 <div class="price-status">
                                     <span class="price">$540,000 </span>
                                 </div>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
                             </div>
-                            <p class="fh5co-property-specification">
-                                <span><strong>3500</strong> Sq Ft</span>  <span><strong>3</strong> Beds</span>  <span><strong>3.5</strong> Baths</span>  <span><strong>2</strong> Garages</span>
+                            <p class="fh5co-property-specification books">
+                                <span><strong>阅读数</strong>10000</span>
                             </p>
                         </div>
-
-
                     </div>
-                    <div class="col-md-4 item-block animate-box" data-animate-effect="fadeIn">
-
-                        <div class="fh5co-property">
+                    <div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">
+                        <div class="fh5co-property books">
                             <figure>
-                                <img src="/images/slide_2.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                                <a href="#" class="tag">For Rent</a>
+                                <img src="images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
+                                <a href="javascript:;" class="tag">推荐</a>
                             </figure>
-                            <div class="fh5co-property-innter">
-                                <h3><a href="#">15 Apartments Of Type B</a></h3>
+                            <div class="fh5co-property-innter books">
+                                <h3>
+                                    <a href="#">Villa In Hialeah, Dade County</a>
+                                </h3>
                                 <div class="price-status">
-                                    <span class="price">$2,000<span class="per">/month</span> </span>
+                                    <span class="price">$540,000 </span>
                                 </div>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
                             </div>
-                            <p class="fh5co-property-specification">
-                                <span><strong>3500</strong> Sq Ft</span>  <span><strong>3</strong> Beds</span>  <span><strong>3.5</strong> Baths</span>  <span><strong>2</strong> Garages</span>
+                            <p class="fh5co-property-specification books">
+                                <span><strong>阅读数</strong>10000</span>
                             </p>
                         </div>
-
                     </div>
-                    <div class="col-md-4 item-block animate-box" data-animate-effect="fadeIn">
-
-                        <div class="fh5co-property">
+                    <div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">
+                        <div class="fh5co-property books">
                             <figure>
-                                <img src="/images/slide_1.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                                <a href="#" class="tag">For Sale</a>
+                                <img src="images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
+                                <a href="javascript:;" class="tag">推荐</a>
                             </figure>
-                            <div class="fh5co-property-innter">
-                                <h3><a href="#">401 Biscayne Boulevard, Miami</a></h3>
+                            <div class="fh5co-property-innter books">
+                                <h3>
+                                    <a href="#">Villa In Hialeah, Dade County</a>
+                                </h3>
                                 <div class="price-status">
-                                    <span class="price">$1,540,000</span>
+                                    <span class="price">$540,000 </span>
                                 </div>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
                             </div>
-                            <p class="fh5co-property-specification">
-                                <span><strong>3500</strong> Sq Ft</span>  <span><strong>3</strong> Beds</span>  <span><strong>3.5</strong> Baths</span>  <span><strong>2</strong> Garages</span>
+                            <p class="fh5co-property-specification books">
+                                <span><strong>阅读数</strong>10000</span>
                             </p>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
-
-
-        <div class="fh5co-section-with-image">
-
-            <img src="/images/image_1.jpg" alt="" class="img-responsive">
-            <div class="fh5co-box animate-box">
-                <h2>Security, Comfort, &amp; Convenience</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
-                <p><a href="#" class="btn btn-primary btn-outline with-arrow">Get started <i class="icon-arrow-right"></i></a></p>
-            </div>
-
-        </div>
-
-        <div id="fh5co-testimonial">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3 text-center fh5co-heading animate-box" data-animate-effect="fadeIn">
-                        <h2>Happy Clients</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                    </div>
-                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
-                        <blockquote>
-                            <p>&ldquo; She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of. &rdquo;</p>
-                            <p><span class="fh5co-author"><cite>Jason Davidson</cite></span><i class="icon twitter-color icon-twitter pull-right"></i></p>
-
-                        </blockquote>
-                    </div>
-                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
-                        <blockquote>
-                            <p>&ldquo; Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way. She had a last view back on the skyline of her hometown Bookmarksgrove, the headline of. &rdquo;</p>
-                            <p><span class="fh5co-author"><cite>Kyle Smith</cite></span><i class="icon googleplus-color icon-google-plus pull-right"></i></p>
-                        </blockquote>
-                    </div>
-                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
-
-                        <blockquote>
-                            <p>&ldquo; The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. S	he had a last view back on the skyline of her hometown Bookmarksgrove. &rdquo;</p>
-                            <p><span class="fh5co-author"><cite>Rick Cook</cite></span><i class="icon facebook-color icon-facebook pull-right"></i></p>
-                        </blockquote>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div id="fh5co-agents">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3 text-center fh5co-heading white animate-box" data-animate-effect="fadeIn">
-                        <h2>Our Trusted Agents</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                    </div>
-                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
-
-                        <div class="fh5co-agent">
-                            <figure>
-                                <img src="/images/testimonial_person2.jpg" alt="Free Website Template by FreeHTML5.co">
-                            </figure>
-                            <h3>John Doe</h3>
-                            <p>Veniam laudantium rem odio quod, beatae voluptates natus animi fugiat provident voluptatibus. Debitis assumenda, possimus ducimus omnis.</p>
-                            <p><a href="#" class="btn btn-primary btn-outline">Contact Me</a></p>
-                        </div>
-
-                    </div>
-                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
-                        <div class="fh5co-agent">
-                            <figure>
-                                <img src="/images/testimonial_person3.jpg" alt="Free Website Template by FreeHTML5.co">
-                            </figure>
-                            <h3>John Doe</h3>
-                            <p>Veniam laudantium rem odio quod, beatae voluptates natus animi fugiat provident voluptatibus. Debitis assumenda, possimus ducimus omnis.</p>
-                            <p><a href="#" class="btn btn-primary btn-outline">Contact Me</a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
-                        <div class="fh5co-agent">
-                            <figure>
-                                <img src="/images/testimonial_person4.jpg" alt="Free Website Template by FreeHTML5.co">
-                            </figure>
-                            <h3>John Doe</h3>
-                            <p>Veniam laudantium rem odio quod, beatae voluptates natus animi fugiat provident voluptatibus. Debitis assumenda, possimus ducimus omnis.</p>
-                            <p><a href="#" class="btn btn-primary btn-outline">Contact Me</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div id="fh5co-blog">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3 text-center fh5co-heading animate-box" data-animate-effect="fadeIn">
-                        <h2>Latest <em>from</em> Blog</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 animate-box" data-animate-effect="fadeIn">
-                        <a class="fh5co-entry" href="#">
-                            <figure>
-                                <img src="/images/slide_4.jpg" alt="Free Website Template, Free HTML5 Bootstrap Template" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-copy">
-                                <h3>We Create Awesome Free Templates</h3>
-                                <span class="fh5co-date">June 8, 2016</span>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4 animate-box" data-animate-effect="fadeIn">
-                        <a class="fh5co-entry" href="#">
-                            <figure>
-                                <img src="/images/slide_5.jpg" alt="Free Website Template, Free HTML5 Bootstrap Template" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-copy">
-                                <h3>Handcrafted Using CSS3 &amp; HTML5</h3>
-                                <span class="fh5co-date">June 8, 2016</span>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4 animate-box" data-animate-effect="fadeIn">
-                        <a class="fh5co-entry" href="#">
-                            <figure>
-                                <img src="/images/slide_6.jpg" alt="Free Website Template, Free HTML5 Bootstrap Template" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-copy">
-                                <h3>We Try To Update The Site Everyday</h3>
-                                <span class="fh5co-date">June 8, 2016</span>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-md-12 text-center animate-box" data-animate-effect="fadeIn">
-                        <p><a href="#" class="btn btn-primary btn-outline with-arrow">View More Posts <i class="icon-arrow-right"></i></a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="fh5co-cta" style="background-image: url(/images/slide_4.jpg);">
+        <div class="fh5co-cta">
             <div class="overlay"></div>
             <div class="container">
-                <div class="col-md-12 text-center animate-box" data-animate-effect="fadeIn">
-                    <h3>We Try To Update The Site Everyday</h3>
-                    <p><a href="#" class="btn btn-primary btn-outline with-arrow">Get started now! <i class="icon-arrow-right"></i></a></p>
+                <div class="col-md-12 text-center animate-box fadeInUp animated-fast">
+                    <h3>地图搜索</h3>
+                    <p>
+                        权威的地图搜索功能。权威的地图搜索功能。权威的地图搜索功能。权威的地图搜索功能。
+                    </p>
                 </div>
             </div>
         </div>
-
-
+        <div id="allmap" class="animate-box" data-animate-effect="fadeIn"></div>
         <footer id="fh5co-footer" role="contentinfo">
-
             <div class="container">
-                <div class="col-md-3 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-                    <h3>About Us</h3>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
-                    <p><a href="#" class="btn btn-primary btn-outline with-arrow btn-sm">I'm button <i class="icon-arrow-right"></i></a></p>
+                <div class="row">
+                    <div class="col-md-4 col-sm-12 col-xs-12">
+                        <h1>地图出版社</h1>
+                        <p>西安地图出版社成立于1985年，是国务院新闻出版部署批准成立，国务院测绘地理信息行政主管部门核准的专业出版机构。其主业是出版发行各类地图、地学、地理学和相关的自然科学、科技类图书。 </p>
+                        <p>同时经营与主业相应的网络电子版产品，研发和推广特种地图。 </p>
+                    </div>
+                    <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h3>Our Services</h3>
+                        <ul class="float">
+                            <li><a href="#">Web Design</a></li>
+                            <li><a href="#">Branding &amp; Identity</a></li>
+                            <li><a href="#">Free HTML5</a></li>
+                            <li><a href="#">HandCrafted Templates</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h3>Our Services</h3>
+                        <ul class="float">
+                            <li><a href="#">Web Design</a></li>
+                            <li><a href="#">Branding &amp; Identity</a></li>
+                            <li><a href="#">Free HTML5</a></li>
+                            <li><a href="#">HandCrafted Templates</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h3>Our Services</h3>
+                        <ul class="float">
+                            <li><a href="#">Web Design</a></li>
+                            <li><a href="#">Branding &amp; Identity</a></li>
+                            <li><a href="#">Free HTML5</a></li>
+                            <li><a href="#">HandCrafted Templates</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-12 col-xs-12">
+                        <h3>Our Services</h3>
+                        <ul class="float">
+                            <li><a href="#">Web Design</a></li>
+                            <li><a href="#">Branding &amp; Identity</a></li>
+                            <li><a href="#">Free HTML5</a></li>
+                            <li><a href="#">HandCrafted Templates</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-6 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-                    <h3>Our Services</h3>
-                    <ul class="float">
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Branding &amp; Identity</a></li>
-                        <li><a href="#">Free HTML5</a></li>
-                        <li><a href="#">HandCrafted Templates</a></li>
-                    </ul>
-                    <ul class="float">
-                        <li><a href="#">Free Bootstrap Template</a></li>
-                        <li><a href="#">Free HTML5 Template</a></li>
-                        <li><a href="#">Free HTML5 &amp; CSS3 Template</a></li>
-                        <li><a href="#">HandCrafted Templates</a></li>
-                    </ul>
-
-                </div>
-
-                <div class="col-md-2 col-md-push-1 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0">
-                    <h3>Follow Us</h3>
-                    <ul class="fh5co-social">
-                        <li><a href="#"><i class="icon-twitter"></i></a></li>
-                        <li><a href="#"><i class="icon-facebook"></i></a></li>
-                        <li><a href="#"><i class="icon-google-plus"></i></a></li>
-                        <li><a href="#"><i class="icon-instagram"></i></a></li>
-                    </ul>
-                </div>
-
-
                 <div class="col-md-12 fh5co-copyright text-center">
-                    <p>&copy; 2016 Free HTML5 template. All Rights Reserved. <span>Designed with <i class="icon-heart"></i> by <a href="#/" target="_blank">Freehtml5</a> More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></span></p>
+                    <p>版权所有：西安地图出版社 编号：陕网文[2012]0118-001号 陕ICP备 06004576号 增值电信业务许可证B-20120015</p>
                 </div>
-
             </div>
         </footer>
     </div>
-
+    <script type="text/javascript">
+        // 百度地图API功能
+        var map = new BMap.Map("allmap");    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+        map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+        map.setCurrentCity("西安");          // 设置地图显示的城市 此项是必须设置的
+        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        var local = new BMap.LocalSearch(map, {
+            renderOptions: { map: map }
+        });
+        local.search("西安地图出版社");
+    </script>
 
     <!-- jQuery -->
     <script src="/js/jquery.min.js"></script>
@@ -430,5 +500,3 @@
 
 </body>
 </html>
-
-

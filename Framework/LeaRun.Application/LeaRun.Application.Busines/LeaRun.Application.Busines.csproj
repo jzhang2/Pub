@@ -59,6 +59,7 @@
     <Compile Include="CustomerManage\OrderBLL.cs" />
     <Compile Include="CustomerManage\OrderEntryBLL.cs" />
     <Compile Include="ExtendManage\ContributionBLL.cs" />
+    <Compile Include="ExtendManage\SecurityCodeBLL.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerBLL.cs" />
     <Compile Include="ExtendManage\SuggestionBLL.cs" />
     <Compile Include="FlowManage\WFDelegate.cs" />
