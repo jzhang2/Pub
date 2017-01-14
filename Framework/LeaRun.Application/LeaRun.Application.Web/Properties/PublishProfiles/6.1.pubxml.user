@@ -555,58 +555,58 @@
       <publishTime>05/30/2016 11:27:49</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Busines.dll">
-      <publishTime>01/11/2017 17:54:49</publishTime>
+      <publishTime>01/14/2017 15:19:11</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Cache.dll">
-      <publishTime>01/11/2017 17:54:50</publishTime>
+      <publishTime>01/14/2017 15:19:12</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Code.dll">
-      <publishTime>01/11/2017 17:54:46</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Entity.dll">
-      <publishTime>01/11/2017 17:54:47</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.IService.dll">
-      <publishTime>01/11/2017 17:54:47</publishTime>
+      <publishTime>01/14/2017 15:19:11</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Mapping.dll">
-      <publishTime>01/11/2017 17:54:48</publishTime>
+      <publishTime>01/14/2017 15:19:11</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Service.dll">
-      <publishTime>01/11/2017 17:54:48</publishTime>
+      <publishTime>01/14/2017 15:19:11</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Web.dll">
-      <publishTime>01/11/2017 17:54:51</publishTime>
+      <publishTime>01/14/2017 15:19:12</publishTime>
     </File>
     <File Include="bin/LeaRun.Cache.dll">
       <publishTime>01/11/2017 17:54:42</publishTime>
     </File>
     <File Include="bin/LeaRun.Cache.Factory.dll">
-      <publishTime>01/11/2017 17:54:46</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Cache.Redis.dll">
       <publishTime>01/11/2017 17:54:44</publishTime>
     </File>
     <File Include="bin/LeaRun.CodeGenerator.dll">
-      <publishTime>01/11/2017 17:54:46</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Data.dll">
-      <publishTime>01/11/2017 17:54:45</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Data.EF.dll">
-      <publishTime>01/11/2017 17:54:46</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Data.Repository.dll">
-      <publishTime>01/11/2017 17:54:46</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Util.dll">
-      <publishTime>01/11/2017 17:54:44</publishTime>
+      <publishTime>01/14/2017 15:19:09</publishTime>
     </File>
     <File Include="bin/LeaRun.Util.Extension.dll">
       <publishTime>01/11/2017 17:54:42</publishTime>
     </File>
     <File Include="bin/LeaRun.Util.FlowWork.dll">
-      <publishTime>01/11/2017 17:54:46</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Util.Ioc.dll">
       <publishTime>01/11/2017 17:54:42</publishTime>
@@ -618,13 +618,13 @@
       <publishTime>01/11/2017 17:54:42</publishTime>
     </File>
     <File Include="bin/LeaRun.Util.SignalR.dll">
-      <publishTime>01/11/2017 17:54:45</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Util.WebControl.dll">
-      <publishTime>01/11/2017 17:54:45</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/LeaRun.Util.WeChat.dll">
-      <publishTime>01/11/2017 17:54:45</publishTime>
+      <publishTime>01/14/2017 15:19:10</publishTime>
     </File>
     <File Include="bin/log4net.dll">
       <publishTime>05/30/2016 11:21:04</publishTime>
@@ -3363,7 +3363,7 @@
       <publishTime>01/10/2017 13:41:30</publishTime>
     </File>
     <File Include="css/style.css">
-      <publishTime>01/11/2017 17:31:53</publishTime>
+      <publishTime>01/14/2017 15:17:06</publishTime>
     </File>
     <File Include="css/VarelaRound.css">
       <publishTime>01/10/2017 13:38:05</publishTime>
@@ -4332,7 +4332,13 @@
       <publishTime>05/30/2016 11:19:08</publishTime>
     </File>
     <File Include="Views/Default/Index.cshtml">
-      <publishTime>01/11/2017 17:24:33</publishTime>
+      <publishTime>01/11/2017 23:28:27</publishTime>
+    </File>
+    <File Include="Views/Default/SignIn.cshtml">
+      <publishTime>01/12/2017 15:35:00</publishTime>
+    </File>
+    <File Include="Views/Default/SignUp.cshtml">
+      <publishTime>01/14/2017 15:18:23</publishTime>
     </File>
     <File Include="Views/Error/ErrorBrowser.cshtml">
       <publishTime>12/27/2016 17:25:11</publishTime>
@@ -4425,7 +4431,7 @@
       <publishTime>08/24/2016 14:22:46</publishTime>
     </File>
     <File Include="XmlConfig/system.config">
-      <publishTime>12/27/2016 17:22:47</publishTime>
+      <publishTime>01/13/2017 22:52:22</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -71,7 +71,7 @@ namespace LeaRun.Util
                 MailMessage message = new MailMessage();
                 // 接收人邮箱地址
                 message.To.Add(new MailAddress(to));
-                message.From = new MailAddress("122343716@qq.com", MailName);
+                message.From = new MailAddress(MailUserName, MailName);
                 message.BodyEncoding = Encoding.GetEncoding(encoding);
                 message.Body = body;
                 //GB2312
@@ -79,16 +79,16 @@ namespace LeaRun.Util
                 message.Subject = subject;
                 message.IsBodyHtml = isBodyHtml;
 
-                SmtpClient smtpclient = new SmtpClient(MailServer, 465);
-                smtpclient.UseDefaultCredentials = false;
-                smtpclient.Credentials = new System.Net.NetworkCredential("122343716@qq.com", "c..h1170");
+                SmtpClient smtpclient = new SmtpClient("localhost");
+                //smtpclient.UseDefaultCredentials = true;
+                //smtpclient.Credentials = new System.Net.NetworkCredential("122343716@qq.com", "mloyrdcldmedbjic");
                 //SSL连接
-                smtpclient.EnableSsl = enableSsl;
+                //smtpclient.EnableSsl = false;
                 smtpclient.Send(message);
                 return true;
             }
             catch (Exception ex) {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.InnerException);
                 return false;
             }
         }
@@ -142,5 +142,43 @@ namespace LeaRun.Util
 
             })).Start();
         }
+
+        public static void SendEmailByThread(string to, string title, string body, int port = 25) {
+            new Thread(new ThreadStart(delegate () {
+                try {
+                    SmtpClient smtp = new SmtpClient();
+                    //邮箱的smtp地址
+                    smtp.Host = "localhost";
+                    //端口号
+                    smtp.Port = port;
+                    //构建发件人的身份凭据类
+                    //smtp.Credentials = new NetworkCredential(MailUserName, MailPassword);
+                    //构建消息类
+                    MailMessage objMailMessage = new MailMessage();
+                    //设置优先级
+                    objMailMessage.Priority = MailPriority.High;
+                    //消息发送人
+                    objMailMessage.From = new MailAddress(MailUserName, MailName, System.Text.Encoding.UTF8);
+                    //收件人
+                    objMailMessage.To.Add(to);
+                    //标题
+                    objMailMessage.Subject = title.Trim();
+                    //标题字符编码
+                    objMailMessage.SubjectEncoding = System.Text.Encoding.UTF8;
+                    //正文
+                    objMailMessage.Body = body.Trim();
+                    objMailMessage.IsBodyHtml = true;
+                    //内容字符编码
+                    objMailMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                    //发送
+                    smtp.Send(objMailMessage);
+                }
+                catch (Exception ex) {
+                    Console.WriteLine(ex.ToString());
+                }
+
+            })).Start();
+        }
+
     }
 }

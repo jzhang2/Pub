@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-8">
-                                        <button type="submit" class="btn btn-default signinbtn" style="margin-right: 20px;">登录</button><a>忘记密码</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a>注册</a>
+                                        <button type="submit" class="btn btn-default signinbtn" style="margin-right: 20px;" id="btnlogin">登录</button><a>忘记密码</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a>注册</a>
                                     </div>
                                 </div>
                             </form>
@@ -132,6 +132,28 @@
 
     <!-- MAIN JS -->
     <script src="/js/main.js"></script>
+<script>
+    $("#btnlogin").click(function () {
+        var $username = $("#username");
+        var $password = $("#password");
+        var $verifycode = $("#verifycode");
+        if ($username.val() == "") {
+            $username.focus();
+            formMessage('请输入账户或手机号或邮箱。');
+            return false;
+        } else if ($password.val() == "") {
+            $password.focus();
+            formMessage('请输入密码。');
+            return false;
+        } else if ($verifycode.val() == "") {
+            $verifycode.focus();
+            formMessage('请输入验证码。');
+            return false;
+        } else {
+            CheckLogin(0);
+        }
+    })
 
+</script>
 </body>
 </html>

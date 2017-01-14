@@ -148,16 +148,17 @@
     <script src="/js/jquery.flexslider-min.js"></script>
 
     <!-- MAIN JS -->
-    <script src="/js/main.js"></script>
+<script src="/js/main.js"></script>
+    <script src="~/Content/scripts/plugins/jquery.md5.js"></script>
     <script>
     //提示信息
         function formMessage(msg, type) {
-        $('.login_tips').parent('.form-group').remove();
+            $('.regmsg').remove();
         var _class = "login_tips";
         if (type == 1) {
             _class = "login_tips-succeed";
         }
-        $('#Regform').prepend('<div class="form-group" style="margin:0;"><div class="' + _class + ' col-sm-10 col-md-push-1"><i class="fa fa-question-circle"></i>' + msg + '</div></div>');
+        $('#Regform').prepend('<div class="form-group regmsg" style="margin:0;"><div class="' + _class + ' col-sm-10 col-md-push-1"><i class="fa fa-question-circle"></i>' + msg + '</div></div>');
     }
     /*=========注册账户（begin）================================================================*/
     $(function () {
@@ -202,7 +203,7 @@
                     dataType: "json",
                     success: function (data) {
                         if (data.type == 1) {
-                            alert('注册成功');
+                            //alert('注册成功');
                             window.location.href = '/';
                         } else {
                             formMessage(data.message);
@@ -226,7 +227,7 @@
                 async: false,
                 success: function (data) {
                     if (data.type == 1) {
-                        formMessage('验证码已发送到您的邮箱' + $("#txt_register_account").val() + '请注意查收。', 1);
+                        formMessage('验证码已发送到您的邮箱' + $("#email").val() + '请注意查收。', 1);
                     } else {
                         $this.removeAttr('disabled');
                         formMessage(data.message);

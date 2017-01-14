@@ -206,8 +206,8 @@ namespace LeaRun.Application.Entity.CustomerManage
         {
             this.CustomerId = Guid.NewGuid().ToString();
             this.CreateDate = DateTime.Now;
-            this.CreateUserId = OperatorProvider.Provider.Current().UserId;
-            this.CreateUserName = OperatorProvider.Provider.Current().UserName;
+            //this.CreateUserId = OperatorProvider.Provider.Current().UserId;
+            //this.CreateUserName = OperatorProvider.Provider.Current().UserName;
             this.ModifyDate = DateTime.Now;
         }
         /// <summary>
