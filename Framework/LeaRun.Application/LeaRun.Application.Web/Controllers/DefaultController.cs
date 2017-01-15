@@ -5,22 +5,39 @@ using System.Web;
 using System.Web.Mvc;
 using LeaRun.Application.Busines.AuthorizeManage;
 using LeaRun.Application.Busines.CustomerManage;
+using LeaRun.Application.Busines.PublicInfoManage;
 using LeaRun.Application.Code;
 using LeaRun.Application.Entity.CustomerManage;
 using LeaRun.Application.Entity.ExtendManage;
+using LeaRun.Application.Entity.PublicInfoManage;
 using LeaRun.Application.Service.ExtendManage;
 using LeaRun.Util;
+using LeaRun.Util.WebControl;
 
 namespace LeaRun.Application.Web.Controllers {
+    public class HomeViewModel
+    {
+        public List<NewsEntity> NewsList { get; set; }
+        public List<NewsEntity> MapNewsList { get; set; }
+        public List<NewsEntity> PBooksList { get; set; }
+    }
     [HandlerLogin(LoginMode.Ignore)]
     public class DefaultController : MvcControllerBase {
         private CustomerBLL customerbll = new CustomerBLL();
+        private NewsBLL newsBll = new NewsBLL();
         private SecurityCodeService securityCodeService = new SecurityCodeService();
         //
         // GET: /Default/
 
         public ActionResult Index() {
-            return View();
+            var viewModel = new HomeViewModel();
+            Pagination pagination = new Pagination();
+            pagination.page = 1;
+            pagination.rows = 4;
+            pagination.sidx = "CreateDate";
+            pagination.sord = "DESC";
+            viewModel.NewsList = newsBll.GetPageList(pagination, "{ TypeId:3,EnabledMark:1 }").ToList();
+            return View(viewModel);
         }
 
         public ActionResult SignUp() {

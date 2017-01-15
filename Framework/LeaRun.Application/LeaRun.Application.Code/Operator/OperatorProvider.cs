@@ -188,5 +188,29 @@ namespace LeaRun.Application.Code
                 return 0;//已登录
             }
         }
+
+        public virtual bool IsLogin() {
+            Operator user = new Operator();
+            try
+            {
+                if (LoginProvider == "Cookie") {
+                    user = DESEncrypt.Decrypt(WebHelper.GetCookie(LoginUserKey).ToString()).ToObject<Operator>();
+                    //#region 解决cookie时，设置数据权限较多时无法登陆的bug modify by chengzg
+                    //AuthorizeDataModel dataAuthorize = CacheFactory.Cache().GetCache<AuthorizeDataModel>(LoginUserKey);
+                    //user.DataAuthorize = dataAuthorize;
+                    //#endregion
+                }
+                else {
+                    user = DESEncrypt.Decrypt(WebHelper.GetSession(LoginUserKey).ToString()).ToObject<Operator>();
+                }
+                return user != null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
+        }
+
     }
 }

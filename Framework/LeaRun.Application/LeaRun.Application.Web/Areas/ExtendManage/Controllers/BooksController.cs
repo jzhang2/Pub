@@ -149,6 +149,26 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
             newsBLL.UpdateState(keyValue, 1);
             return Success("书籍上架成功。");
         }
+
+        [HttpPost]
+        [AjaxOnly]
+        [HandlerAuthorize(PermissionMode.Enforce)]
+        public ActionResult Disrecommed(string keyValue) {
+            newsBLL.UpdateRecommed(keyValue, 0);
+            return Success("书籍取消推荐成功。");
+        }
+        /// <summary>
+        /// 启用账户
+        /// </summary>
+        /// <param name="keyValue">主键值</param>
+        /// <returns></returns>
+        [HttpPost]
+        [AjaxOnly]
+        [HandlerAuthorize(PermissionMode.Enforce)]
+        public ActionResult Recommed(string keyValue) {
+            newsBLL.UpdateRecommed(keyValue, 1);
+            return Success("书籍推荐成功。");
+        }
         #endregion
     }
 

@@ -195,10 +195,7 @@
 
         }, { offset: '85%' });
     };
-
-
-
-
+    
     $(function () {
         fullHeight();
         sliderMain();
@@ -222,3 +219,25 @@
 
 
 }());
+
+ function indexOut() {
+    window.setTimeout(function () {
+        $.ajax({
+            url: "/Login/OutLogin",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                window.location.href = "/";
+            }
+        });
+    }, 500);
+ }
+ //提示信息
+ function formMessage(msg, type) {
+     $('.regmsg').remove();
+     var _class = "login_tips";
+     if (type == 1) {
+         _class = "login_tips-succeed";
+     }
+     $('#Regform').prepend('<div class="form-group regmsg" style="margin:0;"><div class="' + _class + ' col-sm-10 col-md-push-1"><i class="fa fa-question-circle"></i>' + msg + '</div></div>');
+ }

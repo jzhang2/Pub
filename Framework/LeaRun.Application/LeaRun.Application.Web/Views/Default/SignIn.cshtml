@@ -139,20 +139,60 @@
         var $verifycode = $("#verifycode");
         if ($username.val() == "") {
             $username.focus();
-            formMessage('请输入账户或手机号或邮箱。');
+            formMessage('请输入邮箱或手机号。');
             return false;
         } else if ($password.val() == "") {
             $password.focus();
             formMessage('请输入密码。');
             return false;
-        } else if ($verifycode.val() == "") {
-            $verifycode.focus();
-            formMessage('请输入验证码。');
-            return false;
-        } else {
+        }
+        //else if ($verifycode.val() == "") {
+        //    $verifycode.focus();
+        //    formMessage('请输入验证码。');
+        //    return false;
+        //}
+        else {
             CheckLogin(0);
         }
     })
+    function CheckLogin(autologin) {
+        $("#btnlogin").addClass('active').attr('disabled', 'disabled');
+        $("#btnlogin").find('span').hide();
+
+        var username = $.trim($("#username").val());
+        var password = $.trim($("#password").val());
+        var verifycode = $.trim($("#verifycode").val());
+        if (top.$.cookie('learn_password') == "" || top.$.cookie('learn_password') == null) {
+            password = $.md5(password);
+        }
+        $.ajax({
+            url: "/Default/CheckLogin",
+            data: { username: $.trim(username), password: $.trim(password), verifycode: verifycode, autologin: autologin },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.type == 1) {
+                    if (top.$.cookie('learn_autologin') == 1) {
+                        top.$.cookie('learn_username', $.trim(username), { path: "/", expires: 7 });
+                        top.$.cookie('learn_password', $.trim(password), { path: "/", expires: 7 });
+                    }
+                    top.$.cookie('learn_UItheme', $("#UItheme").val(), { path: "/", expires: 30 });
+                    window.location.href = '/';
+
+                } else {
+                    if (data.message.length >= 30) {
+                        dialogAlert(data.message, 0);
+                    } else {
+                        formMessage(data.message);
+                    }
+                    $("#btnlogin").removeClass('active').removeAttr('disabled');
+                    //$("#btnlogin").find('span').show();
+                    //$("#login_verifycode").trigger("click");
+                }
+            }
+        });
+    }
+
 
 </script>
 </body>

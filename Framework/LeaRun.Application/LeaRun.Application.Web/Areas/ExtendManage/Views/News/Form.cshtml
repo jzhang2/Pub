@@ -7,6 +7,7 @@
 <script src="~/Content/scripts/plugins/simditor/js/uploader.min.js"></script>
 <script src="~/Content/scripts/plugins/simditor/js/hotkeys.min.js"></script>
 <script src="~/Content/scripts/plugins/simditor/js/simditor.min.js"></script>
+<script src="~/Content/scripts/plugins/uploadify/ajaxfileupload.js"></script>
 <script>
     var TypeId = request('TypeId');
     var keyValue = request('keyValue');
@@ -40,11 +41,33 @@
                 success: function (data) {
                     $("#form1").SetWebControls(data);
                     editor.setValue(data.NewsContent);
+                    if (data.NewsImage) {
+                        document.getElementById('uploadPreview').src = data.NewsImage;
+                    }
                 }
             });
         } else {
             $("#Category").ComboBoxTreeSetValue(category);
         }
+        $('#uploadFile').change(function () {
+            var f = document.getElementById('uploadFile').files[0];
+            var src = window.URL.createObjectURL(f);
+            document.getElementById('uploadPreview').src = src;
+
+            //上传应用图标
+            $.ajaxFileUpload({
+                url: "/ExtendManage/Books/UploadFile",
+                secureuri: false,
+                fileElementId: 'uploadFile',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.type == 1) {
+                        $("#NewsImage").val(data.resultdata);
+                    }
+                    dialogMsg(data.message, 1);
+                }
+            });
+        });
     }
     //保存表单
     function AcceptClick() {
@@ -56,7 +79,7 @@
             Category: $("#Category").attr('data-value'),
             ReleaseTime: $("#ReleaseTime").val(),
             AuthorName: $("#AuthorName").val(),
-            CompileName: $("#CompileName").val(),
+            NewsImage: $("#NewsImage").val(),
             TagWord: $("#TagWord").val(),
             Keyword: $("#Keyword").val(),
             NewsContent: editor.getValue(),
@@ -91,13 +114,15 @@
             </td>
         </tr>
         <tr>
-            <td class="formTitle">作者<font face="宋体">*</font></td>
+            <td class="formTitle">编辑信息<font face="宋体">*</font></td>
             <td class="formValue">
-                <input id="AuthorName" type="text" class="form-control" placeholder="请输入作者" isvalid="yes" checkexpession="NotNull" />
+                <input id="AuthorName" type="text" class="form-control" placeholder="请输入编辑信息" isvalid="yes" checkexpession="NotNull"/>
             </td>
-            <td class="formTitle">编辑<font face="宋体">*</font></td>
+            <td class="formTitle">封面</td>
             <td class="formValue">
-                <input id="CompileName" type="text" class="form-control" placeholder="请输入编辑" isvalid="yes" checkexpession="NotNull" />
+                <div class="file">
+                    <img id="uploadPreview" style="width: 40px; height: 40px;" src="~/Content/images/logo-headere47d5.png" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="NewsImage" />
+                </div>
             </td>
         </tr>
         <tr>

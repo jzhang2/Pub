@@ -42,6 +42,10 @@ namespace LeaRun.Application.Service.PublicInfoManage
                 string TypeId = queryParam["TypeId"].ToString();
                 expression = expression.And(t => t.TypeId.ToString() == TypeId);
             }
+            if (!queryParam["EnabledMark"].IsEmpty()) {
+                string EnabledMark = queryParam["EnabledMark"].ToString();
+                expression = expression.And(t => t.EnabledMark.ToString() == EnabledMark);
+            }
             return this.BaseRepository().FindList(expression, pagination);
         }
         /// <summary>
@@ -94,6 +98,12 @@ namespace LeaRun.Application.Service.PublicInfoManage
             NewsEntity userEntity = new NewsEntity();
             userEntity.Modify(keyValue);
             userEntity.EnabledMark = State;
+            this.BaseRepository().Update(userEntity);
+        }
+        public void UpdateRecommed(string keyValue, int State) {
+            NewsEntity userEntity = new NewsEntity();
+            userEntity.Modify(keyValue);
+            userEntity.IsRecommend = State;
             this.BaseRepository().Update(userEntity);
         }
         #endregion

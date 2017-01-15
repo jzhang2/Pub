@@ -267,3 +267,25 @@ div.standtabactived{background-color: rgb(255,255,255);}
 .wizard-step-content .drag-tip p {color: #666; font-size: 12px; margin-top: 10px;}
  
 
+.file {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        text-decoration: none;
+        text-indent: 0;
+        cursor: pointer !important;
+    }
+
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer !important;
+        }
+
+        .file:hover {
+            text-decoration: none;
+            cursor: pointer !important;
+        }

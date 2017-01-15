@@ -34,5 +34,7 @@ namespace LeaRun.Application.Code
         /// </summary>
         /// <returns></returns>
         int IsOnLine();
+
+        bool IsLogin();
     }
 }

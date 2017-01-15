@@ -45,5 +45,6 @@ namespace LeaRun.Application.IService.PublicInfoManage
         #endregion
 
         void UpdateState(string keyValue, int state);
+        void UpdateRecommed(string keyValue, int state);
     }
 }

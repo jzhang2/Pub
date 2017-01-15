@@ -1,7 +1,8 @@
 ﻿@{
     Layout = null;
 }
-
+@using LeaRun.Application.Code
+@model LeaRun.Application.Web.Controllers.HomeViewModel
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -70,9 +71,29 @@
                                 <li><a href="properties.html">产品定制</a></li>
                                 <li><a href="properties.html">业务服务</a></li>
                                 <li><a href="properties.html">关于我们</a></li>
-                                <li style="margin-left: 20px;"><a class="navbtn" href="/SignIn">登录</a></li>
-                                <li><a class="regbtn btn btn-primary " href="/SignUp">注册</a></li>
+                                @if (OperatorProvider.Provider.IsLogin()) {
+                                    <li>
+                                        @if (OperatorProvider.Provider.Current().HeadIcon != null) {
+                                            <a href="javascript:;"><img src="@OperatorProvider.Provider.Current().HeadIcon" />@OperatorProvider.Provider.Current().RealName</a>
+                                        }
+                                        else {
+                                            <a href="javascript:;">@OperatorProvider.Provider.Current().RealName</a>
+                                        }
+                                        <ul class="fh5co-sub-menu">
+                                            <li><a href="#/preview/?item=build-free-html5-bootstrap-template">个人资料</a></li>
+                                            <li><a href="#/preview/?item=work-free-html5-template-bootstrap">我的定制</a></li>
+                                            <li><a href="#/preview/?item=light-free-html5-template-bootstrap">投诉建议</a></li>
+                                            <li><a href="#/preview/?item=light-free-html5-template-bootstrap">我的投稿</a></li>
+                                            <li><a onclick="indexOut();">退出登录</a></li>
+                                        </ul>
+                                    </li>
+                                }
+                                else {
+                                    <li style="margin-left: 20px;"><a class="navbtn" href="/SignIn">登录</a></li>
+                                    <li><a class="regbtn btn btn-primary " href="/SignUp">注册</a></li>
+                                }
                             </ul>
+
                         </nav>
                     </div>
                 </div>
@@ -213,7 +234,6 @@
                             </div>
                             <figure>
                                 <img src="/images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                                <a href="#" class="tag">For Sale</a>
                             </figure>
                             <div class="fh5co-property-innter">
                                 <p>第三届中国地图文化大会将于明日在江苏南京举办，我社应邀参加。本届大会是继2014年青岛、2015年南昌之后的又一届地图文化盛会。</p>
@@ -408,24 +428,24 @@
                 </div>
             </div>
         </div>
-    <div class="fh5co-cta">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="col-md-12 text-center animate-box fadeInUp animated-fast">
-                <h3>地图搜索</h3>
-                <p>
-                    权威的地图搜索功能。权威的地图搜索功能。权威的地图搜索功能。权威的地图搜索功能。
-                </p>
-            </div>
+        <div class="fh5co-cta">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="col-md-12 text-center animate-box fadeInUp animated-fast">
+                    <h3>地图搜索</h3>
+                    <p>
+                        权威的地图搜索功能。权威的地图搜索功能。权威的地图搜索功能。权威的地图搜索功能。
+                    </p>
+                </div>
 
+            </div>
         </div>
-    </div>
         <div style="background: #F6F6F6;">
             <div class="container">
                 <div class="row"><div id="allmap" class="animate-box" data-animate-effect="fadeIn"></div></div>
             </div>
         </div>
-        
+
         <footer id="fh5co-footer" role="contentinfo">
             <div class="container">
                 <div class="row">
@@ -460,7 +480,7 @@
                             <li><a href="#">Free HTML5</a></li>
                             <li><a href="#">HandCrafted Templates</a></li>
                         </ul>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="col-md-12 fh5co-copyright text-center">
                     <p>版权所有：西安地图出版社 编号：陕网文[2012]0118-001号 陕ICP备 06004576号 增值电信业务许可证B-20120015</p>
@@ -479,6 +499,7 @@
             renderOptions: { map: map }
         });
         local.search("西安地图出版社");
+
     </script>
 
     <!-- jQuery -->

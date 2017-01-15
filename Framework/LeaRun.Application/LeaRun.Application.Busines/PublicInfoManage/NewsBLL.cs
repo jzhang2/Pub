@@ -88,5 +88,13 @@ namespace LeaRun.Application.Busines.PublicInfoManage
                 throw;
             }
         }
+        public void UpdateRecommed(string keyValue, int State) {
+            try {
+                service.UpdateRecommed(keyValue, State);
+            }
+            catch (Exception) {
+                throw;
+            }
+        }
     }
 }

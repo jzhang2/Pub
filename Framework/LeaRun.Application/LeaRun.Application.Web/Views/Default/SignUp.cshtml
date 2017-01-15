@@ -151,15 +151,7 @@
 <script src="/js/main.js"></script>
     <script src="~/Content/scripts/plugins/jquery.md5.js"></script>
     <script>
-    //提示信息
-        function formMessage(msg, type) {
-            $('.regmsg').remove();
-        var _class = "login_tips";
-        if (type == 1) {
-            _class = "login_tips-succeed";
-        }
-        $('#Regform').prepend('<div class="form-group regmsg" style="margin:0;"><div class="' + _class + ' col-sm-10 col-md-push-1"><i class="fa fa-question-circle"></i>' + msg + '</div></div>');
-    }
+    
     /*=========注册账户（begin）================================================================*/
     $(function () {
         //手机号离开事件

@@ -78,5 +78,6 @@ namespace LeaRun.Application.Code
         public AuthorizeDataModel DataAuthorize { get; set; }
 
         public string RealName { get; set; }
+        public string HeadIcon { get; set; }
     }
 }
