@@ -112,6 +112,12 @@ namespace LeaRun.Application.Service.CustomerManage
             }
             return this.BaseRepository().IQueryable(expression).Count() == 0 ? true : false;
         }
+        public CustomerEntity CheckLogin(string username) {
+            var expression = LinqExtensions.True<CustomerEntity>();
+            expression = expression.And(t => t.Email == username);
+            expression = expression.Or(t => t.Mobile == username);
+            return this.BaseRepository().FindEntity(expression);
+        }
         #endregion
 
         #region 提交数据

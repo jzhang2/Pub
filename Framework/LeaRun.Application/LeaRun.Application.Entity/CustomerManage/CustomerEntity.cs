@@ -187,7 +187,7 @@ namespace LeaRun.Application.Entity.CustomerManage
         /// </summary>
         /// <returns></returns>
         public string ModifyUserName { get; set; }
-
+        public string HeadIcon { get; set; }
         /// <summary>
         /// ÐÔ±ð
         /// </summary>		

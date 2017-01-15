@@ -4,6 +4,8 @@ using LeaRun.Application.Service.CustomerManage;
 using LeaRun.Util.WebControl;
 using System.Collections.Generic;
 using System;
+using LeaRun.Application.Entity.BaseManage;
+using LeaRun.Util;
 
 namespace LeaRun.Application.Busines.CustomerManage
 {
@@ -118,5 +120,37 @@ namespace LeaRun.Application.Busines.CustomerManage
             }
         }
         #endregion
+
+        public CustomerEntity CheckLogin(string username, string password) {
+            CustomerEntity userEntity = service.CheckLogin(username);
+            if (userEntity != null) {
+                if (userEntity.EnabledMark == 1) {
+                    string dbPassword = Md5Helper.MD5(DESEncrypt.Encrypt(password.ToLower(), userEntity.Secretkey).ToLower(), 32).ToLower();
+                    if (dbPassword == userEntity.Password) {
+                        DateTime LastVisit = DateTime.Now;
+                        //int LogOnCount = (userEntity.LogOnCount).ToInt() + 1;
+                        //if (userEntity.LastVisit != null) {
+                        //    userEntity.PreviousVisit = userEntity.LastVisit.ToDate();
+                        //}
+                        //userEntity.LastVisit = LastVisit;
+                        //userEntity.LogOnCount = LogOnCount;
+                        //userEntity.UserOnLine = 1;
+                        //service.UpdateEntity(userEntity);
+                        return userEntity;
+                    }
+                    else {
+                        throw new Exception("密码和账户名不匹配");
+                        //throw new Exception("密码和账户名不匹配" + "|" + password + "|" + dbPassword);
+                    }
+                }
+                else {
+                    throw new Exception("账户名被系统锁定,请联系管理员");
+                }
+            }
+            else {
+                throw new Exception("账户不存在，请重新输入");
+            }
+        }
+
     }
 }

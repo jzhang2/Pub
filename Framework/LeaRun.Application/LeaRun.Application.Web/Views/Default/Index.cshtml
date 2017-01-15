@@ -2,6 +2,9 @@
     Layout = null;
 }
 @using LeaRun.Application.Code
+@using LeaRun.Application.Entity.ExtendManage
+@using LeaRun.Application.Entity.PublicInfoManage
+@using LeaRun.Util
 @model LeaRun.Application.Web.Controllers.HomeViewModel
 
 <!DOCTYPE html>
@@ -72,19 +75,18 @@
                                 <li><a href="properties.html">业务服务</a></li>
                                 <li><a href="properties.html">关于我们</a></li>
                                 @if (OperatorProvider.Provider.IsLogin()) {
+                                    string name = !string.IsNullOrEmpty(OperatorProvider.Provider.Current().RealName) ? OperatorProvider.Provider.Current().RealName : OperatorProvider.Provider.Current().Account;
                                     <li>
-                                        @if (OperatorProvider.Provider.Current().HeadIcon != null) {
-                                            <a href="javascript:;"><img src="@OperatorProvider.Provider.Current().HeadIcon" />@OperatorProvider.Provider.Current().RealName</a>
-                                        }
-                                        else {
-                                            <a href="javascript:;">@OperatorProvider.Provider.Current().RealName</a>
-                                        }
-                                        <ul class="fh5co-sub-menu">
+                                        <a href="javascript:;">
+                                            <img style="padding-bottom: 6px;" src="@(OperatorProvider.Provider.Current().HeadIcon ?? "/images/头像.png")" />
+                                            @(name.Length > 16 ? (name.Substring(0, 13) + "...") : name)
+                                        </a>
+                                        <ul class="fh5co-sub-menu" style="width: 100px;">
                                             <li><a href="#/preview/?item=build-free-html5-bootstrap-template">个人资料</a></li>
                                             <li><a href="#/preview/?item=work-free-html5-template-bootstrap">我的定制</a></li>
                                             <li><a href="#/preview/?item=light-free-html5-template-bootstrap">投诉建议</a></li>
                                             <li><a href="#/preview/?item=light-free-html5-template-bootstrap">我的投稿</a></li>
-                                            <li><a onclick="indexOut();">退出登录</a></li>
+                                            <li><a href="javascript:;" onclick="indexOut();">退出登录</a></li>
                                         </ul>
                                     </li>
                                 }
@@ -99,79 +101,25 @@
                 </div>
             </div>
         </header>
-
-
-
         <aside id="fh5co-hero" clsas="js-fullheight">
             <div class="flexslider">
                 <ul class="slides">
-                    <li style="background-image: url('/images/banner.png');">
-                        <div class="container">
-                            <div class="col-md-12 text-center  fh5co-property-brief slider-text">
-                                <div class="fh5co-property-brief-inner">
-                                    <div class="fh5co-box">
-
-                                        <h2>区域概况 国家名片 图文并茂</h2>
-                                        <h2>地理概况 人文风俗 大美疆域</h2>
-                                        <h1>中国世界地图册</h1>
-                                        <h4>地图上那些事 随心所想 随意而行</h4>
-                                        <h4>一本通系列 新聆听 心感悟</h4>
-
-                                        <p>
-                                            <a href="#" class="btn btn-primary slider-btn">点击查看</a>
-                                        </p>
-
-
+                    @foreach (BannerNewsEntity entity in Model.BannerNewsList) {
+                        <li style="background-image: url('@entity.ImgPath');">
+                            <a href="@entity.URL">
+                                <div class="container">
+                                    <div class="col-md-12 text-center  fh5co-property-brief slider-text">
+                                        <div class="fh5co-property-brief-inner">
+                                            <div class="fh5co-box">
+                                                <h2>@entity.Title</h2>
+                                                <h4>@entity.Description</h4>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li style="background-image: url('/images/banner.png'); ">
-                        <div class="container">
-                            <div class="col-md-12 text-center  fh5co-property-brief slider-text">
-                                <div class="fh5co-property-brief-inner">
-                                    <div class="fh5co-box">
-
-                                        <h2>区域概况 国家名片 图文并茂</h2>
-                                        <h2>地理概况 人文风俗 大美疆域</h2>
-                                        <h1>中国世界地图册</h1>
-                                        <h4>地图上那些事 随心所想 随意而行</h4>
-                                        <h4>一本通系列 新聆听 心感悟</h4>
-
-                                        <p>
-                                            <a href="#" class="btn btn-primary slider-btn">点击查看</a>
-                                        </p>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li style="background-image: url('/images/banner.png');">
-                        <div class="container">
-                            <div class="col-md-12 text-center  fh5co-property-brief slider-text">
-                                <div class="fh5co-property-brief-inner">
-                                    <div class="fh5co-box">
-
-                                        <h2>区域概况 国家名片 图文并茂</h2>
-                                        <h2>地理概况 人文风俗 大美疆域</h2>
-                                        <h1>中国世界地图册</h1>
-                                        <h4>地图上那些事 随心所想 随意而行</h4>
-                                        <h4>一本通系列 新聆听 心感悟</h4>
-
-                                        <p>
-                                            <a href="#" class="btn btn-primary slider-btn">点击查看</a>
-                                        </p>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
         </aside>
@@ -226,85 +174,27 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
-                        <div class="fh5co-property">
-                            <div class="fh5co-property-title">
-                                <h5><a href="#">我社应邀参加第三届中国地图文化大会</a></h5>
-                                <p>2016-12-14 8:58</p>
+                    @foreach (NewsEntity entity in Model.NewsList) {
+                        <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
+                            <div class="fh5co-property">
+                                <div class="fh5co-property-title">
+                                    <h5><a href="#">@entity.FullHead</a></h5>
+                                    <p>@Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd HH:mm")</p>
+                                </div>
+                                <figure>
+                                    <img src="@entity.NewsImage" alt="" class="img-responsive">
+                                </figure>
+                                <div class="fh5co-property-innter">
+                                    <p>@(WebHelper.GetText(entity.NewsContent).Length > 60 ? WebHelper.GetText(entity.NewsContent).Substring(0, 60) : WebHelper.GetText(entity.NewsContent))</p>
+                                </div>
+                                <p class="fh5co-property-specification">
+                                    <span>@entity.AuthorName</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>@entity.PV<i class="icon-comments"></i>10</span>
+                                </p>
                             </div>
-                            <figure>
-                                <img src="/images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-property-innter">
-                                <p>第三届中国地图文化大会将于明日在江苏南京举办，我社应邀参加。本届大会是继2014年青岛、2015年南昌之后的又一届地图文化盛会。</p>
-                            </div>
-                            <p class="fh5co-property-specification">
-                                <span>作者：璋交易</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>2<i class="icon-comments"></i>10</span>
-                            </p>
+
+
                         </div>
-
-
-                    </div>
-                    <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
-                        <div class="fh5co-property">
-                            <div class="fh5co-property-title">
-                                <h5><a href="#">我社应邀参加第三届中国地图文化大会</a></h5>
-                                <p>2016-12-14 8:58</p>
-                            </div>
-                            <figure>
-                                <img src="/images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                                <a href="#" class="tag">For Sale</a>
-                            </figure>
-                            <div class="fh5co-property-innter">
-                                <p>第三届中国地图文化大会将于明日在江苏南京举办，我社应邀参加。本届大会是继2014年青岛、2015年南昌之后的又一届地图文化盛会。</p>
-                            </div>
-                            <p class="fh5co-property-specification">
-                                <span>作者：璋交易</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>2<i class="icon-comments"></i>10</span>
-                            </p>
-                        </div>
-
-
-                    </div>
-                    <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
-                        <div class="fh5co-property">
-                            <div class="fh5co-property-title">
-                                <h5><a href="#">我社应邀参加第三届中国地图文化大会</a></h5>
-                                <p>2016-12-14 8:58</p>
-                            </div>
-                            <figure>
-                                <img src="/images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                                <a href="#" class="tag">For Sale</a>
-                            </figure>
-                            <div class="fh5co-property-innter">
-                                <p>第三届中国地图文化大会将于明日在江苏南京举办，我社应邀参加。本届大会是继2014年青岛、2015年南昌之后的又一届地图文化盛会。</p>
-                            </div>
-                            <p class="fh5co-property-specification">
-                                <span>作者：璋交易</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>2<i class="icon-comments"></i>10</span>
-                            </p>
-                        </div>
-
-
-                    </div>
-                    <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
-                        <div class="fh5co-property">
-                            <div class="fh5co-property-title">
-                                <h5><a href="#">我社应邀参加第三届中国地图文化大会</a></h5>
-                                <p>2016-12-14 8:58</p>
-                            </div>
-                            <figure>
-                                <img src="/images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-property-innter">
-                                <p>第三届中国地图文化大会将于明日在江苏南京举办，我社应邀参加。本届大会是继2014年青岛、2015年南昌之后的又一届地图文化盛会。</p>
-                            </div>
-                            <p class="fh5co-property-specification">
-                                <span>作者：璋交易</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>2<i class="icon-comments"></i>10</span>
-                            </p>
-                        </div>
-
-
-                    </div>
-
+                    }
                 </div>
             </div>
         </div>
@@ -315,45 +205,21 @@
                         <h2>地图文化展示</h2>
                         <p>为配合“美丽陕西”建设，策划出版了“地图上的秦岭系列丛书”之《秦岭全景图记》《秦岭森林公园》《秦岭地质公园》等分册 </p>
                     </div>
-                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
+                    @foreach (NewsEntity entity in Model.MapNewsList) {
+                        <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
 
-                        <div class="fh5co-agent">
-                            <figure>
-                                <img class="img-responsive" src="/images/slide_2.jpg" alt="Free Website Template by FreeHTML5.co">
-                            </figure>
-                            <p>Veniam laudantium rem odio quod, beatae voluptates natus animi fugiat provident voluptatibus. Debitis assumenda, possimus ducimus omnis.</p>
-                            <p>
-                                <a href="#" class="btn btn-primary btn-outline">点击详情</a>
-                            </p>
+                            <div class="fh5co-agent">
+                                <figure>
+                                    <img class="img-responsive" src="@entity.NewsImage" alt="">
+                                </figure>
+                                <p>@(WebHelper.GetText(entity.NewsContent).Length > 60 ? WebHelper.GetText(entity.NewsContent).Substring(0, 60) : WebHelper.GetText(entity.NewsContent))</p>
+                                <p>
+                                    <a href="#" class="btn btn-primary btn-outline">点击详情</a>
+                                </p>
+                            </div>
+
                         </div>
-
-                    </div>
-                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
-
-                        <div class="fh5co-agent">
-                            <figure>
-                                <img class="img-responsive" src="/images/slide_2.jpg" alt="Free Website Template by FreeHTML5.co">
-                            </figure>
-                            <p>Veniam laudantium rem odio quod, beatae voluptates natus animi fugiat provident voluptatibus. Debitis assumenda, possimus ducimus omnis.</p>
-                            <p>
-                                <a href="#" class="btn btn-primary btn-outline">Contact Me</a>
-                            </p>
-                        </div>
-
-                    </div>
-                    <div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">
-
-                        <div class="fh5co-agent">
-                            <figure>
-                                <img class="img-responsive" src="/images/slide_2.jpg" alt="Free Website Template by FreeHTML5.co">
-                            </figure>
-                            <p>Veniam laudantium rem odio quod, beatae voluptates natus animi fugiat provident voluptatibus. Debitis assumenda, possimus ducimus omnis.</p>
-                            <p>
-                                <a href="#" class="btn btn-primary btn-outline">Contact Me</a>
-                            </p>
-                        </div>
-
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -365,66 +231,28 @@
                         <h2>精品图书（推荐）</h2>
                         <p>图书是人类用来记录一切成就的主要工具，也是人类交融感情，取得知识，传承经验的重要媒介。对人类文明的开展，贡献至钜。</p>
                     </div>
-                    <div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">
-                        <div class="fh5co-property books">
-                            <figure>
-                                <img src="images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                                <a href="javascript:;" class="tag">推荐</a>
-                            </figure>
-                            <div class="fh5co-property-innter books">
-                                <h3>
-                                    <a href="#">Villa In Hialeah, Dade County</a>
-                                </h3>
-                                <div class="price-status">
-                                    <span class="price">$540,000 </span>
+                    @foreach (NewsEntity entity in Model.PBooksList) {
+                        <div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">
+                            <div class="fh5co-property books">
+                                <figure>
+                                    <img src="@entity.NewsImage" alt="" class="img-responsive">
+                                    <a href="javascript:;" class="tag">推荐</a>
+                                </figure>
+                                <div class="fh5co-property-innter books">
+                                    <h3>
+                                        <a href="#">@entity.FullHead</a>
+                                    </h3>
+                                    <div class="price-status">
+                                        <span class="price">￥@entity.Price </span>
+                                    </div>
+                                    <p>@(WebHelper.GetText(entity.NewsContent).Length > 60 ? WebHelper.GetText(entity.NewsContent).Substring(0, 60) : WebHelper.GetText(entity.NewsContent))</p>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
+                                <p class="fh5co-property-specification books">
+                                    <span><strong>阅读数</strong>@entity.PV</span>
+                                </p>
                             </div>
-                            <p class="fh5co-property-specification books">
-                                <span><strong>阅读数</strong>10000</span>
-                            </p>
                         </div>
-                    </div>
-                    <div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">
-                        <div class="fh5co-property books">
-                            <figure>
-                                <img src="images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                                <a href="javascript:;" class="tag">推荐</a>
-                            </figure>
-                            <div class="fh5co-property-innter books">
-                                <h3>
-                                    <a href="#">Villa In Hialeah, Dade County</a>
-                                </h3>
-                                <div class="price-status">
-                                    <span class="price">$540,000 </span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
-                            </div>
-                            <p class="fh5co-property-specification books">
-                                <span><strong>阅读数</strong>10000</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">
-                        <div class="fh5co-property books">
-                            <figure>
-                                <img src="images/slide_3.jpg" alt="Free Website Templates FreeHTML5.co" class="img-responsive">
-                                <a href="javascript:;" class="tag">推荐</a>
-                            </figure>
-                            <div class="fh5co-property-innter books">
-                                <h3>
-                                    <a href="#">Villa In Hialeah, Dade County</a>
-                                </h3>
-                                <div class="price-status">
-                                    <span class="price">$540,000 </span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque dicta magni amet atque doloremque velit unde adipisci omnis hic quaerat.</p>
-                            </div>
-                            <p class="fh5co-property-specification books">
-                                <span><strong>阅读数</strong>10000</span>
-                            </p>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

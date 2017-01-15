@@ -68,6 +68,7 @@
     <Compile Include="CustomerManage\IOrderEntryService.cs" />
     <Compile Include="CustomerManage\IOrderService.cs" />
     <Compile Include="CustomerManage\IReceivableReportService.cs" />
+    <Compile Include="ExtendManage\BannerNewsIService.cs" />
     <Compile Include="ExtendManage\ContributionIService.cs" />
     <Compile Include="ExtendManage\SecurityCodeIService.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerIService.cs" />

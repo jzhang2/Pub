@@ -29,6 +29,8 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         /// 所属类别
         /// </summary>		
         public string Category { get; set; }
+
+        public decimal? Price { get; set; }
         /// <summary>
         /// 完整标题
         /// </summary>		

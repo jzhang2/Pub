@@ -60,6 +60,7 @@
     <Compile Include="CustomerManage\OrderEntity.cs" />
     <Compile Include="CustomerManage\OrderEntryEntity.cs" />
     <Compile Include="CustomerManage\ViewModel\ReceivableReportModel.cs" />
+    <Compile Include="ExtendManage\BannerNewsEntity.cs" />
     <Compile Include="ExtendManage\ContributionEntity.cs" />
     <Compile Include="ExtendManage\SecurityCodeEntity.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerEntity.cs" />

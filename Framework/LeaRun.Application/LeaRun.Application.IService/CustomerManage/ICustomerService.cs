@@ -69,5 +69,6 @@ namespace LeaRun.Application.IService.CustomerManage
 
         bool ExistEmail(string fullName, string keyValue);
         bool ExistMobile(string fullName, string keyValue);
+        CustomerEntity CheckLogin(string username);
     }
 }

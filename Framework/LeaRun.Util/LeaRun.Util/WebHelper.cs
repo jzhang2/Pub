@@ -388,6 +388,21 @@ namespace LeaRun.Util
         }
         #endregion
 
+        /// <summary>
+        /// 获取html中纯文本
+        /// </summary>
+        /// <param name="html">html</param>
+        /// <returns>纯文本</returns>
+        public static string GetHtmlText(string html) {
+            html = System.Text.RegularExpressions.Regex.Replace(html, @"<\/*[^<>]*>", "", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            html = html.Replace("\r\n", "").Replace("\r", "").Replace("&nbsp;", "").Replace(" ", "");
+            return html;
+        }
+
+        public static string GetText(string content) {
+            return WebHelper.GetHtmlText(System.Web.HttpContext.Current.Server.HtmlDecode(WebHelper.NoHtml(content)));
+        }
+
         #region 格式化文本（防止SQL注入）
         /// <summary>
         /// 格式化文本（防止SQL注入）

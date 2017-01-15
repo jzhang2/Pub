@@ -174,6 +174,7 @@
     <Compile Include="Areas\CustomerManage\Controllers\ReceivableReportController.cs" />
     <Compile Include="Areas\CustomerManage\Controllers\TrailRecordController.cs" />
     <Compile Include="Areas\CustomerManage\CustomerManageAreaRegistration.cs" />
+    <Compile Include="Areas\ExtendManage\Controllers\BannerNewsController.cs" />
     <Compile Include="Areas\ExtendManage\Controllers\BooksController.cs" />
     <Compile Include="Areas\ExtendManage\Controllers\ContributionController.cs" />
     <Compile Include="Areas\ExtendManage\Controllers\CustomerController.cs" />
@@ -1565,6 +1566,8 @@
     <Content Include="fonts\icomoon\icomoon.ttf" />
     <Content Include="fonts\icomoon\icomoon.woff" />
     <Content Include="fonts\VarelaRound.woff" />
+    <Content Include="Areas\ExtendManage\Views\BannerNews\Form.cshtml" />
+    <Content Include="Areas\ExtendManage\Views\BannerNews\Index.cshtml" />
     <None Include="Properties\PublishProfiles\6.1.pubxml" />
     <Content Include="Areas\FlowManage\Views\FlowLaunch\Index.cshtml" />
     <Content Include="Areas\FlowManage\Views\FormDesign\FormPreview.cshtml" />

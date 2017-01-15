@@ -46,6 +46,10 @@ namespace LeaRun.Application.Service.PublicInfoManage
                 string EnabledMark = queryParam["EnabledMark"].ToString();
                 expression = expression.And(t => t.EnabledMark.ToString() == EnabledMark);
             }
+            if (!queryParam["IsRecommend"].IsEmpty()) {
+                string IsRecommend = queryParam["IsRecommend"].ToString();
+                expression = expression.And(t => t.IsRecommend.ToString() == IsRecommend);
+            }
             return this.BaseRepository().FindList(expression, pagination);
         }
         /// <summary>
