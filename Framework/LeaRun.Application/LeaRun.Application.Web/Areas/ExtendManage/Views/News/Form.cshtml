@@ -2,12 +2,10 @@
     ViewBag.Title = "文章管理";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
-<link href="~/Content/scripts/plugins/simditor/css/simditor.css" rel="stylesheet" />
-<script src="~/Content/scripts/plugins/simditor/js/module.min.js"></script>
-<script src="~/Content/scripts/plugins/simditor/js/uploader.min.js"></script>
-<script src="~/Content/scripts/plugins/simditor/js/hotkeys.min.js"></script>
-<script src="~/Content/scripts/plugins/simditor/js/simditor.min.js"></script>
 <script src="~/Content/scripts/plugins/uploadify/ajaxfileupload.js"></script>
+<link href="~/Content/scripts/plugins/summernote/summernote.css" rel="stylesheet" />
+<script src="~/Content/scripts/plugins/summernote/summernote.js"></script>
+<script src="~/Content/scripts/plugins/summernote/lang/summernote-zh-CN.js"></script>
 <script>
     var TypeId = request('TypeId');
     var keyValue = request('keyValue');
@@ -15,10 +13,10 @@
     var EnCode = request('EnCode');
     var editor = null;
     $(function () {
-        editor = new Simditor({
-            textarea: $('#NewsContent'),
+        $('#summernote').summernote({
+            height: 270,
             placeholder: '这里输入文章内容...',
-            toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent']
+            lang: 'zh-CN'
         });
         initControl();
     })
@@ -40,7 +38,7 @@
                 param: { keyValue: keyValue },
                 success: function (data) {
                     $("#form1").SetWebControls(data);
-                    editor.setValue(data.NewsContent);
+                    $('#summernote').summernote('code', data.NewsContent);
                     if (data.NewsImage) {
                         document.getElementById('uploadPreview').src = data.NewsImage;
                     }
@@ -82,7 +80,7 @@
             NewsImage: $("#NewsImage").val(),
             TagWord: $("#TagWord").val(),
             Keyword: $("#Keyword").val(),
-            NewsContent: editor.getValue(),
+            NewsContent: $('#summernote').summernote('code'),
             TypeId: TypeId
         }
         $.SaveForm({
@@ -135,10 +133,11 @@
                 <input id="Keyword" type="text" class="form-control" placeholder="多个关键字之间用“,”分隔，最多不超过10个" />
             </td>
         </tr>
+        
         <tr>
             <th class="formTitle" valign="top" style="padding-top: 4px;">内容</th>
             <td class="formValue" colspan="3">
-                <textarea id="NewsContent" class="form-control" rows="5"></textarea>
+                <div id="summernote"></div>
             </td>
         </tr>
     </table>

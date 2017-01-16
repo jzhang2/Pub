@@ -9,12 +9,14 @@ using LeaRun.Application.Busines.CustomerManage;
 using LeaRun.Application.Busines.ExtendManage;
 using LeaRun.Application.Busines.PublicInfoManage;
 using LeaRun.Application.Busines.SystemManage;
+using LeaRun.Application.Cache;
 using LeaRun.Application.Code;
 using LeaRun.Application.Entity.BaseManage;
 using LeaRun.Application.Entity.CustomerManage;
 using LeaRun.Application.Entity.ExtendManage;
 using LeaRun.Application.Entity.PublicInfoManage;
 using LeaRun.Application.Entity.SystemManage;
+using LeaRun.Application.Entity.SystemManage.ViewModel;
 using LeaRun.Application.Service.ExtendManage;
 using LeaRun.Util;
 using LeaRun.Util.Attributes;
@@ -27,6 +29,7 @@ namespace LeaRun.Application.Web.Controllers {
         public List<NewsEntity> MapNewsList { get; set; }
         public List<NewsEntity> PBooksList { get; set; }
         public List<BannerNewsEntity> BannerNewsList { get; set; }
+        public List<DataItemModel> DataItemList { get; set; }
 
     }
     [HandlerLogin(LoginMode.Ignore)]
@@ -35,8 +38,8 @@ namespace LeaRun.Application.Web.Controllers {
         private NewsBLL newsBll = new NewsBLL();
         private BannerNewsBLL bannerNewsBll = new BannerNewsBLL();
         private SecurityCodeService securityCodeService = new SecurityCodeService();
-        //
-        // GET: /Default/
+        private DataItemCache dataItemCache = new DataItemCache();
+
 
         public ActionResult Index() {
             var viewModel = new HomeViewModel();
@@ -63,7 +66,37 @@ namespace LeaRun.Application.Web.Controllers {
         public ActionResult SignIn() {
             return View();
         }
-
+        public ActionResult News() {
+            var viewModel = new HomeViewModel();
+            viewModel.DataItemList = dataItemCache.GetDataItemList("MapNews").ToList();
+            return View(viewModel);
+        }
+        public ActionResult MapCulture() {
+            var viewModel = new HomeViewModel();
+            viewModel.DataItemList = dataItemCache.GetDataItemList("MapKn").ToList();
+            return View(viewModel);
+        }
+        public ActionResult Books() {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult GetNewsJson(Pagination pagination, string queryJson) {
+            var watch = CommonHelper.TimerStart();
+            var data = newsBll.GetPageList(pagination, queryJson).ToList();
+            foreach (NewsEntity entity in data) {
+                entity.NewsContent = WebHelper.GetText(entity.NewsContent).Length > 60
+                    ? WebHelper.GetText(entity.NewsContent).Substring(0, 60)
+                    : WebHelper.GetText(entity.NewsContent);
+            }
+            var JsonData = new {
+                rows = data,
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records,
+                costtime = CommonHelper.TimerEnd(watch)
+            };
+            return Content(JsonData.ToJson());
+        }
         /// <summary>
         /// 注册账户
         /// </summary>

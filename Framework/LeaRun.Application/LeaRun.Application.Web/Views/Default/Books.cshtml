@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "网上书店";
+    ViewBag.navIndex = 3;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive" />
+</div>
+<div class="content-navbar">
+    <div class="container">
+        <div class="row">
+            <div class="content-quicknva">
+                <ul>
+                    <li>
+                        <a href="javascript:;" data-id="5">电子书库</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-id="6">实体书库</a>
+                    </li>
+                    <li style="float: right" class="col-xs-search">
+                        <form id="custom-search-form" class="form-search pull-right">
+                            <div class="input-append">
+                                <input type="text" class="search-query" placeholder="搜索" id="keyword">
+                                <button type="button" class="btn" id="news-search"><i class="icon-search"></i></button>
+                            </div>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="best-deal" class="fh5co-agents">
+    <div class="container" style="padding: 35px 25px;">
+        <div class="row">
+            <div id="news-content"></div>
+            <div class="col-md-12" style="text-align: center; display: none;" id="page-more">
+                <a href="javascript:;" class="btn btn-primary">加载更多</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var page = 1;
+    var TypeId = -1;
+    var category = '';
+    function initdata() {
+        var queryJson = {
+            Category: '',
+            FullHead: $("#keyword").val(),
+            TypeId: TypeId
+        }
+        $.ajax({
+            url: "/Default/GetNewsJson",
+            type: "get",
+            dataType: "json",
+            data: { sord: "DESC", sidx: "CreateDate", page: page, rows: 9, queryJson: JSON.stringify(queryJson) },
+            success: function (data) {
+                if (data.rows.length > 0) {
+                    var html = "";
+                    $.each(data.rows, function (i) {
+                        html += '<div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">';
+                        html += '<div class="fh5co-property books">';
+                        html += '<figure>';
+                        html += '<img src="' + data.rows[i].NewsImage + '" alt="" class="img-responsive">';
+                        if (data.rows[i].IsRecommend == "1") {
+                            html += '<a href="javascript:;" class="tag">推荐</a>';
+                        }
+                        html += '</figure>';
+                        html += '<div class="fh5co-property-innter books">';
+                        html += '<h3>';
+                        html += '<a href="#">' + data.rows[i].FullHead + '</a>';
+                        html += '</h3>';
+                        html += '<div class="price-status">';
+                        html += '<span class="price">￥' + data.rows[i].Price + ' </span>';
+                        html += '</div>';
+                        html += '<p>' + data.rows[i].NewsContent + '</p>';
+                        html += '</div>';
+                        html += '<p class="fh5co-property-specification books">';
+                        html += '<span><strong>阅读数</strong>' + data.rows[i].PV + '</span>';
+                        html += '</p>';
+                        html += '</div>';
+                        html += '</div>';
+
+                    });
+                    $("#news-content").append(html);
+                    contentWayPoint();
+                    if (data.page < data.total) {
+                        $("#page-more").show();
+                    } else {
+                        $("#page-more").hide();
+                    }
+                }
+            }
+        });
+    }
+    $(function () {
+        $(".content-quicknva ul li a").click(function () {
+            $(".content-quicknva ul li a").removeClass("active");
+            $(this).addClass("active");
+            TypeId = $(".content-quicknva ul li a.active").attr("data-id");
+            $("#news-content").empty();
+            initdata();
+        });
+        $("#page-more").click(function () {
+            page = page + 1;
+            initdata();
+        });
+        $("#news-search").click(function () {
+            $("#news-content").empty();
+            initdata();
+        });
+        initdata();
+    });
+</script>

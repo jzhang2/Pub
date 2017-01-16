@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "地图文化";
+    ViewBag.navIndex = 2;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive" />
+</div>
+<div class="content-navbar">
+    <div class="container">
+        <div class="row">
+            <div class="content-quicknva">
+                <ul>
+                    @for (int i = 0; i < Model.DataItemList.Count; i++) {
+                        <li @(i % 2 == 0 ? "class=col-xs-6-nav" : "")>
+                            <a href="javascript:;">@Model.DataItemList[i].ItemName</a>
+                        </li>
+                    }
+                    <li style="float: right" class="col-xs-search">
+                        <form id="custom-search-form" class="form-search pull-right">
+                            <div class="input-append">
+                                <input type="text" class="search-query" placeholder="搜索" id="keyword">
+                                <button type="button" class="btn" id="news-search"><i class="icon-search"></i></button>
+                            </div>
+                        </form>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="best-deal" class="fh5co-agents">
+    <div class="container" style="padding: 35px 25px;">
+        <div class="row">
+            <div id="news-content"></div>
+            <div class="col-md-12" style="text-align: center; display: none;" id="page-more">
+                <a href="javascript:;" class="btn btn-primary">加载更多</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var page = 1;
+    var category = '';
+    function initdata() {
+        var queryJson = {
+            Category: $(".content-quicknva ul li a.active").text(),
+            FullHead: $("#keyword").val(),
+            TypeId: 4
+        }
+        $.ajax({
+            url: "/Default/GetNewsJson",
+            type: "get",
+            dataType: "json",
+            data: { sord: "DESC", sidx: "CreateDate", page: page, rows: 9, queryJson: JSON.stringify(queryJson) },
+            success: function (data) {
+                if (data.rows.length > 0) {
+                    var html = "";
+                    $.each(data.rows, function (i) {
+                        html += '<div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">';
+                        html += '<div class="fh5co-agent">';
+                        html += '<figure>';
+                        html += '<img class="img-responsive" src="' + data.rows[i].NewsImage + '" alt="">';
+                        html += '</figure>';
+                        html += '<p>' + data.rows[i].NewsContent + '</p>';
+                        html += '<p>';
+                        html += '<a href="#" class="btn btn-primary btn-outline">点击详情</a>';
+                        html += '</p>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                    $("#news-content").append(html);
+                    contentWayPoint();
+                    if (data.page < data.total) {
+                        $("#page-more").show();
+                    } else {
+                        $("#page-more").hide();
+                    }
+                }
+            }
+        });
+    }
+    $(function () {
+        $(".content-quicknva ul li a").click(function () {
+            $(".content-quicknva ul li a").removeClass("active");
+            $(this).addClass("active");
+            $("#news-content").empty();
+            initdata();
+        });
+        $("#page-more").click(function () {
+            page = page + 1;
+            initdata();
+        });
+        $("#news-search").click(function () {
+            $("#news-content").empty();
+            initdata();
+        });
+        initdata();
+    });
+</script>
