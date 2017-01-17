@@ -1059,6 +1059,7 @@
     <Content Include="css\icomoon.css" />
     <Content Include="css\style.css" />
     <Content Include="css\VarelaRound.css" />
+    <Content Include="favicon.ico" />
     <Content Include="fonts\bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\icomoon\icomoon.svg" />
     <Content Include="images\baneer1.png" />
@@ -1068,6 +1069,7 @@
     <Content Include="images\loader.gif" />
     <Content Include="images\loc.png" />
     <Content Include="images\logo.bmp" />
+    <Content Include="images\logo.png" />
     <Content Include="images\nav.bmp" />
     <Content Include="images\slide_1.jpg" />
     <Content Include="images\slide_2.jpg" />
@@ -1617,6 +1619,8 @@
     <Content Include="Content\scripts\plugins\summernote\font\summernote.eot" />
     <Content Include="Content\scripts\plugins\summernote\font\summernote.ttf" />
     <Content Include="Content\scripts\plugins\summernote\font\summernote.woff" />
+    <Content Include="Areas\ExtendManage\Views\BannerNews\LinksIndex.cshtml" />
+    <Content Include="Areas\ExtendManage\Views\BannerNews\LinksForm.cshtml" />
     <None Include="Properties\PublishProfiles\6.1.pubxml" />
     <Content Include="Areas\FlowManage\Views\FlowLaunch\Index.cshtml" />
     <Content Include="Areas\FlowManage\Views\FormDesign\FormPreview.cshtml" />
@@ -1660,10 +1664,13 @@
     <Content Include="Views\Default\SignUp.cshtml" />
     <Content Include="Views\Default\SignIn.cshtml" />
     <Content Include="Views\Default\News.cshtml" />
-    <Content Include="Views\Shared\HeaderNav.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_LayoutHome.cshtml" />
     <Content Include="Views\Default\MapCulture.cshtml" />
     <Content Include="Views\Default\Books.cshtml" />
+    <Content Include="Views\Default\Detail.cshtml" />
+    <Content Include="Views\Default\Service.cshtml" />
+    <Content Include="Views\Default\AboutUs.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

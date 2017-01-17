@@ -2,11 +2,6 @@
     ViewBag.Title = "内容管理";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
-<link href="~/Content/scripts/plugins/simditor/css/simditor.css" rel="stylesheet" />
-<script src="~/Content/scripts/plugins/simditor/js/module.min.js"></script>
-<script src="~/Content/scripts/plugins/simditor/js/uploader.min.js"></script>
-<script src="~/Content/scripts/plugins/simditor/js/hotkeys.min.js"></script>
-<script src="~/Content/scripts/plugins/simditor/js/simditor.min.js"></script>
 <script>
     var TypeId = request('TypeId');
     var keyValue = request('keyValue');
@@ -14,10 +9,10 @@
     var EnCode = request('EnCode');
     var editor = null;
     $(function () {
-        editor = new Simditor({
-            textarea: $('#NewsContent'),
-            placeholder: '这里输入内容...',
-            toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent']
+        $('#summernote').summernote({
+            height: 270,
+            placeholder: '这里输入文章内容...',
+            lang: 'zh-CN'
         });
         initControl();
     })
@@ -39,7 +34,7 @@
                 param: { keyValue: keyValue },
                 success: function (data) {
                     $("#form1").SetWebControls(data);
-                    editor.setValue(data.NewsContent);
+                    $('#summernote').summernote('code', data.NewsContent);
                 }
             });
         } else {
@@ -59,7 +54,7 @@
             //CompileName: $("#CompileName").val(),
             TagWord: $("#TagWord").val(),
             Keyword: $("#Keyword").val(),
-            NewsContent: editor.getValue(),
+            NewsContent: $('#summernote').summernote('code'),
             TypeId: TypeId
         }
         $.SaveForm({
@@ -113,7 +108,7 @@
         <tr>
             <th class="formTitle" valign="top" style="padding-top: 4px;">内容</th>
             <td class="formValue" colspan="3">
-                <textarea id="NewsContent" class="form-control" rows="5"></textarea>
+                <div id="summernote"></div>
             </td>
         </tr>
     </table>

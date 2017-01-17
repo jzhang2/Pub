@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "内容详情";
+    ViewBag.navIndex = -1;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive" />
+</div>
+<div id="best-deal">
+    <div class="container" style="background: white; padding: 35px 25px;">
+        <div style="border-bottom: solid 1px #E6EAED; margin-bottom: 25px; padding-bottom: 10px;">
+            <h3 style="margin-bottom: 5px;">@Model.CurrentArticle.FullHead</h3>
+            <span>@Convert.ToDateTime(Model.CurrentArticle.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.CurrentArticle.AuthorName</span><span class="comments-bar"><i class="icon-thumbs-o-up"></i>@Model.CurrentArticle.PV<i class="icon-comments"></i>10</span>
+        </div>
+        <div>
+            @Html.Raw(HttpUtility.HtmlDecode(Model.CurrentArticle.NewsContent))
+        </div>
+    </div>
+</div>

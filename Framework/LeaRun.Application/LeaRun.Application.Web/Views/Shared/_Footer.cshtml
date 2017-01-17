@@ -1,0 +1,44 @@
+﻿@using LeaRun.Application.Entity.ExtendManage
+@using LeaRun.Application.Entity.PublicInfoManage
+<footer id="fh5co-footer" role="contentinfo">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 col-sm-12 col-xs-12">
+                <h1>地图出版社</h1>
+                <p>西安地图出版社成立于1985年，是国务院新闻出版部署批准成立，国务院测绘地理信息行政主管部门核准的专业出版机构。其主业是出版发行各类地图、地学、地理学和相关的自然科学、科技类图书。 </p>
+                <p>同时经营与主业相应的网络电子版产品，研发和推广特种地图。 </p>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-2 col-sm-12 col-xs-12">
+                <h3>友情链接</h3>
+                <ul class="float">
+                    @foreach (BannerNewsEntity entity in Model.BannerNewsList) {
+                        <li><a href="@entity.URL">@entity.Title</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="col-md-2 col-sm-12 col-xs-12">
+                <h3>快捷导航</h3>
+                <ul class="float">
+                    <li><a href="/">首页</a></li>
+                    <li><a href="/News">西图动态</a></li>
+                    <li><a href="/MapCulture" class="sf-with-ul">地图文化</a></li>
+                    <li><a href="/Books">网上书店</a></li>
+                    <li><a href="#">产品定制</a></li>
+                    <li><a href="/Service">业务服务</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 col-sm-12 col-xs-12">
+                <h3>关于我们</h3>
+                <ul class="float">
+                    @foreach (NewsEntity entity in Model.AboutUs) {
+                        <li><a href="/AboutUs/@entity.NewsId">@entity.FullHead</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12 fh5co-copyright text-center">
+            <p>版权所有：西安地图出版社 编号：陕网文[2012]0118-001号 陕ICP备 06004576号 增值电信业务许可证B-20120015</p>
+        </div>
+    </div>
+</footer>

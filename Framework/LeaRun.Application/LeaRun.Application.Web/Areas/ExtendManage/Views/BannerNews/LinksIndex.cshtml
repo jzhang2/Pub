@@ -25,7 +25,7 @@
         var selectedRowIndex = 0;
         var $grid = $("#gridTable");
         var queryJson = {
-            Type: 1
+            Type: 0
         }
         $grid.jqGrid({
             autowidth: true,
@@ -37,7 +37,6 @@
                 { label: 'BannerNewsId', name: 'BannerNewsId', index: 'BannerNewsId', width: 100, align: 'left', sortable: true, hidden: true },
                 { label: '标题', name: 'Title', index: 'Title', width: 100, align: 'left', sortable: true },
                 { label: '链接', name: 'URL', index: 'URL', width: 200, align: 'left', sortable: true },
-                { label: '描述', name: 'Description', index: 'Description', width: 350, align: 'left', sortable: true },
                 { label: '创建日期', name: 'CreateDate', index: 'CreateDate', width: 100, align: 'left', sortable: true },
             ],
             viewrecords: true,
@@ -62,10 +61,10 @@
     function btn_add() {
         dialogOpen({
             id: 'Form',
-            title: '添加首页轮播',
-            url: '/ExtendManage/BannerNews/Form',
+            title: '添加友情链接',
+            url: '/ExtendManage/BannerNews/LinksForm',
             width: '500px',
-            height: '400px',
+            height: '250px',
             callBack: function(iframeId) {
                 top.frames[iframeId].AcceptClick();
             }
@@ -78,10 +77,10 @@
         if (checkedRow(keyValue)) {
             dialogOpen({
                 id: 'Form',
-                title: '编辑首页轮播',
-                url: '/ExtendManage/BannerNews/Form?keyValue=' + keyValue,
+                title: '编辑友情链接',
+                url: '/ExtendManage/BannerNews/LinksForm?keyValue=' + keyValue,
                 width: '500px',
-                height: '400px',
+                height: '250px',
                 callBack: function(iframeId) {
                     top.frames[iframeId].AcceptClick();
                 }
@@ -101,14 +100,14 @@
                 }
             })
         } else {
-            dialogMsg('请选择需要删除的首页轮播！', 0);
+            dialogMsg('请选择需要删除的友情链接！', 0);
         }
     }
 </script>
 <div class="ui-layout" id="layout" style="height: 100%; width: 100%;">
     <div class="ui-layout-center">
         <div class="center-Panel">
-            <div class="panel-Title">首页轮播</div>
+            <div class="panel-Title">友情链接</div>
             <div class="titlePanel">
                 <div class="title-search">
                     <table>

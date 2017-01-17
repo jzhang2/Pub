@@ -7,7 +7,7 @@
 @using LeaRun.Application.Entity.PublicInfoManage
 @using LeaRun.Util
 @model LeaRun.Application.Web.Controllers.HomeViewModel
-
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=SRkUQaDbD9KVsHZGmikTgCG1"></script>
 <aside id="fh5co-hero" clsas="js-fullheight">
     <div class="flexslider">
         <ul class="slides">
@@ -85,7 +85,7 @@
                 <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
                     <div class="fh5co-property">
                         <div class="fh5co-property-title">
-                            <h5><a href="#">@entity.FullHead</a></h5>
+                            <h5><a href="/Detail/@entity.NewsId">@entity.FullHead</a></h5>
                             <p>@Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd HH:mm")</p>
                         </div>
                         <figure>
@@ -121,7 +121,7 @@
                         </figure>
                         <p>@(WebHelper.GetText(entity.NewsContent).Length > 60 ? WebHelper.GetText(entity.NewsContent).Substring(0, 60) : WebHelper.GetText(entity.NewsContent))</p>
                         <p>
-                            <a href="#" class="btn btn-primary btn-outline">点击详情</a>
+                            <a href="/Detail/@entity.NewsId" class="btn btn-primary btn-outline">点击详情</a>
                         </p>
                     </div>
 
@@ -147,7 +147,7 @@
                         </figure>
                         <div class="fh5co-property-innter books">
                             <h3>
-                                <a href="#">@entity.FullHead</a>
+                                <a href="@entity.BuyLink">@entity.FullHead</a>
                             </h3>
                             <div class="price-status">
                                 <span class="price">￥@entity.Price </span>

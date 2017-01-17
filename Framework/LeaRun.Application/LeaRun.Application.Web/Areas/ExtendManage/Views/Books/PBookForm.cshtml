@@ -2,12 +2,6 @@
     ViewBag.Title = "文章管理";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
-<link href="~/Content/scripts/plugins/simditor/css/simditor.css" rel="stylesheet" />
-<script src="~/Content/scripts/plugins/simditor/js/module.min.js"></script>
-<script src="~/Content/scripts/plugins/simditor/js/uploader.min.js"></script>
-<script src="~/Content/scripts/plugins/simditor/js/hotkeys.min.js"></script>
-<script src="~/Content/scripts/plugins/simditor/js/simditor.min.js"></script>
-<script src="~/Content/scripts/plugins/uploadify/ajaxfileupload.js"></script>
 <script>
     var TypeId = request('TypeId');
     var keyValue = request('keyValue');
@@ -15,10 +9,10 @@
     var EnCode = request('EnCode');
     var editor = null;
     $(function () {
-        editor = new Simditor({
-            textarea: $('#NewsContent'),
+        $('#summernote').summernote({
+            height: 270,
             placeholder: '这里输入书籍简介...',
-            toolbar: ['title', 'bold', 'italic', 'underline', 'strikethrough', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent']
+            lang: 'zh-CN'
         });
         initControl();
     })
@@ -40,7 +34,7 @@
                 param: { keyValue: keyValue },
                 success: function (data) {
                     $("#form1").SetWebControls(data);
-                    editor.setValue(data.NewsContent);
+                    $('#summernote').summernote('code', data.NewsContent);
                     if (data.NewsImage) {
                         document.getElementById('uploadPreview').src = data.NewsImage;
                     }
@@ -83,7 +77,7 @@
             BuyLink: $("#BuyLink").val(),
             TagWord: $("#TagWord").val(),
             Keyword: $("#Keyword").val(),
-            NewsContent: editor.getValue(),
+            NewsContent: $('#summernote').summernote('code'),
             TypeId: TypeId
         }
         $.SaveForm({
@@ -145,32 +139,8 @@
         <tr>
             <th class="formTitle" valign="top" style="padding-top: 4px;">内容</th>
             <td class="formValue" colspan="3">
-                <textarea id="NewsContent" class="form-control" rows="5"></textarea>
+                <div id="summernote"></div>
             </td>
         </tr>
     </table>
 </div>
-<style>
-    .file {
-        position: relative;
-        display: inline-block;
-        overflow: hidden;
-        text-decoration: none;
-        text-indent: 0;
-        cursor: pointer !important;
-    }
-
-        .file input {
-            position: absolute;
-            font-size: 100px;
-            right: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer !important;
-        }
-
-        .file:hover {
-            text-decoration: none;
-            cursor: pointer !important;
-        }
-</style>

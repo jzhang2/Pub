@@ -30,7 +30,8 @@ namespace LeaRun.Application.Web.Controllers {
         public List<NewsEntity> PBooksList { get; set; }
         public List<BannerNewsEntity> BannerNewsList { get; set; }
         public List<DataItemModel> DataItemList { get; set; }
-
+        public List<NewsEntity> AboutUs { get; set; }
+        public NewsEntity CurrentArticle { get; set; }
     }
     [HandlerLogin(LoginMode.Ignore)]
     public class DefaultController : MvcControllerBase {
@@ -76,8 +77,62 @@ namespace LeaRun.Application.Web.Controllers {
             viewModel.DataItemList = dataItemCache.GetDataItemList("MapKn").ToList();
             return View(viewModel);
         }
+        public ActionResult Service(string id) {
+            var viewModel = new HomeViewModel();
+            Pagination pagination = new Pagination();
+            pagination.page = 1;
+            pagination.sidx = "CreateDate";
+            pagination.sord = "DESC";
+            pagination.rows = 10000;
+            viewModel.NewsList = newsBll.GetPageList(pagination, "{ TypeId:7,EnabledMark:1 }").ToList();
+
+            if (!string.IsNullOrEmpty(id)) {
+                viewModel.CurrentArticle = newsBll.GetEntity(id);
+            }
+            else if (viewModel.NewsList.Count > 0) {
+                viewModel.CurrentArticle = viewModel.NewsList.First();
+            }
+            return View(viewModel);
+        }
+
+        public ActionResult AboutUs(string id) {
+            var viewModel = new HomeViewModel();
+            Pagination pagination = new Pagination();
+            pagination.page = 1;
+            pagination.sidx = "CreateDate";
+            pagination.sord = "DESC";
+            pagination.rows = 10000;
+            viewModel.AboutUs = newsBll.GetPageList(pagination, "{ TypeId:8,EnabledMark:1 }").ToList();
+
+            if (!string.IsNullOrEmpty(id)) {
+                viewModel.CurrentArticle = newsBll.GetEntity(id);
+            }
+            else if (viewModel.AboutUs.Count > 0) {
+                viewModel.CurrentArticle = viewModel.AboutUs.First();
+            }
+            return View(viewModel);
+        }
+        public ActionResult Detail(string id) {
+            var viewModel = new HomeViewModel();
+            if (!string.IsNullOrEmpty(id)) {
+                viewModel.CurrentArticle = newsBll.GetEntity(id);
+            }
+            return View(viewModel);
+        }
+
         public ActionResult Books() {
             return View();
+        }
+        public ActionResult _Footer() {
+            var viewModel = new HomeViewModel();
+            Pagination pagination = new Pagination();
+            pagination.page = 1;
+            pagination.sidx = "CreateDate";
+            pagination.sord = "DESC";
+            pagination.rows = 10000;
+            viewModel.BannerNewsList = bannerNewsBll.GetPageList(pagination, "{Type:0}").ToList();
+            viewModel.AboutUs = newsBll.GetPageList(pagination, "{ TypeId:8,EnabledMark:1 }").ToList();
+            return PartialView(viewModel);
         }
         [HttpGet]
         public ActionResult GetNewsJson(Pagination pagination, string queryJson) {

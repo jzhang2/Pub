@@ -29,6 +29,18 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult LinksIndex() {
+            return View();
+        }
+        /// <summary>
+        /// 表单页面
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult LinksForm() {
+            return View();
+        }
         #endregion
 
         #region 获取数据
@@ -97,6 +109,14 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         public ActionResult SaveForm(string keyValue, BannerNewsEntity entity)
         {
             entity.Type = 1;
+            bannernewsbll.SaveForm(keyValue, entity);
+            return Success("操作成功。");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AjaxOnly]
+        public ActionResult SaveLinksForm(string keyValue, BannerNewsEntity entity) {
+            entity.Type = 0;
             bannernewsbll.SaveForm(keyValue, entity);
             return Success("操作成功。");
         }

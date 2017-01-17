@@ -15,6 +15,21 @@ namespace LeaRun.Application.Web
                 defaults: new { controller = "Default", action = "Books", id = UrlParameter.Optional }
             );
             routes.MapRoute(
+                name: "Service",
+                url: "Service/{id}",
+                defaults: new { controller = "Default", action = "Service", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Detail",
+                url: "Detail/{id}",
+                defaults: new { controller = "Default", action = "Detail", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "AboutUs",
+                url: "AboutUs/{id}",
+                defaults: new { controller = "Default", action = "AboutUs", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                 name: "MapCulture",
                 url: "MapCulture",
                 defaults: new { controller = "Default", action = "MapCulture", id = UrlParameter.Optional }
