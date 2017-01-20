@@ -50,8 +50,8 @@ namespace LeaRun.Application.Code
                 if (LoginProvider == "Cookie")
                 {
                     #region 解决cookie时，设置数据权限较多时无法登陆的bug modify by chengzg
-                    CacheFactory.Cache().WriteCache(user.DataAuthorize, LoginUserKey, user.LogTime.AddHours(12));
-                    user.DataAuthorize = null;
+                    //CacheFactory.Cache().WriteCache(user.DataAuthorize, LoginUserKey, user.LogTime.AddHours(12));
+                    //user.DataAuthorize = null;
                     #endregion
                     WebHelper.WriteCookie(LoginUserKey, DESEncrypt.Encrypt(user.ToJson()));
                 }
@@ -79,8 +79,8 @@ namespace LeaRun.Application.Code
                 {
                     user = DESEncrypt.Decrypt(WebHelper.GetCookie(LoginUserKey).ToString()).ToObject<Operator>();
                     #region 解决cookie时，设置数据权限较多时无法登陆的bug modify by chengzg
-                    AuthorizeDataModel dataAuthorize = CacheFactory.Cache().GetCache<AuthorizeDataModel>(LoginUserKey);
-                    user.DataAuthorize = dataAuthorize;
+                    //AuthorizeDataModel dataAuthorize = CacheFactory.Cache().GetCache<AuthorizeDataModel>(LoginUserKey);
+                    //user.DataAuthorize = dataAuthorize;
                     #endregion
                 }
                 else if (LoginProvider == "AppClient")
@@ -129,12 +129,12 @@ namespace LeaRun.Application.Code
                 {
                     str = WebHelper.GetCookie(LoginUserKey);
                     #region 解决cookie时，设置数据权限较多时无法登陆的bug modify by chengzg
-                    dataAuthorize = CacheFactory.Cache().GetCache<AuthorizeDataModel>(LoginUserKey);
+                    //dataAuthorize = CacheFactory.Cache().GetCache<AuthorizeDataModel>(LoginUserKey);
 
-                    if (dataAuthorize == null)
-                    {
-                        return true;
-                    }
+                    //if (dataAuthorize == null)
+                    //{
+                    //    return true;
+                    //}
                     #endregion
                 }
                 else
@@ -166,8 +166,8 @@ namespace LeaRun.Application.Code
             {
                 user = DESEncrypt.Decrypt(WebHelper.GetCookie(LoginUserKey).ToString()).ToObject<Operator>();
                 #region 解决cookie时，设置数据权限较多时无法登陆的bug modify by chengzg
-                AuthorizeDataModel dataAuthorize = CacheFactory.Cache().GetCache<AuthorizeDataModel>(LoginUserKey);
-                user.DataAuthorize = dataAuthorize;
+                //AuthorizeDataModel dataAuthorize = CacheFactory.Cache().GetCache<AuthorizeDataModel>(LoginUserKey);
+                //user.DataAuthorize = dataAuthorize;
                 #endregion
             }
             else

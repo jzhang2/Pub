@@ -79,5 +79,10 @@ namespace LeaRun.Application.Busines.ExtendManage
             }
         }
         #endregion
+
+        public IEnumerable<SuggestionEntity> GetUserSuggestion(string userId)
+        {
+            return service.GetUserSuggestion(userId);
+        }
     }
 }

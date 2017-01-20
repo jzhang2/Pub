@@ -37,5 +37,6 @@ namespace LeaRun.Application.IService.ExtendManage
         #endregion
 
         void UpdateState(string keyValue, int state);
+        IEnumerable<SuggestionEntity> GetUserSuggestion(string userId);
     }
 }

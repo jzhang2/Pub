@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "图书详情";
+    ViewBag.navIndex = 3;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive" />
+</div>
+<div id="best-deal" class="fh5co-agents">
+    <div class="container" style="background: white; padding-top: 45px;">
+        <div class="row">
+            <div class="col-md-5">
+                <div style="border: solid 1px #EEEEEE; text-align: center; padding: 10px 0;" class="aligncenter">
+                    <img class="img-responsive" src="~/images/详情.png" />
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="book-title">
+                    <h4>书名：@Model.CurrentArticle.FullHead</h4>
+                    <h4>作者：@Model.CurrentArticle.AuthorName</h4>
+                    <a href="@Model.CurrentArticle.BuyLink" class="btn btn-default sendver" target="_blank" style="float: none">淘宝购买</a>
+                </div>
+            </div>
+        </div>
+        <div class="book-content">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="javascript:;">图书简介</a></li>
+            </ul>
+            <div>
+                @Html.Raw(HttpUtility.HtmlDecode(Model.CurrentArticle.NewsContent))
+            </div>
+        </div>
+    </div>
+</div>

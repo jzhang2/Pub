@@ -452,6 +452,7 @@ h1, h2, h3, h4, h5, h6, figure {
     float: right;
     font-size: 18px;
     padding: 7px;
+    border: 0;
 }
 
     .sendver[disabled] {
@@ -475,6 +476,11 @@ h1, h2, h3, h4, h5, h6, figure {
         width: 100%;
     }
 }
+@media screen and (max-width: 768px) {
+    .right-content {
+        background: white;
+    }
+}
 
 @media screen and (max-width: 768px) {
     .col-xs-6-nav {
@@ -484,8 +490,8 @@ h1, h2, h3, h4, h5, h6, figure {
 
 @media screen and (max-width: 768px) {
     #best-deal .note-video-clip {
-    width:100%
-}
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -2408,3 +2414,132 @@ h1, h2, h3, h4, h5, h6, figure {
         font-size: 14px;
         padding-right: 5px;
     }
+
+.myaccount ul {
+    padding: 0;
+    margin: 0;
+}
+
+    .myaccount .account-nav ul li {
+        list-style-type: none;
+        padding: 5px 15px;
+        cursor: pointer;
+    }
+
+        .myaccount .account-nav ul li.active {
+            background: #0A84DA;
+        }
+
+            .myaccount .account-nav ul li.active a {
+                color: white;
+            }
+
+        .myaccount .account-nav ul li a {
+            color: #4B4B4B;
+        }
+
+            .myaccount .account-nav ul li a:hover,.myaccount ul li a:active,.myaccount ul li a:focus {
+                text-decoration: none;
+            }
+
+    .myaccount .account-nav ul img {
+        margin-right: 5px;
+    }
+
+.myaccount .row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .myaccount .row > [class*='col-'] {
+        display: flex;
+        flex-direction: column;
+        /*background: white;*/
+    }
+.MyProfile {
+    padding: 30px;
+    color: #96a0ae;
+    font-weight: normal;
+}
+.MyProfile label{
+    font-weight: normal;
+}
+.file {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        text-decoration: none;
+        text-indent: 0;
+        cursor: pointer !important;
+    }
+
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer !important;
+        }
+
+        .file:hover {
+            text-decoration: none;
+            cursor: pointer !important;
+        }
+        .alignleft {
+ display: inline;
+ float: left;
+}
+.alignright {
+ display: inline;
+ float: right;
+}
+.aligncenter {
+ clear: both;
+ display: block;
+ margin:auto;
+}
+.aligncenter img{
+ margin:0 auto;
+}
+.book-title {
+    padding: 60px 35px 0 35px;
+}
+.book-title h4{
+    margin: 10px 0;
+}
+.book-content {
+    margin-top: 60px;
+}
+.book-content ul.nav-pills {
+    border-bottom: solid 1px #3775B6;
+    margin-bottom: 20px;
+}
+.book-content ul.nav-pills li a {
+    padding: 5px 15px;
+    border-radius: 0;
+    cursor: default;
+}
+.contri-input .btn {
+        display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    white-space: nowrap;
+    padding: 10px 20px;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-right: 0;
+}

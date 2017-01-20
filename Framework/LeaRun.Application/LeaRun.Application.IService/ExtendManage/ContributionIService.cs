@@ -13,6 +13,7 @@ namespace LeaRun.Application.IService.ExtendManage
         /// <param name="queryJson">查询参数</param>
         /// <returns>返回列表</returns>
         IEnumerable<ContributionEntity> GetList(string queryJson);
+
         /// <summary>
         /// 获取实体
         /// </summary>
@@ -35,5 +36,7 @@ namespace LeaRun.Application.IService.ExtendManage
         /// <returns></returns>
         void SaveForm(string keyValue, ContributionEntity entity);
         #endregion
+
+        IEnumerable<ContributionEntity> GetUserContribution(string userId);
     }
 }

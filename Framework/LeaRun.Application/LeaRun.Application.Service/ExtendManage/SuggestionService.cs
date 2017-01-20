@@ -5,27 +5,26 @@ using LeaRun.Util.WebControl;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LeaRun.Application.Service.ExtendManage
-{
-    public class SuggestionService : RepositoryFactory<SuggestionEntity>, SuggestionIService
-    {
+namespace LeaRun.Application.Service.ExtendManage {
+    public class SuggestionService : RepositoryFactory<SuggestionEntity>, SuggestionIService {
         #region 获取数据
         /// <summary>
         /// 获取列表
         /// </summary>
         /// <param name="queryJson">查询参数</param>
         /// <returns>返回列表</returns>
-        public IEnumerable<SuggestionEntity> GetList(string queryJson)
-        {
+        public IEnumerable<SuggestionEntity> GetList(string queryJson) {
             return this.BaseRepository().IQueryable().ToList();
+        }
+        public IEnumerable<SuggestionEntity> GetUserSuggestion(string userId) {
+            return this.BaseRepository().IQueryable(t => t.CreateUserId == userId).ToList();
         }
         /// <summary>
         /// 获取实体
         /// </summary>
         /// <param name="keyValue">主键值</param>
         /// <returns></returns>
-        public SuggestionEntity GetEntity(string keyValue)
-        {
+        public SuggestionEntity GetEntity(string keyValue) {
             return this.BaseRepository().FindEntity(keyValue);
         }
         #endregion
@@ -35,8 +34,7 @@ namespace LeaRun.Application.Service.ExtendManage
         /// 删除数据
         /// </summary>
         /// <param name="keyValue">主键</param>
-        public void RemoveForm(string keyValue)
-        {
+        public void RemoveForm(string keyValue) {
             this.BaseRepository().Delete(keyValue);
         }
         /// <summary>
@@ -45,15 +43,12 @@ namespace LeaRun.Application.Service.ExtendManage
         /// <param name="keyValue">主键值</param>
         /// <param name="entity">实体对象</param>
         /// <returns></returns>
-        public void SaveForm(string keyValue, SuggestionEntity entity)
-        {
-            if (!string.IsNullOrEmpty(keyValue))
-            {
+        public void SaveForm(string keyValue, SuggestionEntity entity) {
+            if (!string.IsNullOrEmpty(keyValue)) {
                 entity.Modify(keyValue);
                 this.BaseRepository().Update(entity);
             }
-            else
-            {
+            else {
                 entity.Create();
                 this.BaseRepository().Insert(entity);
             }

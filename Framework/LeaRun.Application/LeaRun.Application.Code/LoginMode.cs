@@ -20,4 +20,11 @@ namespace LeaRun.Application.Code
         /// <summary>忽略</summary>
         Ignore
     }
+
+    public enum LoginType {
+        /// <summary>后台</summary>
+        BackEnd,
+        /// <summary>前台</summary>
+        FrontEnd
+    }
 }

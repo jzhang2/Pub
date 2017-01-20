@@ -19,6 +19,10 @@ namespace LeaRun.Application.Service.ExtendManage
         {
             return this.BaseRepository().IQueryable().ToList();
         }
+
+        public IEnumerable<ContributionEntity> GetUserContribution(string userId) {
+            return this.BaseRepository().IQueryable(t => t.CreateUserId == userId).ToList();
+        }
         /// <summary>
         /// 获取实体
         /// </summary>

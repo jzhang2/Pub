@@ -32,14 +32,19 @@ namespace LeaRun.Application.Web.Controllers {
         public List<DataItemModel> DataItemList { get; set; }
         public List<NewsEntity> AboutUs { get; set; }
         public NewsEntity CurrentArticle { get; set; }
+        public CustomerEntity Customer { get; set; }
+        public List<SuggestionEntity> MySuggestionList { get; set; }
+        public List<ContributionEntity> ContributionList { get; set; } 
     }
-    [HandlerLogin(LoginMode.Ignore)]
+    [HandlerLogin(LoginMode.Ignore, LoginType.FrontEnd)]
     public class DefaultController : MvcControllerBase {
         private CustomerBLL customerbll = new CustomerBLL();
         private NewsBLL newsBll = new NewsBLL();
         private BannerNewsBLL bannerNewsBll = new BannerNewsBLL();
         private SecurityCodeService securityCodeService = new SecurityCodeService();
         private DataItemCache dataItemCache = new DataItemCache();
+        private SuggestionBLL suggestionBll = new SuggestionBLL();
+        private ContributionBLL contributionBll = new ContributionBLL();
 
 
         public ActionResult Index() {
@@ -119,9 +124,25 @@ namespace LeaRun.Application.Web.Controllers {
             }
             return View(viewModel);
         }
+        public ActionResult PBook(string id) {
+            var viewModel = new HomeViewModel();
+            if (!string.IsNullOrEmpty(id)) {
+                viewModel.CurrentArticle = newsBll.GetEntity(id);
+            }
+            return View(viewModel);
+        }
 
         public ActionResult Books() {
             return View();
+        }
+
+        [HandlerLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public ActionResult MyAccount() {
+            var viewModel = new HomeViewModel();
+            viewModel.Customer = customerbll.GetEntity(OperatorProvider.Provider.Current().UserId);
+            viewModel.MySuggestionList = suggestionBll.GetUserSuggestion(OperatorProvider.Provider.Current().UserId).ToList();
+            viewModel.ContributionList = contributionBll.GetUserContribution(OperatorProvider.Provider.Current().UserId).ToList();
+            return View(viewModel);
         }
         public ActionResult _Footer() {
             var viewModel = new HomeViewModel();
@@ -165,16 +186,16 @@ namespace LeaRun.Application.Web.Controllers {
         public ActionResult Register(string mobileCode, string securityCode, string password) {
             try {
 
-                //var code = securityCodeService.GetSecurityCode(mobileCode);
-                //if (code == null) {
-                //    return Error("请先获取验证码。");
-                //}
-                //if (Convert.ToDateTime(code.CreateDate).AddMinutes(5) < DateTime.Now) {
-                //    return Error("验证码已过期，请重新获取。");
-                //}
-                //if (code.SecurityCode != securityCode) {
-                //    return Error("验证码错误。");
-                //}
+                var code = securityCodeService.GetSecurityCode(mobileCode);
+                if (code == null) {
+                    return Error("请先获取验证码。");
+                }
+                if (Convert.ToDateTime(code.CreateDate).AddMinutes(5) < DateTime.Now) {
+                    return Error("验证码已过期，请重新获取。");
+                }
+                if (code.SecurityCode != securityCode) {
+                    return Error("验证码错误。");
+                }
                 CustomerEntity userEntity = new CustomerEntity();
                 userEntity.Email = mobileCode;
                 userEntity.Secretkey = Md5Helper.MD5(CommonHelper.CreateNo(), 16).ToLower();

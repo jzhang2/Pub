@@ -1,157 +1,56 @@
 ﻿@{
-    Layout = null;
+    ViewBag.Title = "注册";
+    ViewBag.navIndex = -1;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
-
-
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>注册</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="西安地图出版社" />
-    <meta name="keywords" content="地图, 出版社, 西安, 电子书, 实体书" />
-
-
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="/css/VarelaRound.css" rel="stylesheet"/>
-    <link href="~/Content/styles/font-awesome.min.css" rel="stylesheet" />
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="/css/animate.css">
-    <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="/css/icomoon.css">
-    <!-- Bootstrap  -->
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <!-- Flexslider  -->
-    <link rel="stylesheet" href="/css/flexslider.css">
-    <!-- Theme style  -->
-    <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Modernizr JS -->
-    <script src="/js/modernizr-2.6.2.min.js"></script>
-    <!-- FOR IE9 below -->
-    <!--[if lt IE 9]>
-    <script src="/js/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-<body>
-
-
-    <div id="fh5co-page">
-        <header id="fh5co-header" role="banner">
-            <div class="container">
-                <div class="row">
-                    <div class="header-inner">
-                        <h1 style="margin-top: 10px;"><a href="/"><img src="~/images/logo.bmp" /></a></h1>
-                        <nav role="navigation">
-                            <ul class="sf-menu" id="fh5co-primary-menu">
-                                <li><a href="/" class="active">首页</a></li>
-                                <li><a href="buy.html">西图动态</a></li>
-                                <li>
-                                    <a href="rent.html" class="sf-with-ul">地图文化</a>
-                                    <ul class="fh5co-sub-menu">
-                                        <li><a href="#/preview/?item=build-free-html5-bootstrap-template" target="_blank">地图百科</a></li>
-                                        <li><a href="#/preview/?item=work-free-html5-template-bootstrap" target="_blank">地图故事</a></li>
-                                        <li><a href="#/preview/?item=light-free-html5-template-bootstrap" target="_blank">趣味地图</a></li>
-                                    </ul>
-
-
-
-                                </li>
-                                <li><a href="properties.html">网上书店</a></li>
-                                <li><a href="properties.html">产品定制</a></li>
-                                <li><a href="properties.html">业务服务</a></li>
-                                <li><a href="properties.html">关于我们</a></li>
-                                <li style="margin-left: 20px;"><a class="navbtn" href="/SignIn">登录</a></li>
-                                <li><a class="regbtn btn btn-primary " href="/SignUp">注册</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div style="background-image: url('../../images/baneer1.png');background-size:cover; ">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-md-push-5 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0" style="margin: 70px 0">
-                        <div class="signup">
-                            <h3>注册</h3>
-                            <form class="form-horizontal" role="form" id="Regform">
-                                <div class="form-group">
-                                    <label for="email" class="control-label col-sm-3 col-xs-12">邮箱注册</label>
-                                    <div class="col-sm-5 col-xs-8">
-                                        <input type="email" class="form-control" id="email" placeholder="请输入邮箱地址">
-                                    </div>
-                                    <div class="col-sm-3 col-xs-4">
-                                        <button type="button" class="btn btn-default sendver" id="register_getcode">发送验证码</button>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="txt_register_code" class="control-label col-sm-3">邮箱验证码</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="txt_register_code" placeholder="请输入邮箱验证码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pwd" class="control-label col-sm-3">设置密码</label>
-                                    <div class="col-sm-8">
-                                        <input type="password" class="form-control" id="pwd" placeholder="设置密码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cpwd" class="control-label col-sm-3">确认密码</label>
-                                    <div class="col-sm-8">
-                                        <input type="password" class="form-control" id="cpwd" placeholder="确认密码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-8 col-md-push-3">
-                                        <button type="submit" id="btnregister" class="btn btn-default signupbtn">马上注册</button>
-                                    </div>
-                                </div>
-                            </form>
+<div style="background-image: url('../../images/baneer1.png');background-size:cover; ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-push-5 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0" style="margin: 70px 0;background: white">
+                <div class="signup">
+                    <h3>注册</h3>
+                    <form class="form-horizontal" role="form" id="Regform">
+                        <div class="form-group">
+                            <label for="email" class="control-label col-sm-3 col-xs-12">邮箱注册</label>
+                            <div class="col-sm-5 col-xs-8">
+                                <input type="email" class="form-control" id="email" placeholder="请输入邮箱地址">
+                            </div>
+                            <div class="col-sm-3 col-xs-4">
+                                <button type="button" class="btn btn-default sendver" id="register_getcode">发送验证码</button>
+                            </div>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="txt_register_code" class="control-label col-sm-3">邮箱验证码</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="txt_register_code" placeholder="请输入邮箱验证码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd" class="control-label col-sm-3">设置密码</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control" id="pwd" placeholder="设置密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpwd" class="control-label col-sm-3">确认密码</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control" id="cpwd" placeholder="确认密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-md-push-3">
+                                <button type="submit" id="btnregister" class="btn btn-default signupbtn">马上注册</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
-        <footer id="fh5co-footer" role="contentinfo">
-            <div class="container">
-                <div class="col-md-12 fh5co-copyright text-center">
-                    <p>版权所有：西安地图出版社 编号：陕网文[2012]0118-001号 陕ICP备 06004576号 增值电信业务许可证B-20120015</p>
-                </div>
-            </div>
-        </footer>
-
     </div>
+</div>
+<script src="~/Content/scripts/plugins/jquery.md5.js"></script>
+<script>
 
-
-    <!-- jQuery -->
-    <script src="/js/jquery.min.js"></script>
-    <!-- jQuery Easing -->
-    <script src="/js/jquery.easing.1.3.js"></script>
-    <!-- Bootstrap -->
-    <script src="/js/bootstrap.min.js"></script>
-    <!-- Waypoints -->
-    <script src="/js/jquery.waypoints.min.js"></script>
-    <!-- Flexslider -->
-    <script src="/js/jquery.flexslider-min.js"></script>
-
-    <!-- MAIN JS -->
-<script src="/js/main.js"></script>
-    <script src="~/Content/scripts/plugins/jquery.md5.js"></script>
-    <script>
-    
     /*=========注册账户（begin）================================================================*/
     $(function () {
         //手机号离开事件
@@ -229,6 +128,5 @@
         });
     })
     /*=========注册账户（end）================================================================*/
-    </script>
-</body>
-</html>
+</script>
+

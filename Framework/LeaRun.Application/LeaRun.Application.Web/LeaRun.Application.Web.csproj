@@ -965,6 +965,7 @@
     <Content Include="Content\scripts\plugins\tree\tree.css" />
     <Content Include="Content\scripts\plugins\tree\tree.js" />
     <Content Include="Content\scripts\plugins\uploadify\ajaxfileupload.js" />
+    <Content Include="Content\scripts\plugins\uploadify\bootstrap-filestyle.min.js" />
     <Content Include="Content\scripts\plugins\uploadify\jquery.uploadify.js" />
     <Content Include="Content\scripts\plugins\uploadify\jquery.uploadify.min.js" />
     <Content Include="Content\scripts\plugins\uploadify\uploadify-cancel.png" />
@@ -1671,6 +1672,8 @@
     <Content Include="Views\Default\Detail.cshtml" />
     <Content Include="Views\Default\Service.cshtml" />
     <Content Include="Views\Default\AboutUs.cshtml" />
+    <Content Include="Views\Default\MyAccount.cshtml" />
+    <Content Include="Views\Default\PBook.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -66,5 +66,10 @@ namespace LeaRun.Application.Busines.ExtendManage
             }
         }
         #endregion
+
+        public IEnumerable<ContributionEntity> GetUserContribution(string userId)
+        {
+            return service.GetUserContribution(userId);
+        }
     }
 }

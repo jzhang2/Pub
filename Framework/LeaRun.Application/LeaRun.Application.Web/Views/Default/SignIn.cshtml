@@ -1,139 +1,41 @@
 ﻿@{
-    Layout = null;
+    ViewBag.Title = "登录";
+    ViewBag.navIndex = -1;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
-
-
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>登录</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="西安地图出版社" />
-    <meta name="keywords" content="地图, 出版社, 西安, 电子书, 实体书" />
-
-
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="/css/VarelaRound.css" rel="stylesheet" />
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="/css/animate.css">
-    <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="/css/icomoon.css">
-    <!-- Bootstrap  -->
-    <link rel="stylesheet" href="/css/bootstrap.css">
-    <!-- Flexslider  -->
-    <link rel="stylesheet" href="/css/flexslider.css">
-    <!-- Theme style  -->
-    <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Modernizr JS -->
-    <script src="/js/modernizr-2.6.2.min.js"></script>
-    <!-- FOR IE9 below -->
-    <!--[if lt IE 9]>
-    <script src="/js/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
-
-
-    <div id="fh5co-page">
-        <header id="fh5co-header" role="banner">
-            <div class="container">
-                <div class="row">
-                    <div class="header-inner">
-                        <h1 style="margin-top: 10px;"><a href="/"><img src="~/images/logo.bmp" /></a></h1>
-                        <nav role="navigation">
-                            <ul class="sf-menu" id="fh5co-primary-menu">
-                                <li><a href="/" class="active">首页</a></li>
-                                <li><a href="buy.html">西图动态</a></li>
-                                <li>
-                                    <a href="rent.html" class="sf-with-ul">地图文化</a>
-                                    <ul class="fh5co-sub-menu">
-                                        <li><a href="#/preview/?item=build-free-html5-bootstrap-template" target="_blank">地图百科</a></li>
-                                        <li><a href="#/preview/?item=work-free-html5-template-bootstrap" target="_blank">地图故事</a></li>
-                                        <li><a href="#/preview/?item=light-free-html5-template-bootstrap" target="_blank">趣味地图</a></li>
-                                    </ul>
-
-
-
-                                </li>
-                                <li><a href="properties.html">网上书店</a></li>
-                                <li><a href="properties.html">产品定制</a></li>
-                                <li><a href="properties.html">业务服务</a></li>
-                                <li><a href="properties.html">关于我们</a></li>
-                                <li style="margin-left: 20px;"><a class="navbtn" href="/SignIn">登录</a></li>
-                                <li><a class="regbtn btn btn-primary " href="/SignUp">注册</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <div style="background-image: url('../../images/baneer1.png');background-size:cover; ">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-md-push-5 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0" style="margin: 70px 0">
-                        <div class="signup">
-                            <h3>登录</h3>
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label for="email" class="control-label col-sm-3">帐号</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control" id="email" placeholder="请输入邮箱或手机号">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pwd" class="control-label col-sm-3">密码</label>
-                                    <div class="col-sm-8">
-                                        <input type="password" class="form-control" id="pwd" placeholder="请输入密码">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-offset-3 col-sm-8">
-                                        <button type="button" class="btn btn-default signinbtn" style="margin-right: 20px;" id="btnlogin">登录</button><a>忘记密码</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a>注册</a>
-                                    </div>
-                                </div>
-                            </form>
+<div style="background-image: url('../../images/baneer1.png');background-size:cover; ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-push-5 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0" style="margin: 70px 0;background: white">
+                <div class="signup">
+                    <h3>登录</h3>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="email" class="control-label col-sm-3">帐号</label>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" id="email" placeholder="请输入邮箱或手机号">
+                            </div>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="pwd" class="control-label col-sm-3">密码</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control" id="pwd" placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-8">
+                                <button type="button" class="btn btn-default signinbtn" style="margin-right: 20px;" id="btnlogin">登录</button><a>忘记密码</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a>注册</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-
-        <footer id="fh5co-footer" role="contentinfo">
-            <div class="container">
-                <div class="col-md-12 fh5co-copyright text-center">
-                    <p>版权所有：西安地图出版社 编号：陕网文[2012]0118-001号 陕ICP备 06004576号 增值电信业务许可证B-20120015</p>
-                </div>
-            </div>
-        </footer>
-
     </div>
+</div>
 
-
-    <!-- jQuery -->
-    <script src="/js/jquery.min.js"></script>
-    <!-- jQuery Easing -->
-    <script src="/js/jquery.easing.1.3.js"></script>
-    <!-- Bootstrap -->
-    <script src="/js/bootstrap.min.js"></script>
-    <!-- Waypoints -->
-    <script src="/js/jquery.waypoints.min.js"></script>
-    <!-- Flexslider -->
-    <script src="/js/jquery.flexslider-min.js"></script>
-
-    <!-- MAIN JS -->
-    <script src="/js/main.js"></script>
-    <script src="~/Content/scripts/plugins/jquery.md5.js"></script>
-    <script>
+<script src="~/Content/scripts/plugins/jquery.md5.js"></script>
+<script>
         $("#btnlogin").click(function () {
             var $username = $("#email");
             var $password = $("#pwd");
@@ -195,6 +97,5 @@
         }
 
 
-    </script>
-</body>
-</html>
+</script>
+

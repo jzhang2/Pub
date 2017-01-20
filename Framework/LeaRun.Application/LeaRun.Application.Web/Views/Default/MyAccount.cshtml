@@ -1,0 +1,325 @@
+﻿@{
+    ViewBag.Title = "个人中心";
+    ViewBag.navIndex = -1;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@using LeaRun.Application.Entity.ExtendManage
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+
+<script src="~/Content/scripts/plugins/uploadify/ajaxfileupload.js"></script>
+<script src="~/Content/scripts/plugins/datepicker/WdatePicker.js"></script>
+<script src="~/Content/scripts/utils/learun-ui.js"></script>
+<script src="~/Content/scripts/utils/learun-form.js"></script>
+<link href="~/Content/scripts/plugins/dialog/dialog.css" rel="stylesheet" />
+<script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
+<script src="~/Content/scripts/plugins/uploadify/bootstrap-filestyle.min.js"></script>
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive" />
+</div>
+@Html.AntiForgeryToken()
+<div id="best-deal" class="myaccount">
+    <div class="container">
+        <div class="row">
+            <div class="account-nav col-md-2 col-sm-12 col-xs-12" style="padding: 0; background: white">
+                <div class="col-md-12" style="padding: 0;">
+                    <img src="~/images/丁图.png" class="img-responsive" style="width: 100%" />
+                    <ul>
+                        <li class="active"><a href="javascript:;"><img src="~/images/个人资料选择效果.png" />个人资料</a></li>
+                        <li><a href="javascript:;"><img src="~/images/我的定制选择效果.png" />我的定制</a></li>
+                        <li><a href="javascript:;"><img src="~/images/我的投诉建议选择效果.png" />投诉建议</a></li>
+                        <li><a href="javascript:;"><img src="~/images/我的投稿选择效果.png" />我的投稿</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-12 col-xs-12 right-content">
+                <div class="col-md-12" style="background: white;">
+                    <div class="MyProfile col-md-6 col-sm-12 col-xs-12" style="">
+                        <form class="form-horizontal" role="form" id="form1">
+                            <div class="form-group">
+                                <label for="uploadPreview" class="control-label col-sm-3">头像</label>
+                                <div class="col-sm-9">
+                                    <div class="file">
+                                        <img id="uploadPreview" style="width: 70px; height: 70px;" src="@(!string.IsNullOrEmpty(Model.Customer.HeadIcon) ? Model.Customer.HeadIcon : "/Content/images/logo-headere47d5.png")" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="HeadIcon" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="FullName" class="control-label col-sm-3">昵称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="FullName" placeholder="" value="@Model.Customer.FullName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Mobile" class="control-label col-sm-3">手机号</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="Mobile" placeholder="" value="@Model.Customer.Mobile">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Gender" class="control-label col-sm-3">性别</label>
+                                <div class="col-sm-9">
+                                    <label class="radio-inline"><input type="radio" name="Gender" value="1" @(Model.Customer.Gender == 1 ? "checked" : "")>男</label>
+                                    <label class="radio-inline"><input type="radio" name="Gender" value="0" @(Model.Customer.Gender == 0 ? "checked" : "")>女</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Birthday" class="control-label col-sm-3">生日</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="Birthday" placeholder="" onfocus="WdatePicker({ maxDate: '%y-%M-%d' })" value="@(Convert.ToDateTime(Model.Customer.Birthday).ToString("yyyy-MM-dd"))">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="City" class="control-label col-sm-3">城市</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="City" placeholder="" value="@Model.Customer.City">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="CompanySite" class="control-label col-sm-3">职业</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="CompanySite" placeholder="" value="@Model.Customer.CompanySite">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="CompanyDesc" class="control-label col-sm-3">学历</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="CompanyDesc" placeholder="" value="@Model.Customer.CompanyDesc">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Hobby" class="control-label col-sm-3">兴趣标签</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="Hobby" placeholder="" value="@Model.Customer.Hobby">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button onclick="AcceptClick();" type="button" class="btn btn-default signinbtn" style="margin-right: 20px;" id="btnlogin">保存</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-12 col-xs-12 right-content" style="display:none"></div>
+            <div class="col-md-10 col-sm-12 col-xs-12 right-content" style="display: none">
+                <div class="col-md-12" style="background: white;">
+                    <div class="MyProfile col-md-12 col-sm-12 col-xs-12 sugg-nav" style="">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="javascript:;">投诉建议</a></li>
+                            <li><a href="javascript:;">历史记录</a></li>
+                        </ul>
+                    </div>
+                    <div class="MyProfile col-md-6 col-sm-12 col-xs-12 sugg-content">
+                        <form class="form-horizontal" role="form" id="form2">
+                            <div class="form-group">
+                                <label for="Category" class="control-label col-sm-3">类型</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="Category">
+                                        <option value="1">建议</option>
+                                        <option value="2">投诉</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Title" class="control-label col-sm-3">标题</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="Title" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Contents" class="control-label col-sm-3">内容</label>
+                                <div class="col-sm-9">
+                                    <textarea id="Contents" class="form-control" style="height: 80px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button onclick="SaveSuggestion();" type="button" class="btn btn-default signinbtn" style="margin-right: 20px;">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="MyProfile col-md-12 col-sm-12 col-xs-12 sugg-content" style="display: none">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>类型</th>
+                                    <th>标题</th>
+                                    <th>内容</th>
+                                    <th>时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (SuggestionEntity entity in Model.MySuggestionList) {
+                                    <tr>
+                                        <td>@(entity.Category == 1 ? "建议" : "投诉")</td>
+                                        <td>@entity.Title</td>
+                                        <td>@entity.Contents</td>
+                                        <td>@(Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-12 col-xs-12 right-content" style="display:none">
+                <div class="col-md-12" style="background: white;">
+                    <div class="MyProfile col-md-12 col-sm-12 col-xs-12 contri-nav" style="">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="javascript:;">投稿</a></li>
+                            <li><a href="javascript:;">历史记录</a></li>
+                        </ul>
+                    </div>
+                    <div class="MyProfile col-md-6 col-sm-12 col-xs-12 contri-content">
+                        <form class="form-horizontal" role="form" id="form3">
+                            <div class="form-group">
+                                <label for="ContriTitle" class="control-label col-sm-3">标题</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="ContriTitle" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Description" class="control-label col-sm-3">备注</label>
+                                <div class="col-sm-9">
+                                    <textarea id="Description" class="form-control" style="height: 80px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="uploadFile1" class="control-label col-sm-3">稿件</label>
+                                <div class="col-sm-9 contri-input">
+                                    <input type="file" name="uploadFile1" class="filestyle" id="uploadFile1"><input type="hidden" id="FileName" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button onclick="SaveContri();" type="button" class="btn btn-default signinbtn" style="margin-right: 20px;">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="MyProfile col-md-12 col-sm-12 col-xs-12 contri-content" style="display:none">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>标题</th>
+                                    <th>备注</th>
+                                    <th>时间</th>
+                                    <th>状态</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (ContributionEntity entity in Model.ContributionList) {
+                                    <tr>
+                                        <td>@entity.Title</td>
+                                        <td>@entity.Description</td>
+                                        <td>@entity.ContributionStatus</td>
+                                        <td>@(Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function AcceptClick() {
+        //if (!$('#form1').Validform()) {
+        //    return false;
+        //}
+        var keyValue = '@Model.Customer.CustomerId';
+        var postData = $("#form1").GetWebControls(keyValue);
+        postData["Gender"] = $('#form1 input[name="Gender"]:checked ').val();
+        $.SaveForm({
+            url: "../../ExtendManage/Customer/SaveForm?keyValue=" + keyValue,
+            param: postData,
+            loading: "正在保存数据...",
+            success: function () {
+
+            }
+        });
+    }
+    function SaveSuggestion() {
+        var postData = $("#form2").GetWebControls();
+        postData["Gender"] = $('#form1 input[name="Gender"]:checked ').val();
+        $.SaveForm({
+            url: "../../ExtendManage/Suggestion/SaveForm",
+            param: postData,
+            loading: "正在保存数据...",
+            success: function () {
+
+            }
+        });
+    }
+    function SaveContri() {
+        var postData = {
+            Title: $("#ContriTitle").val(),
+            Description: $("#Description").val(),
+            FileName: $("#FileName").val()
+        }
+        $.SaveForm({
+            url: "../../ExtendManage/Contribution/SaveForm",
+            param: postData,
+            loading: "正在保存数据...",
+            success: function () {
+            }
+        });
+    }
+    $(function () {
+        var tabindex = '@(ViewContext.RouteData.Values["id"])';
+        $(".account-nav ul li").eq(tabindex).addClass("active").siblings().removeClass("active");
+        $(".myaccount .row .right-content").hide().eq(tabindex).show();
+        $(".account-nav ul li").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            $(".myaccount .row .right-content").hide().eq($(this).index()).show();
+        });
+        $(".sugg-nav ul li").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            $(".sugg-content").hide().eq($(this).index()).show();
+        });
+        $(".contri-nav ul li").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            $(".contri-content").hide().eq($(this).index()).show();
+        });
+        $("#uploadFile1").filestyle({ icon: false });
+        $('#uploadFile').change(function () {
+            var f = document.getElementById('uploadFile').files[0];
+            var src = window.URL.createObjectURL(f);
+            document.getElementById('uploadPreview').src = src;
+
+            //上传应用图标
+            $.ajaxFileUpload({
+                url: "/ExtendManage/Books/UploadFile",
+                secureuri: false,
+                fileElementId: 'uploadFile',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.type == 1) {
+                        $("#HeadIcon").val(data.resultdata);
+                    }
+                    dialogMsg(data.message, 1);
+                }
+            });
+        });
+        $('#uploadFile1').change(function () {
+            //上传应用图标
+            $.ajaxFileUpload({
+                url: "/ExtendManage/Books/UploadFile",
+                secureuri: false,
+                fileElementId: 'uploadFile1',
+                dataType: 'json',
+                success: function (data) {
+                    alert(data)
+                    if (data.type == 1) {
+                        $("#FileName").val(data.resultdata);
+                    }
+                    dialogMsg(data.message, 1);
+                }
+            });
+        });
+    });
+</script>
