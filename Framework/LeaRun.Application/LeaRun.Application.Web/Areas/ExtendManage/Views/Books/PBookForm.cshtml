@@ -12,7 +12,30 @@
         $('#summernote').summernote({
             height: 270,
             placeholder: '这里输入书籍简介...',
-            lang: 'zh-CN'
+            lang: 'zh-CN',
+            fontNames: ['微软雅黑', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],
+            callbacks: {
+                onImageUpload: function (files) {
+                    var formData = new FormData();
+                    formData.append("file", files[0]);
+                    $.ajax({
+                        dataType: 'json',
+                        data: formData,
+                        type: "POST",
+                        url: "/ExtendManage/Books/UploadImage",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            if (data.type == 1) {
+                                $('#summernote').summernote('insertImage', data.resultdata);
+                            } else {
+                                dialogMsg(data.message, 1);
+                            }
+                        }
+                    });
+                }
+            }
         });
         initControl();
     })

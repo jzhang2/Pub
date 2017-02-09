@@ -3,6 +3,7 @@
     ViewBag.navIndex = -1;
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
+<script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
 @model LeaRun.Application.Web.Controllers.HomeViewModel
 <div>
     <img src="~/images/baneer1.png" class="img-responsive" />
@@ -10,14 +11,36 @@
 <div id="best-deal">
     <div class="container" style="background: white; padding: 35px 25px;">
         <div style="border-bottom: solid 1px #E6EAED; margin-bottom: 25px; padding-bottom: 10px;">
-            <h3 style="margin-bottom: 5px;">@Model.CurrentArticle.FullHead</h3>
-            <span>@Convert.ToDateTime(Model.CurrentArticle.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.CurrentArticle.AuthorName</span><span class="comments-bar"><i class="icon-thumbs-o-up"></i>@Model.CurrentArticle.PV<i class="icon-comments"></i>10</span>
+            <h3 style="margin-bottom: 5px;">@Model.Detial.FullHead</h3>
+            <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="icon-thumbs-o-up"></i>@Model.Detial.ThumbUp<i class="icon-comments"></i>10</span>
         </div>
         <div>
-            @Html.Raw(HttpUtility.HtmlDecode(Model.CurrentArticle.NewsContent))
+            @Html.Raw(HttpUtility.HtmlDecode(Model.Detial.NewsContent))
+        </div>
+        <div style="vertical-align: central; text-align: center;">
+            <img @(!Model.Detial.IsThumbed ? "class=thumb_up_icon" : "") src="/images/点赞.png" />
+            <p id="tcount">@Model.Detial.ThumbUp 人点赞</p>
         </div>
     </div>
 </div>
 <script>
-    
+    $(".thumb_up_icon").click(function () {
+        $.ajax({
+            url: "/Default/ThumbUp",
+            data: { NewsId: '@Model.Detial.NewsId' },
+            type: "get",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.type == 1) {
+                    $(".thumb_up_icon").unbind();
+                    layer.msg('+1', { icon: 1, time: 2000, shift: 5 });
+                    $("#tcount").html('@(Model.Detial.ThumbUp+1)' + ' 人点赞');
+                    $(".thumb_up_icon").removeClass("thumb_up_icon");
+                } else {
+                    layer.msg(data.message, { icon: 1, time: 2000, shift: 5 });
+                }
+            }
+        });
+    })
 </script>

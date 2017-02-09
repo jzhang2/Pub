@@ -6,8 +6,7 @@ using LeaRun.Util.WebControl;
 using System;
 using System.Collections.Generic;
 
-namespace LeaRun.Application.Busines.PublicInfoManage
-{
+namespace LeaRun.Application.Busines.PublicInfoManage {
     /// <summary>
     /// 版 本 6.1
     /// Copyright (c) 2013-2016 上海力软信息技术有限公司
@@ -15,8 +14,7 @@ namespace LeaRun.Application.Busines.PublicInfoManage
     /// 日 期：2015.12.7 16:40
     /// 描 述：新闻中心
     /// </summary>
-    public class NewsBLL
-    {
+    public class NewsBLL {
         private INewsService service = new NewsService();
 
         #region 获取数据
@@ -26,8 +24,7 @@ namespace LeaRun.Application.Busines.PublicInfoManage
         /// <param name="pagination">分页</param>
         /// <param name="queryJson">查询参数</param>
         /// <returns></returns>
-        public IEnumerable<NewsEntity> GetPageList(Pagination pagination, string queryJson)
-        {
+        public IEnumerable<NewsEntity> GetPageList(Pagination pagination, string queryJson) {
             return service.GetPageList(pagination, queryJson);
         }
         /// <summary>
@@ -35,10 +32,11 @@ namespace LeaRun.Application.Busines.PublicInfoManage
         /// </summary>
         /// <param name="keyValue">主键值</param>
         /// <returns></returns>
-        public NewsEntity GetEntity(string keyValue)
-        {
+        public NewsEntity GetEntity(string keyValue) {
             NewsEntity newsEntity = service.GetEntity(keyValue);
-            newsEntity.NewsContent = WebHelper.HtmlDecode(newsEntity.NewsContent);
+            if (newsEntity?.NewsContent != null) {
+                newsEntity.NewsContent = WebHelper.HtmlDecode(newsEntity.NewsContent);
+            }
             return newsEntity;
         }
         #endregion
@@ -48,14 +46,11 @@ namespace LeaRun.Application.Busines.PublicInfoManage
         /// 删除新闻
         /// </summary>
         /// <param name="keyValue">主键</param>
-        public void RemoveForm(string keyValue)
-        {
-            try
-            {
+        public void RemoveForm(string keyValue) {
+            try {
                 service.RemoveForm(keyValue);
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 throw;
             }
         }
@@ -65,22 +60,18 @@ namespace LeaRun.Application.Busines.PublicInfoManage
         /// <param name="keyValue">主键值</param>
         /// <param name="newsEntity">新闻实体</param>
         /// <returns></returns>
-        public void SaveForm(string keyValue, NewsEntity newsEntity)
-        {
-            try
-            {
+        public void SaveForm(string keyValue, NewsEntity newsEntity) {
+            try {
                 newsEntity.NewsContent = WebHelper.HtmlEncode(newsEntity.NewsContent);
                 service.SaveForm(keyValue, newsEntity);
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 throw;
             }
         }
         #endregion
 
-        public void UpdateState(string keyValue, int State)
-        {
+        public void UpdateState(string keyValue, int State) {
             try {
                 service.UpdateState(keyValue, State);
             }

@@ -7,18 +7,15 @@ using System.Linq;
 using LeaRun.Application.Entity.BaseManage;
 using LeaRun.Util.Extension;
 
-namespace LeaRun.Application.Service.ExtendManage
-{
-    public class SecurityCodeService : RepositoryFactory<SecurityCodeEntity>, SecurityCodeIService
-    {
+namespace LeaRun.Application.Service.ExtendManage {
+    public class SecurityCodeService : RepositoryFactory<SecurityCodeEntity>, SecurityCodeIService {
         #region 获取数据
         /// <summary>
         /// 获取列表
         /// </summary>
         /// <param name="queryJson">查询参数</param>
         /// <returns>返回列表</returns>
-        public IEnumerable<SecurityCodeEntity> GetList(string queryJson)
-        {
+        public IEnumerable<SecurityCodeEntity> GetList(string queryJson) {
             return this.BaseRepository().IQueryable().ToList();
         }
         /// <summary>
@@ -26,8 +23,7 @@ namespace LeaRun.Application.Service.ExtendManage
         /// </summary>
         /// <param name="keyValue">主键值</param>
         /// <returns></returns>
-        public SecurityCodeEntity GetEntity(string keyValue)
-        {
+        public SecurityCodeEntity GetEntity(string keyValue) {
             return this.BaseRepository().FindEntity(keyValue);
         }
         #endregion
@@ -37,8 +33,7 @@ namespace LeaRun.Application.Service.ExtendManage
         /// 删除数据
         /// </summary>
         /// <param name="keyValue">主键</param>
-        public void RemoveForm(string keyValue)
-        {
+        public void RemoveForm(string keyValue) {
             this.BaseRepository().Delete(keyValue);
         }
         /// <summary>
@@ -47,25 +42,27 @@ namespace LeaRun.Application.Service.ExtendManage
         /// <param name="keyValue">主键值</param>
         /// <param name="entity">实体对象</param>
         /// <returns></returns>
-        public void SaveForm(string keyValue, SecurityCodeEntity entity)
-        {
-            if (!string.IsNullOrEmpty(keyValue))
-            {
+        public void SaveForm(string keyValue, SecurityCodeEntity entity) {
+            if (!string.IsNullOrEmpty(keyValue)) {
                 entity.Modify(keyValue);
                 this.BaseRepository().Update(entity);
             }
-            else
-            {
+            else {
                 entity.Create();
                 this.BaseRepository().Insert(entity);
             }
         }
         #endregion
 
-        public SecurityCodeEntity GetSecurityCode(string mobileCode)
-        {
+        public SecurityCodeEntity GetSecurityCode(string mobileCode) {
             var expression = LinqExtensions.True<SecurityCodeEntity>();
             expression = expression.And(t => t.Email == mobileCode);
+            return this.BaseRepository().IQueryable(expression).OrderByDescending(t => t.CreateDate).FirstOrDefault();
+        }
+
+        public SecurityCodeEntity GetCode(string mobileCode) {
+            var expression = LinqExtensions.True<SecurityCodeEntity>();
+            expression = expression.And(t => t.SecurityCode == mobileCode);
             return this.BaseRepository().IQueryable(expression).OrderByDescending(t => t.CreateDate).FirstOrDefault();
         }
     }

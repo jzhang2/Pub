@@ -40,7 +40,7 @@ p {
 
 h1, h2, h3, h4, h5, h6, figure {
     color: #000;
-    font-family: "Varela Round", Arial, sans-serif;
+    font-family: "Microsoft YaHei","Varela Round", Arial, sans-serif;
     font-weight: 400;
     margin: 0 0 30px 0;
 }
@@ -440,7 +440,7 @@ h1, h2, h3, h4, h5, h6, figure {
     padding: 7px 24px;
 }
 
-.sendver {
+.sendver,.sendver:hover,.sendver:focus {
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
@@ -2542,4 +2542,12 @@ h1, h2, h3, h4, h5, h6, figure {
     -ms-user-select: none;
     user-select: none;
     margin-right: 0;
+}
+
+a.btn, button.btn {
+    border: 0;
+}
+
+.thumb_up_icon {
+    cursor: pointer;
 }

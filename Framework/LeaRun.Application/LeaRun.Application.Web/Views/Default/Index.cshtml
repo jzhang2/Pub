@@ -5,6 +5,7 @@
 }
 @using LeaRun.Application.Entity.ExtendManage
 @using LeaRun.Application.Entity.PublicInfoManage
+@using LeaRun.Application.Web.Controllers
 @using LeaRun.Util
 @model LeaRun.Application.Web.Controllers.HomeViewModel
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=SRkUQaDbD9KVsHZGmikTgCG1"></script>
@@ -38,32 +39,38 @@
                     <li class="col-xs-12-nav"><a class="regbtn btn" href="javascript:;">快速业务</a></li>
                     <li class="col-xs-6-nav">
                         <a href="/" class="active">
-                            <img src="~/images/dz.bmp" />读者服务
+                            <img src="~/images/读者服务选中.png"/>
+                            读者服务
                         </a>
                     </li>
                     <li>
                         <a href="/" class="active">
-                            <img src="~/images/zzfw.bmp" />作者服务
+                            <img src="~/images/作者服务选中.png"/>
+                            作者服务
                         </a>
                     </li>
                     <li class="col-xs-6-nav">
                         <a href="/" class="active">
-                            <img src="~/images/zzfw.bmp" />经销商服务
+                            <img src="~/images/经销商服务选中.png"/>
+                            经销商服务
                         </a>
                     </li>
                     <li>
                         <a href="/" class="active">
-                            <img src="~/images/zzfw.bmp" />图书馆服务
+                            <img src="~/images/图书馆服务选中.png"/>
+                            图书馆服务
                         </a>
                     </li>
                     <li class="col-xs-6-nav">
                         <a href="/" class="active">
-                            <img src="~/images/zzfw.bmp" />农家书屋服务
+                            <img src="~/images/农家书屋服务选中.png"/>
+                            农家书屋服务
                         </a>
                     </li>
                     <li>
                         <a href="/" class="active">
-                            <img src="~/images/zzfw.bmp" />社区书屋服务
+                            <img src="~/images/社区书屋服务选中.png"/>
+                            社区书屋服务
                         </a>
                     </li>
 
@@ -81,7 +88,7 @@
             </div>
         </div>
         <div class="row">
-            @foreach (NewsEntity entity in Model.NewsList) {
+            @foreach (NewsEntityThumbUp entity in Model.NewsEntityThumbUp) {
                 <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
                     <div class="fh5co-property">
                         <div class="fh5co-property-title">
@@ -92,10 +99,10 @@
                             <img src="@entity.NewsImage" alt="" class="img-responsive">
                         </figure>
                         <div class="fh5co-property-innter">
-                            <p>@(WebHelper.GetText(entity.NewsContent).Length > 60 ? WebHelper.GetText(entity.NewsContent).Substring(0, 60) : WebHelper.GetText(entity.NewsContent))</p>
+                            <p>@entity.NewsContent</p>
                         </div>
                         <p class="fh5co-property-specification">
-                            <span>@entity.AuthorName</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>@entity.PV<i class="icon-comments"></i>10</span>
+                            <span>@entity.AuthorName</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>@entity.ThumbUp<i class="icon-comments"></i>10</span>
                         </p>
                     </div>
 
@@ -119,7 +126,7 @@
                         <figure>
                             <img class="img-responsive" src="@entity.NewsImage" alt="">
                         </figure>
-                        <p>@(WebHelper.GetText(entity.NewsContent).Length > 60 ? WebHelper.GetText(entity.NewsContent).Substring(0, 60) : WebHelper.GetText(entity.NewsContent))</p>
+                        <p>@entity.NewsContent</p>
                         <p>
                             <a href="/Detail/@entity.NewsId" class="btn btn-primary btn-outline">点击详情</a>
                         </p>
@@ -152,7 +159,7 @@
                             <div class="price-status">
                                 <span class="price">￥@entity.Price </span>
                             </div>
-                            <p>@(WebHelper.GetText(entity.NewsContent).Length > 60 ? WebHelper.GetText(entity.NewsContent).Substring(0, 60) : WebHelper.GetText(entity.NewsContent))</p>
+                            <p>@entity.NewsContent</p>
                         </div>
                         <p class="fh5co-property-specification books">
                             <span><strong>阅读数</strong>@entity.PV</span>

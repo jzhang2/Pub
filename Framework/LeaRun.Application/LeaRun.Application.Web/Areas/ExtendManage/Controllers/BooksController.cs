@@ -109,6 +109,27 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
             return Success("操作成功。");
         }
 
+        [HttpPost]
+        public ActionResult UploadImage(HttpPostedFileBase file) {
+            if (file != null && file.ContentType.StartsWith("image/"))
+            {
+                string FileEextension = Path.GetExtension(file.FileName);
+                string virtualPath = string.Format("/Resource/BookFile/{0}{1}", Guid.NewGuid(), FileEextension);
+                string fullFileName = Server.MapPath("~" + virtualPath);
+                //创建文件夹，保存文件
+                string path = Path.GetDirectoryName(fullFileName);
+                Directory.CreateDirectory(path);
+                file.SaveAs(fullFileName);
+
+                return Success("上传成功。", virtualPath);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+        [HttpGet]
         public ActionResult UploadFile() {
             HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
             //没有文件上传，直接返回

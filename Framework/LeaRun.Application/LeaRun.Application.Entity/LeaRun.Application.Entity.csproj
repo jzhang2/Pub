@@ -65,6 +65,7 @@
     <Compile Include="ExtendManage\SecurityCodeEntity.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerEntity.cs" />
     <Compile Include="ExtendManage\SuggestionEntity.cs" />
+    <Compile Include="ExtendManage\ThumbUpEntity.cs" />
     <Compile Include="FlowManage\WFDelegateRecordEntity.cs" />
     <Compile Include="FlowManage\WFDelegateRuleEntity.cs" />
     <Compile Include="FlowManage\WFDelegateRuleSchemeInfoEntity.cs" />

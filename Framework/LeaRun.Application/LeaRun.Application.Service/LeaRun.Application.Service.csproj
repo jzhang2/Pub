@@ -67,6 +67,7 @@
     <Compile Include="ExtendManage\SecurityCodeService.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerService.cs" />
     <Compile Include="ExtendManage\SuggestionService.cs" />
+    <Compile Include="ExtendManage\ThumbUpService.cs" />
     <Compile Include="FlowManage\WFDelegateRecordService.cs" />
     <Compile Include="FlowManage\WFDelegateRuleService.cs" />
     <Compile Include="FlowManage\WFProcessInstanceService.cs" />

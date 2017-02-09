@@ -10,6 +10,16 @@ namespace LeaRun.Application.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "ResetPwd",
+                url: "ResetPwd",
+                defaults: new { controller = "Default", action = "ResetPwd", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "ForgotPassWord",
+                url: "ForgotPassWord",
+                defaults: new { controller = "Default", action = "ForgotPassWord", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                 name: "Books",
                 url: "Books",
                 defaults: new { controller = "Default", action = "Books", id = UrlParameter.Optional }

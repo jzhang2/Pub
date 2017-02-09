@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "重置密码";
+    ViewBag.navIndex = -1;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<link href="~/Content/styles/font-awesome.min.css" rel="stylesheet" />
+<div style="background-image: url('../../images/baneer1.png');background-size:cover; ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-push-5 col-sm-12 col-sm-push-0 col-xs-12 col-xs-push-0" style="margin: 70px 0;background: white">
+                <div class="signup">
+                    <h3>重置密码</h3>
+                    @if (!string.IsNullOrEmpty(ViewBag.Message))
+                    {
+                        <label  class="control-label">@(@Html.Raw(ViewBag.Message))</label>
+                    }
+                    else
+                    {
+                        <form class="form-horizontal" role="form" id="Regform">
+                            <div class="form-group">
+                                <label for="pwd" class="control-label col-sm-3">设置密码</label>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" id="pwd" placeholder="设置密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="cpwd" class="control-label col-sm-3">确认密码</label>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" id="cpwd" placeholder="确认密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-md-push-3">
+                                    <button type="submit" id="btnregister" class="btn btn-default signupbtn">确认</button>
+                                </div>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Content/scripts/plugins/jquery.md5.js"></script>
+<script>
+
+    /*=========注册账户（begin）================================================================*/
+    $(function() {
+        //注册按钮事件
+        $("#btnregister").click(function() {
+            var $password = $("#pwd");
+            var $cpwd = $("#cpwd");
+            if ($password.val() == "") {
+                $password.focus();
+                formMessage('请输入密码。');
+                return false;
+            } else if ($password.val() != $cpwd.val()) {
+                $cpwd.focus();
+                formMessage('两次输入的密码不一致。');
+                return false;
+            } else {
+                $("#btnregister").addClass('active').attr('disabled', 'disabled');
+                $.ajax({
+                    url: "/Default/UpdatePwd",
+                    data: { securityCode: '@(HttpContext.Current.Request.QueryString["code"])', password: $.md5($password.val()) },
+                    type: "post",
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.type == 1) {
+                            //alert('注册成功');
+                            window.location.href = '/';
+                        } else {
+                            formMessage(data.message);
+                            $("#btnregister").removeClass('active').removeAttr('disabled');
+                            //$("#btnregister").find('span').show();
+                            //$("#register_verifycode").trigger("click");
+                        }
+                    }
+                });
+            }
+        })
+    });
+</script>
+

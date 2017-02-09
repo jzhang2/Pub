@@ -17,6 +17,7 @@ using LeaRun.Application.Entity.ExtendManage;
 using LeaRun.Application.Entity.PublicInfoManage;
 using LeaRun.Application.Entity.SystemManage;
 using LeaRun.Application.Entity.SystemManage.ViewModel;
+using LeaRun.Application.Service.CustomerManage;
 using LeaRun.Application.Service.ExtendManage;
 using LeaRun.Util;
 using LeaRun.Util.Attributes;
@@ -24,17 +25,49 @@ using LeaRun.Util.Extension;
 using LeaRun.Util.WebControl;
 
 namespace LeaRun.Application.Web.Controllers {
-    public class HomeViewModel {
-        public List<NewsEntity> NewsList { get; set; }
-        public List<NewsEntity> MapNewsList { get; set; }
-        public List<NewsEntity> PBooksList { get; set; }
-        public List<BannerNewsEntity> BannerNewsList { get; set; }
-        public List<DataItemModel> DataItemList { get; set; }
-        public List<NewsEntity> AboutUs { get; set; }
-        public NewsEntity CurrentArticle { get; set; }
-        public CustomerEntity Customer { get; set; }
-        public List<SuggestionEntity> MySuggestionList { get; set; }
-        public List<ContributionEntity> ContributionList { get; set; } 
+    public class NewsEntityThumbUp : NewsEntity {
+        private ThumbUpService service = new ThumbUpService();
+        public int ThumbUp
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(NewsId)) {
+                    return service.GetCount(NewsId,"");
+                }
+                else {
+                    return 0;
+                }
+            }
+        }
+
+        public bool IsThumbed
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(NewsId)) {
+                    return service.GetCount(NewsId, OperatorProvider.Provider.Current().UserId) >0;
+                }
+                else {
+                    return true;
+                }
+            }
+        }
+    }
+
+    public class HomeViewModel
+    {
+        public List<NewsEntity> NewsList = new List<NewsEntity>();
+        public List<NewsEntityThumbUp> NewsEntityThumbUp = new List<NewsEntityThumbUp>();
+        public List<NewsEntity> MapNewsList = new List<NewsEntity>();
+        public List<NewsEntity> PBooksList = new List<NewsEntity>();
+        public List<BannerNewsEntity> BannerNewsList = new List<BannerNewsEntity>();
+        public List<DataItemModel> DataItemList = new List<DataItemModel>();
+        public List<NewsEntity> AboutUs = new List<NewsEntity>();
+        public NewsEntity CurrentArticle =new NewsEntity();
+        public NewsEntityThumbUp Detial = new NewsEntityThumbUp();
+        public CustomerEntity Customer = new CustomerEntity();
+        public List<SuggestionEntity> MySuggestionList = new List<SuggestionEntity>();
+        public List<ContributionEntity> ContributionList = new List<ContributionEntity>();
     }
     [HandlerLogin(LoginMode.Ignore, LoginType.FrontEnd)]
     public class DefaultController : MvcControllerBase {
@@ -45,8 +78,7 @@ namespace LeaRun.Application.Web.Controllers {
         private DataItemCache dataItemCache = new DataItemCache();
         private SuggestionBLL suggestionBll = new SuggestionBLL();
         private ContributionBLL contributionBll = new ContributionBLL();
-
-
+        private ThumbUpService service = new ThumbUpService();
         public ActionResult Index() {
             var viewModel = new HomeViewModel();
             Pagination pagination = new Pagination();
@@ -54,19 +86,22 @@ namespace LeaRun.Application.Web.Controllers {
             pagination.rows = 4;
             pagination.sidx = "CreateDate";
             pagination.sord = "DESC";
-            viewModel.NewsList = newsBll.GetPageList(pagination, "{ TypeId:3,EnabledMark:1 }").ToList();
-
+            var NewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:3,EnabledMark:1 }").ToList(), 60);
+            NewsList.ForEach(x=> viewModel.NewsEntityThumbUp.Add(CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(x)));
             pagination.rows = 6;
-            viewModel.MapNewsList = newsBll.GetPageList(pagination, "{ TypeId:4,EnabledMark:1 }").ToList();
+            viewModel.MapNewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:4,EnabledMark:1 }").ToList(), 60);
 
             pagination.rows = 10000;
-            viewModel.PBooksList = newsBll.GetPageList(pagination, "{ TypeId:6,EnabledMark:1,IsRecommend:1 }").ToList();
+            viewModel.PBooksList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:6,EnabledMark:1,IsRecommend:1 }").ToList(), 60);
 
             viewModel.BannerNewsList = bannerNewsBll.GetPageList(pagination, "{Type:1}").ToList();
             return View(viewModel);
         }
 
         public ActionResult SignUp() {
+            return View();
+        }
+        public ActionResult ForgotPassWord() {
             return View();
         }
         public ActionResult SignIn() {
@@ -120,7 +155,7 @@ namespace LeaRun.Application.Web.Controllers {
         public ActionResult Detail(string id) {
             var viewModel = new HomeViewModel();
             if (!string.IsNullOrEmpty(id)) {
-                viewModel.CurrentArticle = newsBll.GetEntity(id);
+                viewModel.Detial = CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(newsBll.GetEntity(id));
             }
             return View(viewModel);
         }
@@ -128,12 +163,25 @@ namespace LeaRun.Application.Web.Controllers {
             var viewModel = new HomeViewModel();
             if (!string.IsNullOrEmpty(id)) {
                 viewModel.CurrentArticle = newsBll.GetEntity(id);
+                viewModel.CurrentArticle.PV = viewModel.CurrentArticle.PV + 1;
+                newsBll.SaveForm(viewModel.CurrentArticle.NewsId, viewModel.CurrentArticle);
             }
             return View(viewModel);
         }
 
         public ActionResult Books() {
             return View();
+        }
+
+        public List<NewsEntity> SubStringList(List<NewsEntity> data, int length) {
+            foreach (NewsEntity entity in data) {
+                if (entity.NewsContent == null) continue;
+                var content = WebHelper.StripTagsCharArray(System.Web.HttpContext.Current.Server.HtmlDecode(entity.NewsContent));
+                entity.NewsContent = content.Length > length
+                    ? content.Substring(0, length)
+                    : content;
+            }
+            return data;
         }
 
         [HandlerLogin(LoginMode.Enforce, LoginType.FrontEnd)]
@@ -160,12 +208,17 @@ namespace LeaRun.Application.Web.Controllers {
             var watch = CommonHelper.TimerStart();
             var data = newsBll.GetPageList(pagination, queryJson).ToList();
             foreach (NewsEntity entity in data) {
-                entity.NewsContent = WebHelper.GetText(entity.NewsContent).Length > 60
-                    ? WebHelper.GetText(entity.NewsContent).Substring(0, 60)
-                    : WebHelper.GetText(entity.NewsContent);
+                if (entity.NewsContent == null) continue;
+                var content =
+                    WebHelper.StripTagsCharArray(System.Web.HttpContext.Current.Server.HtmlDecode(entity.NewsContent));
+                entity.NewsContent = content.Length > 60
+                    ? content.Substring(0, 60)
+                    : content;
             }
+            var thumb=new List<NewsEntityThumbUp>();
+            data.ForEach(x => thumb.Add(CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(x)));
             var JsonData = new {
-                rows = data,
+                rows = thumb,
                 total = pagination.total,
                 page = pagination.page,
                 records = pagination.records,
@@ -190,7 +243,7 @@ namespace LeaRun.Application.Web.Controllers {
                 if (code == null) {
                     return Error("请先获取验证码。");
                 }
-                if (Convert.ToDateTime(code.CreateDate).AddMinutes(5) < DateTime.Now) {
+                if (Convert.ToDateTime(code.CreateDate).AddMinutes(10) < DateTime.Now) {
                     return Error("验证码已过期，请重新获取。");
                 }
                 if (code.SecurityCode != securityCode) {
@@ -224,6 +277,71 @@ namespace LeaRun.Application.Web.Controllers {
                 return Error("注册失败。");
             }
         }
+
+        public ActionResult ResetPwd(string code) {
+            var entity = securityCodeService.GetCode(code);
+            if (entity == null) {
+                ViewBag.Message = "非法请求。";
+            }
+            if (Convert.ToDateTime(entity.CreateDate).AddMinutes(10) < DateTime.Now) {
+                ViewBag.Message = "重置密码邮件已过期，请<a href=\"/ForgotPassWord\">重新发送邮件</a>。";
+            }
+            return View();
+        }
+
+        public ActionResult ThumbUp(string NewsId) {
+            if (service.GetCount(NewsId, OperatorProvider.Provider.Current().UserId) > 0)
+            {
+                return Error("您已经点过赞了。");
+            }
+            var entity = new ThumbUpEntity
+            {
+                CustomerId= OperatorProvider.Provider.Current().UserId,
+                NewsId=NewsId
+            };
+            service.SaveForm("",entity);
+            return Success("点赞成功。");
+        }
+
+        public ActionResult UpdatePwd(string securityCode, string password) {
+            try {
+
+                var code = securityCodeService.GetCode(securityCode);
+                if (code == null) {
+                    return Error("非法请求。");
+                }
+                if (Convert.ToDateTime(code.CreateDate).AddMinutes(10) < DateTime.Now) {
+                    return Error("重置邮件已过期，请<a href=\"/ForgotPassWord\">重新发送邮件</a>。");
+                }
+
+                CustomerEntity userEntity = new CustomerService().CheckLogin(code.Email);
+                userEntity.Secretkey = Md5Helper.MD5(CommonHelper.CreateNo(), 16).ToLower();
+                userEntity.Password = Md5Helper.MD5(DESEncrypt.Encrypt(password.ToLower(), userEntity.Secretkey).ToLower(), 32).ToLower(); userEntity.EnabledMark = 1;
+                customerbll.SaveForm("", userEntity);
+                Operator operators = new Operator();
+                operators.UserId = userEntity.CustomerId;
+                operators.Code = userEntity.EnCode;
+                operators.HeadIcon = userEntity.HeadIcon;
+                operators.Account = userEntity.Email;
+                operators.Password = userEntity.Password;
+                operators.Secretkey = userEntity.Secretkey;
+                operators.RealName = userEntity.FullName;
+                operators.IPAddress = Net.Ip;
+                operators.IPAddressName = IPLocation.GetLocation(Net.Ip);
+                operators.LogTime = DateTime.Now;
+                operators.Token = DESEncrypt.Encrypt(Guid.NewGuid().ToString());
+                AuthorizeDataModel dataAuthorize = new AuthorizeDataModel();
+                operators.DataAuthorize = dataAuthorize;
+                OperatorProvider.Provider.AddCurrent(operators);
+                return Success("重置密码成功。");
+
+            }
+            catch (Exception) {
+
+                return Error("重置密码失败。");
+            }
+        }
+
         [HttpPost]
         [AjaxOnly]
         public ActionResult CheckLogin(string username, string password, string verifycode, int autologin) {
@@ -318,6 +436,30 @@ namespace LeaRun.Application.Web.Controllers {
             }
             catch (Exception ee) {
                 return Error("验证码发送错误。");
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult SendPwd(string mobileCode) {
+            if (!ValidateUtil.IsEmail(mobileCode)) {
+                throw new Exception("邮箱地址格式不正确,请输入正确格式的邮箱地址。");
+            }
+            var exists = customerbll.ExistEmail(mobileCode, "");
+            if (exists) {
+                throw new Exception("邮箱地址不存在。");
+            }
+            try {
+                var entity = new SecurityCodeEntity();
+                entity.Email = mobileCode;
+                entity.CreateDate = DateTime.Now;
+                entity.SecurityCode = Md5Helper.MD5(CommonHelper.RndNum(4) + mobileCode, 16); ;
+                securityCodeService.SaveForm("", entity);
+                MailHelper.SendEmailByThread(mobileCode, "西安地图出版社重置密码", "尊敬的用户您好：感谢您使用西安地图出版社，请点击链接<a href=\"http://" + System.Web.HttpContext.Current.Request.Url.Authority + "/ResetPwd?code=" + entity.SecurityCode + "\" target=\"_blank\">http://" + System.Web.HttpContext.Current.Request.Url.Authority + "/ResetPwd?code=" + entity.SecurityCode + "</a>重置密码，有效期10分钟。");
+                return Success("重置密码邮件已发送到您的邮箱。");
+            }
+            catch (Exception ee) {
+                return Error("邮件发送错误。");
             }
 
         }

@@ -63,6 +63,7 @@
     <Compile Include="ExtendManage\SecurityCodeBLL.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerBLL.cs" />
     <Compile Include="ExtendManage\SuggestionBLL.cs" />
+    <Compile Include="ExtendManage\ThumbUpBLL.cs" />
     <Compile Include="FlowManage\WFDelegate.cs" />
     <Compile Include="FlowManage\WFRuntimeBLL.cs" />
     <Compile Include="FlowManage\WFSchemeInfoBLL.cs" />

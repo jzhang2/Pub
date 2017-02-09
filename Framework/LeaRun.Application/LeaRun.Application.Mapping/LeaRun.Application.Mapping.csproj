@@ -71,6 +71,7 @@
     <Compile Include="ExtendManage\SecurityCodeMap.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerMap.cs" />
     <Compile Include="ExtendManage\SuggestionMap.cs" />
+    <Compile Include="ExtendManage\ThumbUpMap.cs" />
     <Compile Include="FlowManage\WFDelegateRecordMap.cs" />
     <Compile Include="FlowManage\WFDelegateRuleMap.cs" />
     <Compile Include="FlowManage\WFDelegateRuleSchemeInfoMap.cs" />
