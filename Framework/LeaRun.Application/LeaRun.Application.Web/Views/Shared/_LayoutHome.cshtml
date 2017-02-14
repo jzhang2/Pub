@@ -60,7 +60,12 @@
                                         <li><a href="#/preview/?item=light-free-html5-template-bootstrap" target="_blank">趣味地图</a></li>
                                     </ul>*@
                                 </li>
-                                <li><a href="/Books">网上书店</a></li>
+                                <li><a href="/Books">网上书店</a>
+                                    @*<ul class="fh5co-sub-menu" style="width: 100px;">
+                                        <li><a href="javascript:;" data-id="5">电子书库</a></li>
+                                        <li><a href="javascript:;" data-id="6">实体书库</a></li>
+                                    </ul>*@
+                                </li>
                                 <li><a href="#">产品定制</a></li>
                                 <li><a href="/Service">业务服务</a></li>
                                 <li><a href="/AboutUs">关于我们</a></li>
@@ -68,7 +73,7 @@
                                 {
                                     string name = !string.IsNullOrEmpty(OperatorProvider.Provider.Current().RealName) ? OperatorProvider.Provider.Current().RealName : OperatorProvider.Provider.Current().Account;
                                     <li>
-                                        <a href="javascript:;" id="HeadIcon_imgs"><img width="34" height="34" style="padding-bottom: 6px;" src="@(OperatorProvider.Provider.Current().HeadIcon ?? "/images/头像.png")"/>@(name.Length > 16 ? (name.Substring(0, 13) + "...") : name)</a>
+                                        <a href="javascript:;" id="HeadIcon_imgs"><img width="34" height="34" style="margin-top: -4px" src="@(OperatorProvider.Provider.Current().HeadIcon ?? "/images/头像.png")"/>@(name.Length > 16 ? (name.Substring(0, 13) + "...") : name)</a>
                                         <ul class="fh5co-sub-menu" style="width: 100px;">
                                             <li><a href="/MyAccount/0">个人资料</a></li>
                                             <li><a href="/MyAccount/1">我的定制</a></li>

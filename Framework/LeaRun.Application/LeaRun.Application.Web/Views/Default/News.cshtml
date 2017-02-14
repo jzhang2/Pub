@@ -15,7 +15,7 @@
                 <ul>
                     @for (int i = 0; i < Model.DataItemList.Count; i++) {
                         <li @(i % 2 == 0 ? "class=col-xs-6-nav" : "")>
-                            <a href="javascript:;">@Model.DataItemList[i].ItemName</a>
+                            <a href="javascript:;" @(i==0?"class=active":"")>@Model.DataItemList[i].ItemName</a>
                         </li>
                     }
                     <li style="float: right" class="col-xs-search">
@@ -61,9 +61,10 @@
                     var html = "";
                     $.each(data.rows, function (i) {
                         html += '<div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">';
+                        html += '<a href="/Detail/' + data.rows[i].NewsId + '">';
                         html += '<div class="fh5co-property">';
                         html += '<div class="fh5co-property-title">';
-                        html += '<h5><a href="/Detail/' + data.rows[i].NewsId + '">' + data.rows[i].FullHead + '</a></h5>';
+                        html += '<h5 title="' + data.rows[i].FullHead + '">' + data.rows[i].FullHead + '</h5>';
                         html += '<p>' + data.rows[i].CreateDate + '</p>';
                         html += '</div>';
                         html += '<figure>';
@@ -73,9 +74,10 @@
                         html += '<p>' + data.rows[i].NewsContent + '</p>';
                         html += '</div>';
                         html += '<p class="fh5co-property-specification">';
-                        html += '<span>' + data.rows[i].AuthorName + '</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>' + data.rows[i].ThumbUp + '<i class="icon-comments"></i>' + data.rows[i].CommentsCount + '</span>';
+                        html += '<span title="' + data.rows[i].AuthorName + '">' + (data.rows[i].AuthorName.length > 12 ? (data.rows[i].AuthorName.substring(0, 10) + '...') : data.rows[i].AuthorName) + '</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>' + data.rows[i].ThumbUp + '<i class="icon-comments"></i>' + data.rows[i].CommentsCount + '</span>';
                         html += '</p>';
                         html += '</div>';
+                        html += '</a>';
                         html += '</div>';
                     });
                     $("#news-content").append(html);

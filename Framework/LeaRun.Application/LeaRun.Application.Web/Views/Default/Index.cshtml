@@ -39,37 +39,37 @@
                     <li class="col-xs-12-nav"><a class="regbtn btn" href="javascript:;">快速业务</a></li>
                     <li class="col-xs-6-nav">
                         <a href="/" class="active">
-                            <img src="~/images/读者服务选中.png"/>
+                            <img src="~/images/读者服务选中.png" />
                             读者服务
                         </a>
                     </li>
                     <li>
                         <a href="/" class="active">
-                            <img src="~/images/作者服务选中.png"/>
+                            <img src="~/images/作者服务选中.png" />
                             作者服务
                         </a>
                     </li>
                     <li class="col-xs-6-nav">
                         <a href="/" class="active">
-                            <img src="~/images/经销商服务选中.png"/>
+                            <img src="~/images/经销商服务选中.png" />
                             经销商服务
                         </a>
                     </li>
                     <li>
                         <a href="/" class="active">
-                            <img src="~/images/图书馆服务选中.png"/>
+                            <img src="~/images/图书馆服务选中.png" />
                             图书馆服务
                         </a>
                     </li>
                     <li class="col-xs-6-nav">
                         <a href="/" class="active">
-                            <img src="~/images/农家书屋服务选中.png"/>
+                            <img src="~/images/农家书屋服务选中.png" />
                             农家书屋服务
                         </a>
                     </li>
                     <li>
                         <a href="/" class="active">
-                            <img src="~/images/社区书屋服务选中.png"/>
+                            <img src="~/images/社区书屋服务选中.png" />
                             社区书屋服务
                         </a>
                     </li>
@@ -89,24 +89,25 @@
         </div>
         <div class="row">
             @foreach (NewsEntityThumbUp entity in Model.NewsEntityThumbUp) {
+
                 <div class="col-md-3 item-block animate-box" data-animate-effect="fadeIn">
-                    <div class="fh5co-property">
-                        <div class="fh5co-property-title">
-                            <h5><a href="/Detail/@entity.NewsId">@entity.FullHead</a></h5>
-                            <p>@Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd HH:mm")</p>
+                    <a href="/Detail/@entity.NewsId">
+                        <div class="fh5co-property">
+                            <div class="fh5co-property-title">
+                                <h5 title="@entity.FullHead">@entity.FullHead</h5>
+                                <p>@Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd HH:mm")</p>
+                            </div>
+                            <figure>
+                                <img src="@entity.NewsImage" alt="" class="img-responsive">
+                            </figure>
+                            <div class="fh5co-property-innter">
+                                <p>@entity.NewsContent</p>
+                            </div>
+                            <p class="fh5co-property-specification">
+                                <span title="@entity.AuthorName">@(entity.AuthorName.Length > 12 ? (entity.AuthorName.Substring(0, 10) + "...") : entity.AuthorName)</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>@entity.ThumbUp<i class="icon-comments"></i>@entity.CommentsCount</span>
+                            </p>
                         </div>
-                        <figure>
-                            <img src="@entity.NewsImage" alt="" class="img-responsive">
-                        </figure>
-                        <div class="fh5co-property-innter">
-                            <p>@entity.NewsContent</p>
-                        </div>
-                        <p class="fh5co-property-specification">
-                            <span>@entity.AuthorName</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>@entity.ThumbUp<i class="icon-comments"></i>@entity.CommentsCount</span>
-                        </p>
-                    </div>
-
-
+                    </a>
                 </div>
             }
         </div>
@@ -126,10 +127,12 @@
                         <figure>
                             <img class="img-responsive" src="@entity.NewsImage" alt="">
                         </figure>
-                        <p>@entity.NewsContent</p>
-                        <p>
-                            <a href="/Detail/@entity.NewsId" class="btn btn-primary btn-outline">点击详情</a>
-                        </p>
+                        <div style="padding-left: 15px; padding-right: 15px;min-height: 80px;">
+                            <p>@entity.NewsContent</p>
+                            <p>
+                                <a href="/Detail/@entity.NewsId" class="btn btn-primary btn-outline">点击详情</a>
+                            </p>
+                        </div>
                     </div>
 
                 </div>
@@ -147,24 +150,26 @@
             </div>
             @foreach (NewsEntity entity in Model.PBooksList) {
                 <div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">
-                    <div class="fh5co-property books">
-                        <figure>
-                            <img src="@entity.NewsImage" alt="" class="img-responsive">
-                            <a href="javascript:;" class="tag">推荐</a>
-                        </figure>
-                        <div class="fh5co-property-innter books">
-                            <h3>
-                                <a href="@entity.BuyLink">@entity.FullHead</a>
-                            </h3>
-                            <div class="price-status">
-                                <span class="price">￥@entity.Price </span>
+                    <a href="/Pbook/@entity.NewsId">
+                        <div class="fh5co-property books">
+                            <figure>
+                                <img src="@entity.NewsImage" alt="" class="img-responsive">
+                                <span class="tag">推荐</span>
+                            </figure>
+                            <div class="fh5co-property-innter books">
+                                <h3 title="@entity.FullHead">
+                                    @entity.FullHead
+                                </h3>
+                                <div class="price-status">
+                                    <span class="price">￥@entity.Price </span>
+                                </div>
+                                <p>@entity.NewsContent</p>
                             </div>
-                            <p>@entity.NewsContent</p>
+                            <p class="fh5co-property-specification books">
+                                <span><strong>阅读数</strong>@entity.PV</span>
+                            </p>
                         </div>
-                        <p class="fh5co-property-specification books">
-                            <span><strong>阅读数</strong>@entity.PV</span>
-                        </p>
-                    </div>
+                    </a>
                 </div>
             }
         </div>

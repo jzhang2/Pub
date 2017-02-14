@@ -345,11 +345,11 @@
                         if (result[i].ParentId == 0) {
                             str += '<div class="feed-element">';
                             str += '<a class="pull-left">';
-                            str += '<img class="img-circle" alt="image" src="' + result[i].HeadIcon + '">';
+                            str += '<img class="img-circle" alt="image" src="' + (result[i].HeadIcon == null ? "/images/头像.png" : result[i].HeadIcon) + '">';
                             str += '</a>';
                             str += '<div class="media-body pcoments">';
-                            str += '<small class="pull-right"><a href="javascript:;" onclick="btnrp(this,\'' + result[i].CommentsId + '\',\'' + result[i].FullName + '\',\'' + result[i].CustomerId + '\')">回复</a></small>';
-                            str += '<strong>' + result[i].FullName + '</strong> ' + result[i].CreateDate + ' <br>';
+                            str += '<small class="pull-right"><a href="javascript:;" onclick="btnrp(this,\'' + result[i].CommentsId + '\',\'' + (result[i].FullName == null ? result[i].Email : result[i].FullName) + '\',\'' + result[i].CustomerId + '\')">回复</a></small>';
+                            str += '<strong>' + (result[i].FullName == null ? result[i].Email : result[i].FullName) + '</strong> ' + result[i].CreateDate + ' <br>';
                             str += '<div>' + result[i].Comments + '</div>';
                             if (!result[i].isLeaf) {
                                 str += '<div class="well">';
@@ -357,13 +357,13 @@
                                     if (result[j].ParentId == result[i].CommentsId) {
                                         str += '<div class="feed-element">';
                                         str += '<a class="pull-left">';
-                                        str += '<img class="img-circle" alt="image" src="' + result[j].HeadIcon + '">';
+                                        str += '<img class="img-circle" alt="image" src="' + (result[j].HeadIcon == null ? "/images/头像.png" : result[j].HeadIcon) + '">';
                                         str += '</a>';
                                         str += '<div class="media-body">';
-                                        str += '<small class="pull-right text-navy"><a href="javascript:;" onclick="btnrp(this,\'' + result[i].CommentsId + '\',\'' + result[j].FullName + '\',\'' + result[j].CustomerId + '\')">回复</a></small>';
-                                        str += '<strong>' + result[j].FullName + '</strong> ' + result[j].CreateDate + ' <br>';
+                                        str += '<small class="pull-right text-navy"><a href="javascript:;" onclick="btnrp(this,\'' + result[i].CommentsId + '\',\'' + (result[j].FullName == null ? result[j].Email : result[j].FullName) + '\',\'' + result[j].CustomerId + '\')">回复</a></small>';
+                                        str += '<strong>' + (result[j].FullName == null ? result[j].Email : result[j].FullName) + '</strong> ' + result[j].CreateDate + ' <br>';
                                         if (result[j].ReplyCustomerId != null) {
-                                            str += ' 回复 <strong>' + result[j].FullName + '</strong> ';
+                                            str += ' 回复 <strong>' + (result[j].ReplyName == null ? result[j].ReplyEmail : result[j].ReplyName) + '</strong> ';
                                         }
                                         str += result[j].CreateDate + ' <br>';
                                         str += '<div>';
@@ -401,11 +401,11 @@
                         var str = "";
                         str += '<div class="feed-element">';
                         str += '<a class="pull-left">';
-                        str += '<img class="img-circle" alt="image" src="' + result.HeadIcon + '">';
+                        str += '<img class="img-circle" alt="image" src="' + (result.HeadIcon == null ? "/images/头像.png" : result.HeadIcon) + '">';
                         str += '</a>';
                         str += '<div class="media-body pcoments">';
-                        str += '<small class="pull-right"><a href="javascript:;" onclick="btnrp(this,\'' + result.CommentsId + '\',\'' + result.FullName + '\',\'' + result.CustomerId + '\')">回复</a></small>';
-                        str += '<strong>' + result.FullName + '</strong> ' + result.CreateDate + ' <br>';
+                        str += '<small class="pull-right"><a href="javascript:;" onclick="btnrp(this,\'' + result.CommentsId + '\',\'' + (result.FullName == null ? result.Email : result.FullName) + '\',\'' + result.CustomerId + '\')">回复</a></small>';
+                        str += '<strong>' + (result.FullName == null ? result.Email : result.FullName) + '</strong> ' + result.CreateDate + ' <br>';
                         str += '<div>' + result.Comments + '</div>';
                         str += '</div>';
                         str += '</div>';
@@ -446,13 +446,13 @@
                     var str = "";
                     str += '<div class="feed-element">';
                     str += '<a class="pull-left">';
-                    str += '<img class="img-circle" alt="image" src="' + result.HeadIcon + '">';
+                    str += '<img class="img-circle" alt="image" src="' + (result.HeadIcon == null ? "/images/头像.png" : result.HeadIcon) + '">';
                     str += '</a>';
                     str += '<div class="media-body">';
-                    str += '<small class="pull-right text-navy"><a href="javascript:;" onclick="btnrp(this,\'' + CommentsId + '\',\'' + result.FullName + '\',\'' + result.CustomerId + '\')">回复</a></small>';
+                    str += '<small class="pull-right text-navy"><a href="javascript:;" onclick="btnrp(this,\'' + CommentsId + '\',\'' + (result.FullName == null ? result.Email : result.FullName) + '\',\'' + result.CustomerId + '\')">回复</a></small>';
                     str += '<strong>' + result.FullName + '</strong> ' + result.CreateDate + ' <br>';
                     if (result.ReplyCustomerId != null) {
-                        str += ' 回复 <strong>' + result.FullName + '</strong> ';
+                        str += ' 回复 <strong>' + (result.ReplyName == null ? result.ReplyEmail : result.ReplyName) + '</strong> ';
                     }
                     str += result.CreateDate + ' <br>';
                     str += '<div>';

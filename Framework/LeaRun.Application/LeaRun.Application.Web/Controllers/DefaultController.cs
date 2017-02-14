@@ -87,6 +87,7 @@ namespace LeaRun.Application.Web.Controllers {
         public string FullName { get; set; }
         public string HeadIcon { get; set; }
         public string ReplyName { get; set; }
+        public string ReplyEmail { get; set; }
     }
     [HandlerLogin(LoginMode.Ignore, LoginType.FrontEnd)]
     public class DefaultController : MvcControllerBase {
@@ -106,13 +107,13 @@ namespace LeaRun.Application.Web.Controllers {
             pagination.rows = 4;
             pagination.sidx = "CreateDate";
             pagination.sord = "DESC";
-            var NewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:3,EnabledMark:1 }").ToList(), 60);
+            var NewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:3,EnabledMark:1 }").ToList(), 57);
             NewsList.ForEach(x => viewModel.NewsEntityThumbUp.Add(CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(x)));
             pagination.rows = 6;
-            viewModel.MapNewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:4,EnabledMark:1 }").ToList(), 60);
+            viewModel.MapNewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:4,EnabledMark:1 }").ToList(), 57);
 
             pagination.rows = 10000;
-            viewModel.PBooksList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:6,EnabledMark:1,IsRecommend:1 }").ToList(), 60);
+            viewModel.PBooksList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:6,EnabledMark:1,IsRecommend:1 }").ToList(), 57);
 
             viewModel.BannerNewsList = bannerNewsBll.GetPageList(pagination, "{Type:1}").ToList();
             return View(viewModel);
@@ -183,7 +184,7 @@ namespace LeaRun.Application.Web.Controllers {
         public ActionResult GetCommentsJson(string NewsId) {
             var treeList = new List<TreeGridEntity>();
             if (!string.IsNullOrEmpty(NewsId)) {
-                var data = new Repository<UserComments>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.NewsId='" + NewsId + "' order by co.CreateDate");
+                var data = new Repository<UserComments>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName,c.Email,c1.Email as ReplyEmail from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.NewsId='" + NewsId + "' order by co.CreateDate");
                 foreach (UserComments item in data) {
                     TreeGridEntity tree = new TreeGridEntity();
                     bool hasChildren = data.Count(t => t.ParentId == item.CommentsId) != 0;
@@ -211,7 +212,7 @@ namespace LeaRun.Application.Web.Controllers {
                 entity.NewsId = NewsId;
 
                 new CommentsService().SaveFormData("", entity);
-                var data = new Repository<UserComments>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.CommentsId='" + entity.CommentsId + "' order by co.CreateDate");
+                var data = new Repository<UserComments>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName,c.Email,c1.Email as ReplyEmail from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.CommentsId='" + entity.CommentsId + "' order by co.CreateDate");
                 return Content(data.FirstOrDefault().ToJson());
             }
             catch (Exception ee) {
@@ -232,7 +233,7 @@ namespace LeaRun.Application.Web.Controllers {
                 entity.NewsId = NewsId;
                 entity.ParentId = "0";
                 new CommentsService().SaveFormData("", entity);
-                var data = new Repository<UserComments>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.CommentsId='" + entity.CommentsId + "' order by co.CreateDate");
+                var data = new Repository<UserComments>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName,c.Email,c1.Email as ReplyEmail from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.CommentsId='" + entity.CommentsId + "' order by co.CreateDate");
                 return Content(data.FirstOrDefault().ToJson());
             }
             catch (Exception ee) {
@@ -261,7 +262,7 @@ namespace LeaRun.Application.Web.Controllers {
                 if (entity.NewsContent == null) continue;
                 var content = WebHelper.StripTagsCharArray(System.Web.HttpContext.Current.Server.HtmlDecode(entity.NewsContent));
                 entity.NewsContent = content.Length > length
-                    ? content.Substring(0, length)
+                    ? content.Substring(0, length)+"..."
                     : content;
             }
             return data;

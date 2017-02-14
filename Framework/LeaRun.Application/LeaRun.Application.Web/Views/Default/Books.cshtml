@@ -14,7 +14,7 @@
             <div class="content-quicknva">
                 <ul>
                     <li>
-                        <a href="javascript:;" data-id="5">电子书库</a>
+                        <a href="javascript:;" data-id="5" class="active">电子书库</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-id="6">实体书库</a>
@@ -51,7 +51,7 @@
         var queryJson = {
             Category: '',
             FullHead: $("#keyword").val(),
-            TypeId: TypeId
+            TypeId: $(".content-quicknva ul li a.active").attr("data-id")
         }
         $.ajax({
             url: "/Default/GetNewsJson",
@@ -63,16 +63,17 @@
                     var html = "";
                     $.each(data.rows, function (i) {
                         html += '<div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">';
+                        html += '<a href="/Pbook/' + data.rows[i].NewsId + '">';
                         html += '<div class="fh5co-property books">';
                         html += '<figure>';
                         html += '<img src="' + data.rows[i].NewsImage + '" alt="" class="img-responsive">';
                         if (data.rows[i].IsRecommend == "1") {
-                            html += '<a href="javascript:;" class="tag">推荐</a>';
+                            html += '<span class="tag">推荐</span>';
                         }
                         html += '</figure>';
                         html += '<div class="fh5co-property-innter books">';
-                        html += '<h3>';
-                        html += '<a href="/Pbook/' + data.rows[i].NewsId + '">' + data.rows[i].FullHead + '</a>';
+                        html += '<h3 title="' + data.rows[i].FullHead + '">';
+                        html += data.rows[i].FullHead;
                         html += '</h3>';
                         html += '<div class="price-status">';
                         html += '<span class="price">￥' + data.rows[i].Price + ' </span>';
@@ -83,6 +84,7 @@
                         html += '<span><strong>阅读数</strong>' + data.rows[i].PV + '</span>';
                         html += '</p>';
                         html += '</div>';
+                        html += '</a>';
                         html += '</div>';
 
                     });

@@ -15,7 +15,7 @@
                 <ul>
                     @for (int i = 0; i < Model.DataItemList.Count; i++) {
                         <li @(i % 2 == 0 ? "class=col-xs-6-nav" : "")>
-                            <a href="javascript:;">@Model.DataItemList[i].ItemName</a>
+                            <a href="javascript:;" @(i==0?"class=active":"")>@Model.DataItemList[i].ItemName</a>
                         </li>
                     }
                     <li style="float: right" class="col-xs-search">
@@ -65,10 +65,12 @@
                         html += '<figure>';
                         html += '<img class="img-responsive" src="' + data.rows[i].NewsImage + '" alt="">';
                         html += '</figure>';
+                        html += '<div style="padding-left: 15px; padding-right: 15px;min-height: 80px;">';
                         html += '<p>' + data.rows[i].NewsContent + '</p>';
                         html += '<p>';
                         html += '<a href="/Detail/' + data.rows[i].NewsId + '" class="btn btn-primary btn-outline">点击详情</a>';
                         html += '</p>';
+                        html += '</div>';
                         html += '</div>';
                         html += '</div>';
                     });
