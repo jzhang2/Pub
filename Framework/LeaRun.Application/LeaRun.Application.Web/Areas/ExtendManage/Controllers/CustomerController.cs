@@ -192,6 +192,18 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
             customerbll.SaveForm(keyValue, entity);
             return Success("操作成功。");
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AjaxOnly]
+        [HandlerLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public ActionResult SaveFormFront(string keyValue, CustomerEntity entity) {
+            customerbll.SaveForm(keyValue, entity);
+            var operators = OperatorProvider.Provider.Current();
+            operators.HeadIcon = entity.HeadIcon;
+            operators.RealName = entity.FullName;
+            OperatorProvider.Provider.AddCurrent(operators);
+            return Success("操作成功。");
+        }
         /// <summary>
         /// 删除联系人数据
         /// </summary>

@@ -1736,6 +1736,10 @@
       <Project>{1751A2DD-0F00-4C76-B180-97E8F72FE078}</Project>
       <Name>LeaRun.Data.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\LeaRun.Data\LeaRun.Data\LeaRun.Data.csproj">
+      <Project>{528F308B-D2CD-4BD1-A94F-BF94ABEF08D7}</Project>
+      <Name>LeaRun.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\LeaRun.Util\LeaRun.Util.Extension\LeaRun.Util.Extension.csproj">
       <Project>{4b7dde80-dfa1-4938-93f8-3721e2c592b9}</Project>
       <Name>LeaRun.Util.Extension</Name>

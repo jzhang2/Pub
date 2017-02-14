@@ -129,7 +129,7 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
             }
         }
 
-        [HttpGet]
+
         public ActionResult UploadFile() {
             HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
             //没有文件上传，直接返回

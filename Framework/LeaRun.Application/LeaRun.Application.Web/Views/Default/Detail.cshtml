@@ -12,7 +12,7 @@
     <div class="container" style="background: white; padding: 35px 25px;">
         <div style="border-bottom: solid 1px #E6EAED; margin-bottom: 25px; padding-bottom: 10px;">
             <h3 style="margin-bottom: 5px;">@Model.Detial.FullHead</h3>
-            <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="icon-thumbs-o-up"></i>@Model.Detial.ThumbUp<i class="icon-comments"></i>10</span>
+            <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="icon-thumbs-o-up"></i>@Model.Detial.ThumbUp<i class="icon-comments"></i>@Model.Detial.CommentsCount</span>
         </div>
         <div>
             @Html.Raw(HttpUtility.HtmlDecode(Model.Detial.NewsContent))
@@ -20,6 +20,293 @@
         <div style="vertical-align: central; text-align: center;">
             <img @(!Model.Detial.IsThumbed ? "class=thumb_up_icon" : "") src="/images/点赞.png" />
             <p id="tcount">@Model.Detial.ThumbUp 人点赞</p>
+        </div>
+        <style>
+            .ibox {
+                clear: both;
+                margin-bottom: 25px;
+                margin-top: 0px;
+                padding: 0;
+            }
+
+                .ibox::after, .ibox::before {
+                    display: table;
+                }
+
+            .ibox-title {
+                -moz-border-bottom-colors: none;
+                -moz-border-left-colors: none;
+                -moz-border-right-colors: none;
+                -moz-border-top-colors: none;
+                background-color: #ffffff;
+                border-color: #e7eaec;
+                border-image: none;
+                border-style: solid solid none;
+                border-width: 2px 0 0;
+                color: inherit;
+                margin-bottom: 0px;
+                padding: 15px 15px 7px;
+                min-height: 48px;
+            }
+
+            .ibox-content {
+                background-color: #ffffff;
+                color: inherit;
+                padding: 15px 20px 20px 20px;
+                border-color: #e7eaec;
+                border-image: none;
+                border-style: solid solid none;
+                border-width: 1px 0;
+            }
+
+            .ibox-content {
+                clear: both;
+            }
+
+            .feed-element {
+                padding-bottom: 15px;
+            }
+
+                .feed-element, .feed-element .media {
+                    margin-top: 15px;
+                }
+
+            .chat-element, .media-body {
+                overflow: hidden;
+            }
+
+            .sidebar-panel .feed-element, .media-body, .sidebar-panel p {
+                font-size: 12px;
+            }
+
+            .feed-element, .media-body {
+                overflow: hidden;
+            }
+
+            .feed-activity-list .feed-element {
+                border-bottom: 1px solid #e7eaec;
+            }
+
+            :first-child.feed-element {
+                margin-top: 0px;
+            }
+
+            .pull-left {
+                float: left !important;
+            }
+
+            .pull-left {
+                float: left;
+            }
+
+            .feed-element > .pull-left {
+                margin-right: 10px;
+            }
+
+            .media, .media-body {
+                overflow: hidden;
+                zoom: 1;
+            }
+
+            .media-body {
+                width: 10000px;
+            }
+
+            .media-body, .media-left, .media-right {
+                display: table-cell;
+                vertical-align: top;
+            }
+
+            .small, small {
+                font-size: 85%;
+            }
+
+            .label {
+                display: inline;
+                padding: .2em .6em .3em;
+                font-size: 75%;
+                font-weight: 700;
+                line-height: 1;
+                color: #fff;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                border-radius: .25em;
+            }
+
+            .pull-right {
+                float: right !important;
+            }
+
+            .pull-right {
+                float: right;
+            }
+
+            .text-muted {
+                color: #777;
+            }
+
+            .text-muted {
+                color: #888888;
+            }
+
+            .well {
+                min-height: 20px;
+                padding: 19px;
+                margin-bottom: 20px;
+                background-color: #f5f5f5;
+                border: 1px solid #e3e3e3;
+                border-radius: 4px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+                box-shadow: inset 0px 1px 1px rgba(0,0,0,0.05);
+            }
+
+            .feed-element .well {
+                border: 1px solid #e7eaec;
+                box-shadow: none;
+                margin-top: 10px;
+                margin-bottom: 5px;
+                padding: 10px 20px;
+                font-size: 11px;
+                line-height: 16px;
+            }
+
+            .btn-white {
+                color: inherit;
+                background: white;
+                border: 1px solid #e7eaec;
+            }
+
+            .float-e-margins .btn {
+                margin-bottom: 5px;
+            }
+
+            .fa {
+                display: inline-block;
+                font: normal normal normal 14px/1 FontAwesome;
+                font-size: inherit;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            .fa-thumbs-up::before {
+                content: "\f164";
+            }
+
+            img {
+                vertical-align: middle;
+            }
+
+            .img-circle {
+                border-radius: 50%;
+            }
+
+            .img-circle {
+                border-radius: 50%;
+            }
+
+            .feed-element img.img-circle, .dropdown-messages-box img.img-circle {
+                width: 38px;
+                height: 38px;
+            }
+
+            .text-navy {
+                color: #1ab394;
+            }
+
+            .feed-element .actions {
+                margin-top: 10px;
+            }
+
+            .fa-heart::before {
+                content: "\f004";
+            }
+
+            .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+                font-family: inherit;
+                font-weight: 500;
+                line-height: 1.1;
+                color: inherit;
+            }
+
+            .h4, .h5, .h6, h4, h5, h6 {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            .h5, h5 {
+                font-size: 14px;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: 100;
+            }
+
+            h5 {
+                font-size: 12px;
+            }
+
+            h3, h4, h5 {
+                margin-top: 5px;
+                font-weight: 600;
+            }
+
+            .ibox-content h1, .ibox-content h2, .ibox-content h3, .ibox-content h4, .ibox-content h5, .ibox-title h1, .ibox-title h2, .ibox-title h3, .ibox-title h4, .ibox-title h5 {
+                margin-top: 5px;
+            }
+
+            .ibox-title h5 {
+                display: inline-block;
+                font-size: 14px;
+                margin: 0 0 7px;
+                padding: 0;
+                text-overflow: ellipsis;
+                float: left;
+            }
+
+            .ibox-tools {
+                display: block;
+                float: none;
+                margin-top: 0px;
+                position: relative;
+                padding: 0;
+                text-align: right;
+            }
+
+            .label {
+                background-color: #d1dade;
+                color: #5e5e5e;
+                font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                font-size: 10px;
+                font-weight: 600;
+                padding: 3px 8px;
+                text-shadow: none;
+            }
+
+            .label-warning-light, .badge-warning-light {
+                background-color: #f8ac59;
+                color: #ffffff;
+            }
+
+            .ibox-title .label {
+                float: left;
+                margin-left: 4px;
+            }
+        </style>
+        <div>
+            <div class="ibox float-e-margins" id="dibox">
+                <div class="ibox-title">
+                    <h5>评论(@Model.Detial.CommentsCount)</h5>
+                    <textarea class="form-control" id="tcomments"></textarea>
+                    <a href="javascript:;" id="btn-comment" class="btn btn-sm btn-info pull-right" style="margin:15px 0; border-radius: 8px;margin-right: 0">评论</a>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <div class="feed-activity-list"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -42,5 +329,147 @@
                 }
             }
         });
-    })
+    });
+    $(function () {
+        $.ajax({
+            url: "/Default/GetCommentsJson",
+            data: { NewsId: '@Model.Detial.NewsId' },
+            type: "get",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data != "") {
+                    var str = "";
+                    var result = data.rows;
+                    for (var i = 0; i < result.length; i++) {
+                        if (result[i].ParentId == 0) {
+                            str += '<div class="feed-element">';
+                            str += '<a class="pull-left">';
+                            str += '<img class="img-circle" alt="image" src="' + result[i].HeadIcon + '">';
+                            str += '</a>';
+                            str += '<div class="media-body pcoments">';
+                            str += '<small class="pull-right"><a href="javascript:;" onclick="btnrp(this,\'' + result[i].CommentsId + '\',\'' + result[i].FullName + '\',\'' + result[i].CustomerId + '\')">回复</a></small>';
+                            str += '<strong>' + result[i].FullName + '</strong> ' + result[i].CreateDate + ' <br>';
+                            str += '<div>' + result[i].Comments + '</div>';
+                            if (!result[i].isLeaf) {
+                                str += '<div class="well">';
+                                for (var j = 0; j < result.length; j++) {
+                                    if (result[j].ParentId == result[i].CommentsId) {
+                                        str += '<div class="feed-element">';
+                                        str += '<a class="pull-left">';
+                                        str += '<img class="img-circle" alt="image" src="' + result[j].HeadIcon + '">';
+                                        str += '</a>';
+                                        str += '<div class="media-body">';
+                                        str += '<small class="pull-right text-navy"><a href="javascript:;" onclick="btnrp(this,\'' + result[i].CommentsId + '\',\'' + result[j].FullName + '\',\'' + result[j].CustomerId + '\')">回复</a></small>';
+                                        str += '<strong>' + result[j].FullName + '</strong> ' + result[j].CreateDate + ' <br>';
+                                        if (result[j].ReplyCustomerId != null) {
+                                            str += ' 回复 <strong>' + result[j].FullName + '</strong> ';
+                                        }
+                                        str += result[j].CreateDate + ' <br>';
+                                        str += '<div>';
+                                        str += '<div>' + result[j].Comments + '</div>';
+                                        str += '</div>';
+                                        str += '</div>';
+                                        str += '</div>';
+                                    }
+                                }
+                                str += '</div>';
+
+                            }
+
+                            str += '</div>';
+                            str += '</div>';
+                        }
+                    }
+                    $(".feed-activity-list").html(str);
+                }
+            }
+        });
+        //$(".co-btn").click(function () {
+        //    $('html,body').animate({ scrollTop: $('#dibox').offset().top }, 100);
+        //    $('#tcomments').focus();
+        //});
+        $("#btn-comment").click(function () {
+            $.ajax({
+                url: "/Default/AddComments",
+                data: { Reply: $("#tcomments").val(), NewsId: '@Model.Detial.NewsId' },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    if (!result.type) {
+                        var str = "";
+                        str += '<div class="feed-element">';
+                        str += '<a class="pull-left">';
+                        str += '<img class="img-circle" alt="image" src="' + result.HeadIcon + '">';
+                        str += '</a>';
+                        str += '<div class="media-body pcoments">';
+                        str += '<small class="pull-right"><a href="javascript:;" onclick="btnrp(this,\'' + result.CommentsId + '\',\'' + result.FullName + '\',\'' + result.CustomerId + '\')">回复</a></small>';
+                        str += '<strong>' + result.FullName + '</strong> ' + result.CreateDate + ' <br>';
+                        str += '<div>' + result.Comments + '</div>';
+                        str += '</div>';
+                        str += '</div>';
+
+                        $(".feed-activity-list").append(str);
+                        $("#tcomments").val("");
+                    } else {
+                        layer.msg(result.message, { icon: 1, time: 2000, shift: 5 });
+                    }
+                }
+            });
+        });
+    });
+    function btnrp(obj, CommentsId, FullName, ReplyCustomerId) {
+        $(".drcom").remove();
+        var str = "";
+        str += '<div class="drcom">';
+        str += '<h5 style="margin-top:10px;">回复 ' + FullName + '</h5>';
+        str += '<textarea class="form-control" id="rcomments"></textarea>';
+        str += '<a href="javascript:;" onclick="replyuser(this,\'' + CommentsId + '\',\'' + ReplyCustomerId + '\');" class="btn btn-sm btn-info pull-right" style="margin:15px 0; border-radius: 8px;margin-right: 0">回复</a>';
+        str += '</div>';
+        $(obj).closest(".pcoments").append(str);
+        $("#rcomments").focus();
+    }
+    function replyuser(obj, CommentsId, ReplyCustomerId) {
+        if ($("#rcomments").val() == "") {
+            layer.msg(data.message, { icon: 1, time: 2000, shift: 5 });
+            return;
+        }
+        $.ajax({
+            url: "/Default/ReplyComments",
+            data: { CommentsId: CommentsId, Reply: $("#rcomments").val(), ReplyCustomerId: ReplyCustomerId, NewsId: '@Model.Detial.NewsId' },
+            type: "get",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                if (!result.type) {
+                    var str = "";
+                    str += '<div class="feed-element">';
+                    str += '<a class="pull-left">';
+                    str += '<img class="img-circle" alt="image" src="' + result.HeadIcon + '">';
+                    str += '</a>';
+                    str += '<div class="media-body">';
+                    str += '<small class="pull-right text-navy"><a href="javascript:;" onclick="btnrp(this,\'' + CommentsId + '\',\'' + result.FullName + '\',\'' + result.CustomerId + '\')">回复</a></small>';
+                    str += '<strong>' + result.FullName + '</strong> ' + result.CreateDate + ' <br>';
+                    if (result.ReplyCustomerId != null) {
+                        str += ' 回复 <strong>' + result.FullName + '</strong> ';
+                    }
+                    str += result.CreateDate + ' <br>';
+                    str += '<div>';
+                    str += '<div>' + result.Comments + '</div>';
+                    str += '</div>';
+                    str += '</div>';
+                    str += '</div>';
+                    if ($(obj).closest(".well").length == 0) {
+                        $(obj).closest(".media-body").append('<div class="well">' + str + '</div>');
+                    } else {
+                        $(obj).closest(".well").append(str);
+                    }
+                    $(".drcom").remove();
+                } else {
+                    layer.msg(result.message, { icon: 1, time: 2000, shift: 5 });
+                }
+            }
+        });
+    }
 </script>

@@ -5,7 +5,6 @@
 }
 @using LeaRun.Application.Entity.ExtendManage
 @model LeaRun.Application.Web.Controllers.HomeViewModel
-
 <script src="~/Content/scripts/plugins/uploadify/ajaxfileupload.js"></script>
 <script src="~/Content/scripts/plugins/datepicker/WdatePicker.js"></script>
 <script src="~/Content/scripts/utils/learun-ui.js"></script>
@@ -39,7 +38,7 @@
                                 <label for="uploadPreview" class="control-label col-sm-3">头像</label>
                                 <div class="col-sm-9">
                                     <div class="file">
-                                        <img id="uploadPreview" style="width: 70px; height: 70px;" src="@(!string.IsNullOrEmpty(Model.Customer.HeadIcon) ? Model.Customer.HeadIcon : "/Content/images/logo-headere47d5.png")" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="HeadIcon" />
+                                        <img id="uploadPreview" style="width: 70px; height: 70px;" src="@(!string.IsNullOrEmpty(Model.Customer.HeadIcon) ? Model.Customer.HeadIcon : "/Content/images/logo-headere47d5.png")" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="HeadIcon" value="@(!string.IsNullOrEmpty(Model.Customer.HeadIcon) ? Model.Customer.HeadIcon : "/Content/images/logo-headere47d5.png")"/>
                                     </div>
                                 </div>
                             </div>
@@ -235,11 +234,13 @@
         var postData = $("#form1").GetWebControls(keyValue);
         postData["Gender"] = $('#form1 input[name="Gender"]:checked ').val();
         $.SaveForm({
-            url: "../../ExtendManage/Customer/SaveForm?keyValue=" + keyValue,
+            url: "../../ExtendManage/Customer/SaveFormFront?keyValue=" + keyValue,
             param: postData,
             loading: "正在保存数据...",
-            success: function () {
-
+            success: function (data) {
+                if (data.type == "1") {
+                    $("#HeadIcon_imgs img").attr('src', $("#HeadIcon").val());
+                }
             }
         });
     }
@@ -269,6 +270,41 @@
             }
         });
     }
+    function uphead() {
+        var f = document.getElementById('uploadFile').files[0];
+        var src = window.URL.createObjectURL(f);
+        document.getElementById('uploadPreview').src = src;
+        //上传应用图标
+        $.ajaxFileUpload({
+            url: "/ExtendManage/Books/UploadFile",
+            secureuri: false,
+            fileElementId: 'uploadFile',
+            dataType: 'json',
+            success: function (data) {
+                if (data.type == 1) {
+                    $("#HeadIcon").val(data.resultdata);
+                }
+                dialogMsg(data.message, 1);
+                $('#uploadFile').on('change', uphead);
+            }
+        });
+    }
+    function upfile() {
+        //上传应用图标
+        $.ajaxFileUpload({
+            url: "/ExtendManage/Books/UploadFile",
+            secureuri: false,
+            fileElementId: 'uploadFile1',
+            dataType: 'json',
+            success: function (data) {
+                if (data.type == 1) {
+                    $("#FileName").val(data.resultdata);
+                }
+                dialogMsg(data.message, 1);
+                $('#uploadFile1').on('change', upfile);
+            }
+        });
+    }
     $(function () {
         var tabindex = '@(ViewContext.RouteData.Values["id"])';
         $(".account-nav ul li").eq(tabindex).addClass("active").siblings().removeClass("active");
@@ -286,40 +322,7 @@
             $(".contri-content").hide().eq($(this).index()).show();
         });
         $("#uploadFile1").filestyle({ icon: false });
-        $('#uploadFile').change(function () {
-            var f = document.getElementById('uploadFile').files[0];
-            var src = window.URL.createObjectURL(f);
-            document.getElementById('uploadPreview').src = src;
-
-            //上传应用图标
-            $.ajaxFileUpload({
-                url: "/ExtendManage/Books/UploadFile",
-                secureuri: false,
-                fileElementId: 'uploadFile',
-                dataType: 'json',
-                success: function (data) {
-                    if (data.type == 1) {
-                        $("#HeadIcon").val(data.resultdata);
-                    }
-                    dialogMsg(data.message, 1);
-                }
-            });
-        });
-        $('#uploadFile1').change(function () {
-            //上传应用图标
-            $.ajaxFileUpload({
-                url: "/ExtendManage/Books/UploadFile",
-                secureuri: false,
-                fileElementId: 'uploadFile1',
-                dataType: 'json',
-                success: function (data) {
-                    alert(data)
-                    if (data.type == 1) {
-                        $("#FileName").val(data.resultdata);
-                    }
-                    dialogMsg(data.message, 1);
-                }
-            });
-        });
+        $('#uploadFile').on('change', uphead);
+        $('#uploadFile1').on('change', upfile);
     });
 </script>

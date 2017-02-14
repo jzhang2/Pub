@@ -46,7 +46,8 @@
             <div class="container">
                 <div class="row">
                     <div class="header-inner">
-                        <h1 style="margin-top: 25px;"><a href="/"><img src="~/images/logo.png" /></a></h1>
+                        <h1 style="margin-top: 25px;"><a href="/"><img src="~/images/logo.png"/></a>
+                        </h1>
                         <nav role="navigation">
                             <ul class="sf-menu" id="fh5co-primary-menu">
                                 <li><a href="/">首页</a></li>
@@ -63,13 +64,11 @@
                                 <li><a href="#">产品定制</a></li>
                                 <li><a href="/Service">业务服务</a></li>
                                 <li><a href="/AboutUs">关于我们</a></li>
-                                @if (OperatorProvider.Provider.IsLogin()) {
+                                @if (OperatorProvider.Provider.IsLogin())
+                                {
                                     string name = !string.IsNullOrEmpty(OperatorProvider.Provider.Current().RealName) ? OperatorProvider.Provider.Current().RealName : OperatorProvider.Provider.Current().Account;
                                     <li>
-                                        <a href="javascript:;">
-                                            <img style="padding-bottom: 6px;" src="@(OperatorProvider.Provider.Current().HeadIcon ?? "/images/头像.png")" />
-                                            @(name.Length > 16 ? (name.Substring(0, 13) + "...") : name)
-                                        </a>
+                                        <a href="javascript:;" id="HeadIcon_imgs"><img width="34" height="34" style="padding-bottom: 6px;" src="@(OperatorProvider.Provider.Current().HeadIcon ?? "/images/头像.png")"/>@(name.Length > 16 ? (name.Substring(0, 13) + "...") : name)</a>
                                         <ul class="fh5co-sub-menu" style="width: 100px;">
                                             <li><a href="/MyAccount/0">个人资料</a></li>
                                             <li><a href="/MyAccount/1">我的定制</a></li>
@@ -79,7 +78,8 @@
                                         </ul>
                                     </li>
                                 }
-                                else {
+                                else
+                                {
                                     <li style="margin-left: 20px;"><a class="navbtn" href="/SignIn">登录</a></li>
                                     <li><a class="regbtn btn btn-primary" href="/SignUp">注册</a></li>
                                 }

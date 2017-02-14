@@ -19,6 +19,7 @@ using LeaRun.Application.Entity.SystemManage;
 using LeaRun.Application.Entity.SystemManage.ViewModel;
 using LeaRun.Application.Service.CustomerManage;
 using LeaRun.Application.Service.ExtendManage;
+using LeaRun.Data.Repository;
 using LeaRun.Util;
 using LeaRun.Util.Attributes;
 using LeaRun.Util.Extension;
@@ -27,12 +28,13 @@ using LeaRun.Util.WebControl;
 namespace LeaRun.Application.Web.Controllers {
     public class NewsEntityThumbUp : NewsEntity {
         private ThumbUpService service = new ThumbUpService();
+        private CommentsService commentsService = new CommentsService();
         public int ThumbUp
         {
             get
             {
                 if (!string.IsNullOrEmpty(NewsId)) {
-                    return service.GetCount(NewsId,"");
+                    return service.GetCount(NewsId, "");
                 }
                 else {
                     return 0;
@@ -44,18 +46,30 @@ namespace LeaRun.Application.Web.Controllers {
         {
             get
             {
-                if (!string.IsNullOrEmpty(NewsId)) {
-                    return service.GetCount(NewsId, OperatorProvider.Provider.Current().UserId) >0;
+                if (!string.IsNullOrEmpty(NewsId) && OperatorProvider.Provider.Current() != null && OperatorProvider.Provider.Current().UserId != null) {
+                    return service.GetCount(NewsId, OperatorProvider.Provider.Current().UserId) > 0;
                 }
                 else {
                     return true;
                 }
             }
         }
+
+        public int CommentsCount
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(NewsId)) {
+                    return commentsService.GetList("", NewsId).ToList().Count;
+                }
+                else {
+                    return 0;
+                }
+            }
+        }
     }
 
-    public class HomeViewModel
-    {
+    public class HomeViewModel {
         public List<NewsEntity> NewsList = new List<NewsEntity>();
         public List<NewsEntityThumbUp> NewsEntityThumbUp = new List<NewsEntityThumbUp>();
         public List<NewsEntity> MapNewsList = new List<NewsEntity>();
@@ -63,11 +77,16 @@ namespace LeaRun.Application.Web.Controllers {
         public List<BannerNewsEntity> BannerNewsList = new List<BannerNewsEntity>();
         public List<DataItemModel> DataItemList = new List<DataItemModel>();
         public List<NewsEntity> AboutUs = new List<NewsEntity>();
-        public NewsEntity CurrentArticle =new NewsEntity();
+        public NewsEntity CurrentArticle = new NewsEntity();
         public NewsEntityThumbUp Detial = new NewsEntityThumbUp();
         public CustomerEntity Customer = new CustomerEntity();
         public List<SuggestionEntity> MySuggestionList = new List<SuggestionEntity>();
         public List<ContributionEntity> ContributionList = new List<ContributionEntity>();
+    }
+    public class UserComments : CommentsEntity {
+        public string FullName { get; set; }
+        public string HeadIcon { get; set; }
+        public string ReplyName { get; set; }
     }
     [HandlerLogin(LoginMode.Ignore, LoginType.FrontEnd)]
     public class DefaultController : MvcControllerBase {
@@ -79,6 +98,7 @@ namespace LeaRun.Application.Web.Controllers {
         private SuggestionBLL suggestionBll = new SuggestionBLL();
         private ContributionBLL contributionBll = new ContributionBLL();
         private ThumbUpService service = new ThumbUpService();
+        private CommentsService commentsService = new CommentsService();
         public ActionResult Index() {
             var viewModel = new HomeViewModel();
             Pagination pagination = new Pagination();
@@ -87,7 +107,7 @@ namespace LeaRun.Application.Web.Controllers {
             pagination.sidx = "CreateDate";
             pagination.sord = "DESC";
             var NewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:3,EnabledMark:1 }").ToList(), 60);
-            NewsList.ForEach(x=> viewModel.NewsEntityThumbUp.Add(CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(x)));
+            NewsList.ForEach(x => viewModel.NewsEntityThumbUp.Add(CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(x)));
             pagination.rows = 6;
             viewModel.MapNewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:4,EnabledMark:1 }").ToList(), 60);
 
@@ -159,6 +179,69 @@ namespace LeaRun.Application.Web.Controllers {
             }
             return View(viewModel);
         }
+
+        public ActionResult GetCommentsJson(string NewsId) {
+            var treeList = new List<TreeGridEntity>();
+            if (!string.IsNullOrEmpty(NewsId)) {
+                var data = new Repository<UserComments>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.NewsId='" + NewsId + "' order by co.CreateDate");
+                foreach (UserComments item in data) {
+                    TreeGridEntity tree = new TreeGridEntity();
+                    bool hasChildren = data.Count(t => t.ParentId == item.CommentsId) != 0;
+                    tree.id = item.CommentsId;
+                    tree.hasChildren = hasChildren;
+                    tree.parentId = item.ParentId;
+                    tree.expanded = true;
+                    tree.entityJson = item.ToJson();
+                    treeList.Add(tree);
+                }
+            }
+            return Content(treeList.TreeJson());
+        }
+        [HttpGet]
+        public ActionResult ReplyComments(string CommentsId, string Reply, string ReplyCustomerId, string NewsId) {
+            if (OperatorProvider.Provider.Current() == null || OperatorProvider.Provider.Current().UserId == null) {
+                return Error("您还未登录");
+            }
+            try {
+                var entity = new CommentsEntity();
+                entity.ParentId = CommentsId;
+                entity.Comments = Reply;
+                entity.CustomerId = OperatorProvider.Provider.Current().UserId;
+                entity.ReplyCustomerId = ReplyCustomerId;
+                entity.NewsId = NewsId;
+
+                new CommentsService().SaveFormData("", entity);
+                var data = new Repository<UserComments>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.CommentsId='" + entity.CommentsId + "' order by co.CreateDate");
+                return Content(data.FirstOrDefault().ToJson());
+            }
+            catch (Exception ee) {
+                return Error("评论失败");
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult AddComments(string Reply, string NewsId) {
+            if (OperatorProvider.Provider.Current() == null || OperatorProvider.Provider.Current().UserId == null) {
+                return Error("您还未登录");
+            }
+            try {
+                var entity = new CommentsEntity();
+                entity.Comments = Reply;
+                entity.CustomerId = OperatorProvider.Provider.Current().UserId;
+                entity.NewsId = NewsId;
+                entity.ParentId = "0";
+                new CommentsService().SaveFormData("", entity);
+                var data = new Repository<UserComments>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.CommentsId='" + entity.CommentsId + "' order by co.CreateDate");
+                return Content(data.FirstOrDefault().ToJson());
+            }
+            catch (Exception ee) {
+                return Error("回复失败");
+            }
+
+        }
+
+
         public ActionResult PBook(string id) {
             var viewModel = new HomeViewModel();
             if (!string.IsNullOrEmpty(id)) {
@@ -215,7 +298,7 @@ namespace LeaRun.Application.Web.Controllers {
                     ? content.Substring(0, 60)
                     : content;
             }
-            var thumb=new List<NewsEntityThumbUp>();
+            var thumb = new List<NewsEntityThumbUp>();
             data.ForEach(x => thumb.Add(CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(x)));
             var JsonData = new {
                 rows = thumb,
@@ -290,16 +373,14 @@ namespace LeaRun.Application.Web.Controllers {
         }
 
         public ActionResult ThumbUp(string NewsId) {
-            if (service.GetCount(NewsId, OperatorProvider.Provider.Current().UserId) > 0)
-            {
+            if (service.GetCount(NewsId, OperatorProvider.Provider.Current().UserId) > 0) {
                 return Error("您已经点过赞了。");
             }
-            var entity = new ThumbUpEntity
-            {
-                CustomerId= OperatorProvider.Provider.Current().UserId,
-                NewsId=NewsId
+            var entity = new ThumbUpEntity {
+                CustomerId = OperatorProvider.Provider.Current().UserId,
+                NewsId = NewsId
             };
-            service.SaveForm("",entity);
+            service.SaveForm("", entity);
             return Success("点赞成功。");
         }
 
