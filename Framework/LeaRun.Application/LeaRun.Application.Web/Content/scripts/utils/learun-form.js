@@ -24,7 +24,7 @@
                     dialogAlert(data.message, -1);
                 } else {
                     Loading(false);
-                    dialogMsg(data.message, 1);
+                    dialogMsg(data.message, data.type);
                     options.success(data);
                     if (options.close == true) {
                         dialogClose();

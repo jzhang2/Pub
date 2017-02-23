@@ -105,7 +105,11 @@
             </td>*@
             <td class="formTitle">发布时间<font face="宋体">*</font></td>
             <td class="formValue">
-                <input id="ReleaseTime" type="text" class="form-control" value="@LeaRun.Util.Time.GetToday("yyyy/MM/dd HH:mm")" />
+                <input id="ReleaseTime" type="text" class="form-control" value="@LeaRun.Util.Time.GetToday("yyyy/MM/dd HH:mm")"/>
+            </td>
+            <td class="formTitle">排序</td>
+            <td class="formValue">
+                <input id="SortCode" type="number" class="form-control" placeholder="排序" />
             </td>
         </tr>
         @*<tr>

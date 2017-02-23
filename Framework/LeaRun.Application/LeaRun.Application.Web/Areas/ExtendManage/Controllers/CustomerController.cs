@@ -195,7 +195,7 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AjaxOnly]
-        [HandlerLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        [HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
         public ActionResult SaveFormFront(string keyValue, CustomerEntity entity) {
             customerbll.SaveForm(keyValue, entity);
             var operators = OperatorProvider.Provider.Current();

@@ -1,0 +1,440 @@
+﻿@{
+    ViewBag.Title = "读者服务";
+    ViewBag.navIndex = -1;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@using LeaRun.Application.Entity.ExtendManage
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+<script src="~/Content/scripts/plugins/uploadify/ajaxfileupload.js"></script>
+<script src="~/Content/scripts/plugins/datepicker/WdatePicker.js"></script>
+<script src="~/Content/scripts/utils/learun-ui.js"></script>
+<script src="~/Content/scripts/utils/learun-form.js"></script>
+<link href="~/Content/scripts/plugins/dialog/dialog.css" rel="stylesheet" />
+<script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
+<script src="~/Content/scripts/plugins/uploadify/bootstrap-filestyle.min.js"></script>
+<style>
+    .ibox {
+        clear: both;
+        margin-bottom: 25px;
+        margin-top: 0px;
+        padding: 0;
+    }
+
+        .ibox::after, .ibox::before {
+            display: table;
+        }
+
+    .ibox-title {
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        background-color: #ffffff;
+        border-color: #e7eaec;
+        border-image: none;
+        border-style: solid solid none;
+        border-width: 2px 0 0;
+        color: inherit;
+        margin-bottom: 0px;
+        padding: 15px 15px 7px;
+        min-height: 48px;
+    }
+
+    .ibox-content {
+        background-color: #ffffff;
+        color: inherit;
+        padding: 15px 20px 20px 20px;
+        border-color: #e7eaec;
+        border-image: none;
+        border-style: solid solid none;
+        border-width: 1px 0;
+    }
+
+    .ibox-content {
+        clear: both;
+    }
+
+    .feed-element {
+        padding-bottom: 15px;
+    }
+
+        .feed-element, .feed-element .media {
+            margin-top: 15px;
+        }
+
+    .chat-element, .media-body {
+        overflow: hidden;
+    }
+
+    .sidebar-panel .feed-element, .media-body, .sidebar-panel p {
+        font-size: 12px;
+    }
+
+    .feed-element, .media-body {
+        overflow: hidden;
+    }
+
+    .feed-activity-list .feed-element {
+        border-bottom: 1px solid #e7eaec;
+    }
+
+    :first-child.feed-element {
+        margin-top: 0px;
+    }
+
+    .pull-left {
+        float: left !important;
+    }
+
+    .pull-left {
+        float: left;
+    }
+
+    .feed-element > .pull-left {
+        margin-right: 10px;
+    }
+
+    .media, .media-body {
+        overflow: hidden;
+        zoom: 1;
+    }
+
+    .media-body {
+        width: 10000px;
+    }
+
+    .media-body, .media-left, .media-right {
+        display: table-cell;
+        vertical-align: top;
+    }
+
+    .small, small {
+        font-size: 85%;
+    }
+
+    .label {
+        display: inline;
+        padding: .2em .6em .3em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25em;
+    }
+
+    .pull-right {
+        float: right !important;
+    }
+
+    .pull-right {
+        float: right;
+    }
+
+    .text-muted {
+        color: #777;
+    }
+
+    .text-muted {
+        color: #888888;
+    }
+
+    .well {
+        min-height: 20px;
+        padding: 19px;
+        margin-bottom: 20px;
+        background-color: #f5f5f5;
+        border: 1px solid #e3e3e3;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+        box-shadow: inset 0px 1px 1px rgba(0,0,0,0.05);
+    }
+
+    .feed-element .well {
+        border: 1px solid #e7eaec;
+        box-shadow: none;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        padding: 10px 20px;
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .btn-white {
+        color: inherit;
+        background: white;
+        border: 1px solid #e7eaec;
+    }
+
+    .float-e-margins .btn {
+        margin-bottom: 5px;
+    }
+
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .fa-thumbs-up::before {
+        content: "\f164";
+    }
+
+    img {
+        vertical-align: middle;
+    }
+
+    .img-circle {
+        border-radius: 50%;
+    }
+
+    .img-circle {
+        border-radius: 50%;
+    }
+
+    .feed-element img.img-circle, .dropdown-messages-box img.img-circle {
+        width: 38px;
+        height: 38px;
+    }
+
+    .text-navy {
+        color: #1ab394;
+    }
+
+    .feed-element .actions {
+        margin-top: 10px;
+    }
+
+    .fa-heart::before {
+        content: "\f004";
+    }
+
+    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+        font-family: inherit;
+        font-weight: 500;
+        line-height: 1.1;
+        color: inherit;
+    }
+
+    .h4, .h5, .h6, h4, h5, h6 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .h5, h5 {
+        font-size: 14px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 100;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+    h3, h4, h5 {
+        margin-top: 5px;
+        font-weight: 600;
+    }
+
+    .ibox-content h1, .ibox-content h2, .ibox-content h3, .ibox-content h4, .ibox-content h5, .ibox-title h1, .ibox-title h2, .ibox-title h3, .ibox-title h4, .ibox-title h5 {
+        margin-top: 5px;
+    }
+
+    .ibox-title h5 {
+        display: inline-block;
+        font-size: 14px;
+        margin: 0 0 7px;
+        padding: 0;
+        text-overflow: ellipsis;
+        float: left;
+    }
+
+    .ibox-tools {
+        display: block;
+        float: none;
+        margin-top: 0px;
+        position: relative;
+        padding: 0;
+        text-align: right;
+    }
+
+    .label {
+        background-color: #d1dade;
+        color: #5e5e5e;
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 3px 8px;
+        text-shadow: none;
+    }
+
+    .label-warning-light, .badge-warning-light {
+        background-color: #f8ac59;
+        color: #ffffff;
+    }
+
+    .ibox-title .label {
+        float: left;
+        margin-left: 4px;
+    }
+</style>
+
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive" />
+</div>
+@Html.AntiForgeryToken()
+<div class="content-navbar">
+    <div class="container">
+        <div class="row">
+            <div class="content-quicknva">
+                <ul>
+                    <li class="col-xs-6-nav">
+                        <a href="/Reader" class="active">读者服务</a>
+                    </li>
+                    <li>
+                        <a href="/Contributor">作者服务</a>
+                    </li>
+                    @for (int i = 0; i < Model.NewsList.Count; i++) {
+                        <li @(i % 2 == 0 ? "class=col-xs-6-nav" : "")>
+                            <a href="/Service/@Model.NewsList[i].NewsId" @(Model.NewsList[i].NewsId == Model.CurrentArticle.NewsId ? "class=active" : "")>@Model.NewsList[i].FullHead</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="best-deal" class="myaccount">
+    <div class="container" style="background: white; padding: 35px 25px;">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 right-content">
+                <div class="col-md-12" style="background: white;">
+                    <div class="MyProfile col-md-12 col-sm-12 col-xs-12 sugg-content">
+                        <form class="form-horizontal" role="form" id="form2">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="Category" class="control-label col-sm-3">类型</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" id="Category">
+                                                <option value="1">建议</option>
+                                                <option value="2">投诉</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="Title" class="control-label col-sm-3">标题</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="Title" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="Contents" class="label-cont control-label col-sm-3">内容</label>
+                                        <div class="col-sm-9">
+                                            <textarea id="Contents" class="form-control" style="height: 80px;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-3 col-sm-9">
+                                            <button onclick="SaveSuggestion();" type="button" class="btn btn-default signinbtn" style="margin-right: 20px;">提交</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="ibox float-e-margins" id="dibox">
+                <div class="ibox-content">
+                    <div>
+                        <div class="feed-activity-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function SaveSuggestion() {
+        var postData = $("#form2").GetWebControls();
+        postData["Gender"] = $('#form1 input[name="Gender"]:checked ').val();
+        $.SaveForm({
+            url: "../../ExtendManage/Suggestion/SaveFormFront",
+            param: postData,
+            loading: "正在保存数据...",
+            success: function (data) {
+            }
+        });
+    }
+    $(function () {
+        $.ajax({
+            url: "/Default/GetSuggestionJson",
+            type: "get",
+            dataType: "json",
+            async: false,
+            success: function (result) {
+                if (result != "") {
+                    var str = "";
+                    for (var i = 0; i < result.length; i++) {
+                        str += '<div class="feed-element">';
+                        str += '<a class="pull-left">';
+                        if (result[i].CreateUserId == null) {
+                            str += '<img class="img-circle" alt="image" src="/images/头像.png">';
+                        } else {
+                            str += '<img class="img-circle" alt="image" src="' + (result[i].HeadIcon == null ? "/images/头像.png" : result[i].HeadIcon) + '">';
+                        }
+                        str += '</a>';
+                        str += '<div class="media-body pcoments">';
+                        //str += '<small class="pull-right"><a href="javascript:;" onclick="btnrp(this,\'' + result[i].CommentsId + '\',\'' + (result[i].FullName == null ? result[i].Email : result[i].FullName) + '\',\'' + result[i].CustomerId + '\')">回复</a></small>';
+                        if (result[i].CreateUserId == null) {
+                            str += '<strong>游客</strong> ' + result[i].CreateDate + ' <br>';
+                        } else {
+                            str += '<strong>' + (result[i].FullName == null ? result[i].Email : result[i].FullName) + '</strong> ' + result[i].CreateDate + ' <br>';
+                        }
+                        str += '<div>' + result[i].Contents + '</div>';
+                        if (result[i].IsReply == "1") {
+                            str += '<div class="well">';
+                                    str += '<div class="feed-element">';
+                                    str += '<div class="media-body">';
+                                    str += '<strong>官方回复</strong> ' + result[i].ReplyDate + ' <br>';
+                                    str += '<div>';
+                                    str += '<div>' + result[i].ReplyContents + '</div>';
+                                    str += '</div>';
+                                    str += '</div>';
+                                    str += '</div>';
+                            str += '</div>';
+
+                        }
+
+                        str += '</div>';
+                        str += '</div>';
+                    }
+                    $(".feed-activity-list").html(str);
+                }
+            }
+        });
+    });
+</script>

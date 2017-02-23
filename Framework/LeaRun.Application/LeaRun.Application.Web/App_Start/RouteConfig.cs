@@ -15,13 +15,23 @@ namespace LeaRun.Application.Web
                 defaults: new { controller = "Default", action = "ResetPwd", id = UrlParameter.Optional }
             );
             routes.MapRoute(
+                name: "Contributor",
+                url: "Contributor",
+                defaults: new { controller = "Default", action = "Contributor", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                name: "Reader",
+                url: "Reader",
+                defaults: new { controller = "Default", action = "Reader", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                 name: "ForgotPassWord",
                 url: "ForgotPassWord",
                 defaults: new { controller = "Default", action = "ForgotPassWord", id = UrlParameter.Optional }
             );
             routes.MapRoute(
                 name: "Books",
-                url: "Books",
+                url: "Books/{id}",
                 defaults: new { controller = "Default", action = "Books", id = UrlParameter.Optional }
             );
             routes.MapRoute(
@@ -51,12 +61,12 @@ namespace LeaRun.Application.Web
             );
             routes.MapRoute(
                 name: "MapCulture",
-                url: "MapCulture",
+                url: "MapCulture/{id}",
                 defaults: new { controller = "Default", action = "MapCulture", id = UrlParameter.Optional }
             );
             routes.MapRoute(
                 name: "News",
-                url: "News",
+                url: "News/{id}",
                 defaults: new { controller = "Default", action = "News", id = UrlParameter.Optional }
             );
             routes.MapRoute(

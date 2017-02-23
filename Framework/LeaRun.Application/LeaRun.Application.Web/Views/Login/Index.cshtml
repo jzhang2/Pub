@@ -143,6 +143,10 @@
                         window.location.href = contentPath + '/Home/AdminLTE';
   
                     } else {
+                        $("#autologin").removeAttr("checked");
+                        top.$.cookie('learn_autologin', '', { path: "/", expires: -1 });
+                        top.$.cookie('learn_username', '', { path: "/", expires: -1 });
+                        top.$.cookie('learn_password', '', { path: "/", expires: -1 });
                         if (data.message.length >= 30) {
                             dialogAlert(data.message, 0);
                         } else {

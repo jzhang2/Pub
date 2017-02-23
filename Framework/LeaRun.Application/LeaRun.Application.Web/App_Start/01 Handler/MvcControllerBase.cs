@@ -13,7 +13,7 @@ namespace LeaRun.Application.Web
     /// 日 期：2015.11.9 10:45
     /// 描 述：控制器基类
     /// </summary>
-    [HandlerLogin(LoginMode.Enforce)]
+    //[HandlerLogin(LoginMode.Enforce)]
     public abstract class MvcControllerBase : Controller
     {
         private Log _logger;

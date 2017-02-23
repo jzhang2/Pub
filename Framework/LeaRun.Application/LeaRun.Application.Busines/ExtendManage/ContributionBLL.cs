@@ -65,6 +65,14 @@ namespace LeaRun.Application.Busines.ExtendManage
                 throw;
             }
         }
+        public ContributionEntity SaveEntity(string keyValue, ContributionEntity entity) {
+            try {
+                return service.SaveEntity(keyValue, entity);
+            }
+            catch (Exception) {
+                throw;
+            }
+        }
         #endregion
 
         public IEnumerable<ContributionEntity> GetUserContribution(string userId)

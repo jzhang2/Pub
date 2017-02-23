@@ -37,7 +37,6 @@
     };
 
     var sliderMain = function () {
-
         $('#fh5co-hero .flexslider').flexslider({
             animation: "fade",
             slideshowSpeed: 5000,
@@ -56,9 +55,10 @@
             }
 
         });
-        $('#fh5co-hero .flexslider .slides > li').css('height', $(window).height() * 0.8);
+        $('#fh5co-hero .flexslider .slides > li').css('height', $(window).height() * 0.65);
+        
         $(window).resize(function () {
-            $('#fh5co-hero .flexslider .slides > li').css('height', $(window).height() * 0.8);
+            $('#fh5co-hero .flexslider .slides > li').css('height', $(window).height() * 0.65);
         });
 
     };

@@ -12,6 +12,11 @@
 <link href="~/Content/scripts/plugins/dialog/dialog.css" rel="stylesheet" />
 <script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
 <script src="~/Content/scripts/plugins/uploadify/bootstrap-filestyle.min.js"></script>
+<style>
+    .file img {
+        border-radius: 50%;
+    }
+</style>
 <div>
     <img src="~/images/baneer1.png" class="img-responsive" />
 </div>
@@ -38,7 +43,7 @@
                                 <label for="uploadPreview" class="control-label col-sm-3">头像</label>
                                 <div class="col-sm-9">
                                     <div class="file">
-                                        <img id="uploadPreview" style="width: 70px; height: 70px;" src="@(!string.IsNullOrEmpty(Model.Customer.HeadIcon) ? Model.Customer.HeadIcon : "/Content/images/logo-headere47d5.png")" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="HeadIcon" value="@(!string.IsNullOrEmpty(Model.Customer.HeadIcon) ? Model.Customer.HeadIcon : "/Content/images/logo-headere47d5.png")"/>
+                                        <img id="uploadPreview" style="width: 70px; height: 70px;" src="@(!string.IsNullOrEmpty(Model.Customer.HeadIcon) ? Model.Customer.HeadIcon : "/Content/images/logo-headere47d5.png")" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="HeadIcon" value="@(!string.IsNullOrEmpty(Model.Customer.HeadIcon) ? Model.Customer.HeadIcon : "/Content/images/logo-headere47d5.png")" />
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +193,7 @@
                             <div class="form-group">
                                 <label for="uploadFile1" class="control-label col-sm-3">稿件</label>
                                 <div class="col-sm-9 contri-input">
-                                    <input type="file" data-buttonText="选择文件" name="uploadFile1" class="filestyle" id="uploadFile1"><input type="hidden" id="FileName" />
+                                    <input type="file" data-buttonText="选择文件" name="uploadFile1" class="filestyle" id="uploadFile1"><input type="hidden" id="FileName" /><input type="hidden" id="FilePath" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -204,15 +209,17 @@
                                 <tr>
                                     <th>标题</th>
                                     <th>备注</th>
-                                    <th>时间</th>
+                                    <th>稿件</th>
                                     <th>状态</th>
+                                    <th>时间</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="contb">
                                 @foreach (ContributionEntity entity in Model.ContributionList) {
                                     <tr>
                                         <td>@entity.Title</td>
                                         <td>@entity.Description</td>
+                                        <td><a href="javascript:;" onclick="btn_download('@entity.ContributionId')" style="cursor: pointer;">@(entity.FileName.Substring(0, entity.FileName.LastIndexOf('.')))</a></td>
                                         <td>@entity.ContributionStatus</td>
                                         <td>@(Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd"))</td>
                                     </tr>
@@ -226,6 +233,10 @@
     </div>
 </div>
 <script>
+    function btn_download(keyValue) {
+        $.download("../../ExtendManage/Contribution/Download", "keyValue=" + keyValue, 'post');
+
+    }
     function AcceptClick() {
         //if (!$('#form1').Validform()) {
         //    return false;
@@ -248,11 +259,10 @@
         var postData = $("#form2").GetWebControls();
         postData["Gender"] = $('#form1 input[name="Gender"]:checked ').val();
         $.SaveForm({
-            url: "../../ExtendManage/Suggestion/SaveForm",
+            url: "../../ExtendManage/Suggestion/SaveFormFront",
             param: postData,
             loading: "正在保存数据...",
-            success: function () {
-
+            success: function (data) {
             }
         });
     }
@@ -260,13 +270,34 @@
         var postData = {
             Title: $("#ContriTitle").val(),
             Description: $("#Description").val(),
-            FileName: $("#FileName").val()
+            FileName: $("#FileName").val(),
+            FilePath: $("#FilePath").val()
+        }
+        if (postData.Title == "") {
+            dialogMsg("请输入标题", 2);
+            return;
+        }
+        if (postData.FilePath == "") {
+            dialogMsg("请上传稿件", 2);
+            return;
         }
         $.SaveForm({
-            url: "../../ExtendManage/Contribution/SaveForm",
+            url: "../../ExtendManage/Contribution/SaveFormFront",
             param: postData,
             loading: "正在保存数据...",
-            success: function () {
+            success: function (data) {
+                if (data.type == "1") {
+                    var entity = data.resultdata;
+                    var html = "";
+                    html += '<tr>';
+                    html += '<td>' + entity.Title + '</td>';
+                    html += '<td>' + entity.Description + '</td>';
+                    html += '<td><a href="javascript:;" onclick="btn_download(\'' + entity.ContributionId + '\')" style="cursor: pointer;">' + entity.FileName.substring(0, entity.FileName.lastIndexOf('.')) + '</a></td>';
+                    html += '<td>' + (entity.ContributionStatus == null ? "" : entity.ContributionStatus) + '</td>';
+                    html += '<td>' + entity.CreateDate + '</td>';
+                    html += '</tr>';
+                    $("#contb").prepend(html);
+                }
             }
         });
     }
@@ -284,7 +315,7 @@
                 if (data.type == 1) {
                     $("#HeadIcon").val(data.resultdata);
                 }
-                dialogMsg(data.message, 1);
+                dialogMsg(data.message, data.type);
                 $('#uploadFile').on('change', uphead);
             }
         });
@@ -292,15 +323,16 @@
     function upfile() {
         //上传应用图标
         $.ajaxFileUpload({
-            url: "/ExtendManage/Books/UploadFile",
+            url: "/ExtendManage/Books/UploadDocument",
             secureuri: false,
             fileElementId: 'uploadFile1',
             dataType: 'json',
             success: function (data) {
                 if (data.type == 1) {
-                    $("#FileName").val(data.resultdata);
+                    $("#FileName").val(data.resultdata.fileName);
+                    $("#FilePath").val(data.resultdata.filePath);
                 }
-                dialogMsg(data.message, 1);
+                dialogMsg(data.message, data.type);
                 $('#uploadFile1').on('change', upfile);
             }
         });

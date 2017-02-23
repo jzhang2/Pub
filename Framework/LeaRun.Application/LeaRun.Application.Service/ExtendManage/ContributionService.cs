@@ -21,7 +21,7 @@ namespace LeaRun.Application.Service.ExtendManage
         }
 
         public IEnumerable<ContributionEntity> GetUserContribution(string userId) {
-            return this.BaseRepository().IQueryable(t => t.CreateUserId == userId).ToList();
+            return this.BaseRepository().IQueryable(t => t.CreateUserId == userId).OrderByDescending(t=>t.CreateDate).ToList();
         }
         /// <summary>
         /// 获取实体
@@ -61,6 +61,17 @@ namespace LeaRun.Application.Service.ExtendManage
                 entity.Create();
                 this.BaseRepository().Insert(entity);
             }
+        }
+        public ContributionEntity SaveEntity(string keyValue, ContributionEntity entity) {
+            if (!string.IsNullOrEmpty(keyValue)) {
+                entity.Modify(keyValue);
+                this.BaseRepository().Update(entity);
+            }
+            else {
+                entity.Create();
+                this.BaseRepository().Insert(entity);
+            }
+            return entity;
         }
         #endregion
     }

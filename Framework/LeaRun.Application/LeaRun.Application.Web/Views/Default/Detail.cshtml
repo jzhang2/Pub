@@ -12,7 +12,7 @@
     <div class="container" style="background: white; padding: 35px 25px;">
         <div style="border-bottom: solid 1px #E6EAED; margin-bottom: 25px; padding-bottom: 10px;">
             <h3 style="margin-bottom: 5px;">@Model.Detial.FullHead</h3>
-            <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="icon-thumbs-o-up"></i>@Model.Detial.ThumbUp<i class="icon-comments"></i>@Model.Detial.CommentsCount</span>
+            <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="thumbs-up"><img src="/images/tup.png" /></i>@Model.Detial.ThumbUp<i class="icomments"><img src="/images/icomments.png" /></i>@Model.Detial.CommentsCount</span>
         </div>
         <div>
             @Html.Raw(HttpUtility.HtmlDecode(Model.Detial.NewsContent))

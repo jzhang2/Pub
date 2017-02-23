@@ -12,19 +12,18 @@
         <div class="row">
             <div class="content-quicknva">
                 <ul>
-                    @for (int i = 0; i < Model.NewsList.Count; i++) {
+                    <li class="col-xs-6-nav">
+                        <a href="/Reader">读者服务</a>
+                    </li>
+                    <li>
+                        <a href="/Contributor">作者服务</a>
+                    </li>
+                    @for (int i = 0; i < Model.NewsList.Count; i++)
+                    {
                         <li @(i%2 == 0 ? "class=col-xs-6-nav" : "")>
                             <a href="/Service/@Model.NewsList[i].NewsId" @(Model.NewsList[i].NewsId == Model.CurrentArticle.NewsId ? "class=active" : "")>@Model.NewsList[i].FullHead</a>
                         </li>
                     }
-                    @*<li style="float: right" class="col-xs-search">
-                            <form id="custom-search-form" class="form-search pull-right">
-                                <div class="input-append">
-                                    <input type="text" class="search-query" placeholder="搜索" id="keyword">
-                                    <button type="button" class="btn" id="news-search"><i class="icon-search"></i></button>
-                                </div>
-                            </form>
-                        </li>*@
                 </ul>
             </div>
         </div>

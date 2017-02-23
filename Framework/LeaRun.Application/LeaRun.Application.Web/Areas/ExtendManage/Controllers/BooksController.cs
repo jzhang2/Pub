@@ -13,6 +13,11 @@ using LeaRun.Util.WebControl;
 
 namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
 {
+    public class FileInfo
+    {
+        public string fileName{get; set; }
+        public string filePath { get; set; }
+    }
     public class BooksController : MvcControllerBase {
         private NewsBLL newsBLL = new NewsBLL();
 
@@ -145,6 +150,24 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
             files[0].SaveAs(fullFileName);
 
             return Success("上传成功。", virtualPath);
+        }
+
+        [HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public ActionResult UploadDocument() {
+            HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
+            //没有文件上传，直接返回
+            if (files[0].ContentLength == 0 || string.IsNullOrEmpty(files[0].FileName)) {
+                return HttpNotFound();
+            }
+            string FileEextension = Path.GetExtension(files[0].FileName);
+            string virtualPath = string.Format("/Resource/BookFile/{0}{1}", Guid.NewGuid(), FileEextension);
+            string fullFileName = Server.MapPath("~" + virtualPath);
+            //创建文件夹，保存文件
+            string path = Path.GetDirectoryName(fullFileName);
+            Directory.CreateDirectory(path);
+            files[0].SaveAs(fullFileName);
+
+            return Success("上传成功。", new FileInfo() {fileName= files[0].FileName ,filePath = virtualPath });
         }
         /// <summary>
         /// 禁用账户

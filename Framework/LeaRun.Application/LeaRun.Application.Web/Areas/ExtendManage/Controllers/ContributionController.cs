@@ -5,10 +5,8 @@ using LeaRun.Util.WebControl;
 using System.Web.Mvc;
 using LeaRun.Application.Code;
 
-namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
-{
-    public class ContributionController : MvcControllerBase
-    {
+namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
+    public class ContributionController : MvcControllerBase {
         private ContributionBLL contributionbll = new ContributionBLL();
 
         #region 视图功能
@@ -17,8 +15,7 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ContributionIndex()
-        {
+        public ActionResult ContributionIndex() {
             return View();
         }
         [HttpGet]
@@ -30,8 +27,7 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ContributionForm()
-        {
+        public ActionResult ContributionForm() {
             return View();
         }
         #endregion
@@ -43,8 +39,7 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         /// <param name="queryJson">查询参数</param>
         /// <returns>返回列表Json</returns>
         [HttpGet]
-        public ActionResult GetListJson(string queryJson)
-        {
+        public ActionResult GetListJson(string queryJson) {
             var data = contributionbll.GetList(queryJson);
             return ToJsonResult(data);
         }
@@ -54,8 +49,7 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         /// <param name="keyValue">主键值</param>
         /// <returns>返回对象Json</returns>
         [HttpGet]
-        public ActionResult GetFormJson(string keyValue)
-        {
+        public ActionResult GetFormJson(string keyValue) {
             var data = contributionbll.GetEntity(keyValue);
             return ToJsonResult(data);
         }
@@ -70,8 +64,7 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AjaxOnly]
-        public ActionResult RemoveForm(string keyValue)
-        {
+        public ActionResult RemoveForm(string keyValue) {
             contributionbll.RemoveForm(keyValue);
             return Success("删除成功。");
         }
@@ -84,10 +77,18 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AjaxOnly]
-        public ActionResult SaveForm(string keyValue, ContributionEntity entity)
-        {
+        public ActionResult SaveForm(string keyValue, ContributionEntity entity) {
             contributionbll.SaveForm(keyValue, entity);
-            return Success("操作成功。");
+            return Success("投稿成功。");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AjaxOnly]
+        [HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public ActionResult SaveFormFront(string keyValue, ContributionEntity entity) {
+            entity.CustomerId = OperatorProvider.Provider.Current().UserId;
+            var result = contributionbll.SaveEntity(keyValue, entity);
+            return Success("投稿成功。", result);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -99,6 +100,16 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers
         [HttpPost]
         [HandlerAuthorize(PermissionMode.Enforce)]
         public void DownloadFile(string keyValue) {
+            var data = contributionbll.GetEntity(keyValue);
+            string filename = Server.UrlDecode(data.FileName);//返回客户端文件名称
+            string filepath = this.Server.MapPath(data.FilePath);
+            if (FileDownHelper.FileExists(filepath)) {
+                FileDownHelper.DownLoadold(filepath, filename);
+            }
+        }
+        [HttpPost]
+        [HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public void Download(string keyValue) {
             var data = contributionbll.GetEntity(keyValue);
             string filename = Server.UrlDecode(data.FileName);//返回客户端文件名称
             string filepath = this.Server.MapPath(data.FilePath);

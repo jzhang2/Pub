@@ -17,7 +17,7 @@ namespace LeaRun.Application.Service.ExtendManage {
             return this.BaseRepository().IQueryable().ToList();
         }
         public IEnumerable<SuggestionEntity> GetUserSuggestion(string userId) {
-            return this.BaseRepository().IQueryable(t => t.CreateUserId == userId).ToList();
+            return this.BaseRepository().IQueryable(t => t.CreateUserId == userId).OrderByDescending(t=>t.CreateDate).ToList();
         }
         /// <summary>
         /// 获取实体

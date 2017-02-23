@@ -35,6 +35,7 @@ namespace LeaRun.Application.IService.ExtendManage
         /// <param name="entity">实体对象</param>
         /// <returns></returns>
         void SaveForm(string keyValue, ContributionEntity entity);
+        ContributionEntity SaveEntity(string keyValue, ContributionEntity entity);
         #endregion
 
         IEnumerable<ContributionEntity> GetUserContribution(string userId);

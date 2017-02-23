@@ -102,6 +102,14 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AjaxOnly]
+        //[HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public ActionResult SaveFormFront(string keyValue, SuggestionEntity entity) {
+            suggestionbll.SaveForm(keyValue, entity);
+            return Success("²Ù×÷³É¹¦¡£");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AjaxOnly]
         public ActionResult SaveReply(string keyValue, string reply) {
             SuggestionAnswerEntity suggestionAnswerEntity = suggestionAnswerIService.GetEntityBySuggestion(keyValue) ??
                                                             new SuggestionAnswerEntity();

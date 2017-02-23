@@ -1,0 +1,182 @@
+﻿@{
+    ViewBag.Title = "投稿";
+    ViewBag.navIndex = 5;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@using LeaRun.Application.Entity.ExtendManage
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+<script src="~/Content/scripts/plugins/uploadify/ajaxfileupload.js"></script>
+<script src="~/Content/scripts/utils/learun-ui.js"></script>
+<script src="~/Content/scripts/utils/learun-form.js"></script>
+<link href="~/Content/scripts/plugins/dialog/dialog.css" rel="stylesheet" />
+<script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
+<script src="~/Content/scripts/plugins/uploadify/bootstrap-filestyle.min.js"></script>
+<style>
+    .file img {
+        border-radius: 50%;
+    }
+</style>
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive"/>
+</div>
+@Html.AntiForgeryToken()
+<div class="content-navbar">
+    <div class="container">
+        <div class="row">
+            <div class="content-quicknva">
+                <ul>
+                    <li class="col-xs-6-nav">
+                        <a href="/Reader">读者服务</a>
+                    </li>
+                    <li>
+                        <a href="/Contributor" class="active">作者服务</a>
+                    </li>
+                    @for (int i = 0; i < Model.NewsList.Count; i++) {
+                        <li @(i % 2 == 0 ? "class=col-xs-6-nav" : "")>
+                            <a href="/Service/@Model.NewsList[i].NewsId" @(Model.NewsList[i].NewsId == Model.CurrentArticle.NewsId ? "class=active" : "")>@Model.NewsList[i].FullHead</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="best-deal">
+    <div class="container" style="background: white; padding: 35px 25px;">
+        <div class="col-md-12 col-sm-12 col-xs-12 right-content">
+            <div class="col-md-12" style="background: white;">
+                <div class="MyProfile col-md-12 col-sm-12 col-xs-12 contri-nav" style="padding-top: 0">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="javascript:;">投稿</a></li>
+                        <li><a href="javascript:;">进度查看</a></li>
+                    </ul>
+                </div>
+                <div class="MyProfile col-md-6 col-sm-12 col-xs-12 contri-content">
+                    <form class="form-horizontal" role="form" id="form3">
+                        <div class="form-group">
+                            <label for="ContriTitle" class="control-label col-sm-3">标题</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="ContriTitle" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Description" class="control-label col-sm-3">备注</label>
+                            <div class="col-sm-9">
+                                <textarea id="Description" class="form-control" style="height: 80px;"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="uploadFile1" class="control-label col-sm-3">稿件</label>
+                            <div class="col-sm-9 contri-input">
+                                <input type="file" data-buttonText="选择文件" name="uploadFile1" class="filestyle" id="uploadFile1"><input type="hidden" id="FileName"/><input type="hidden" id="FilePath"/>
+                                <span style="color: red;">注意附件格式包括: PDF,WORD</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="uploadFile1" class="control-label col-sm-3">投稿须知</label>
+                            <div class="col-sm-9 contri-input">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button onclick="SaveContri();" type="button" class="btn btn-default signinbtn" style="margin-right: 20px;">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="MyProfile col-md-12 col-sm-12 col-xs-12 contri-content" style="display: none">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>标题</th>
+                                <th>备注</th>
+                                <th>稿件</th>
+                                <th>状态</th>
+                                <th>时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contb">
+                            @foreach (ContributionEntity entity in Model.ContributionList) {
+                                <tr>
+                                    <td>@entity.Title</td>
+                                    <td>@entity.Description</td>
+                                    <td><a href="javascript:;" onclick="btn_download('@entity.ContributionId')" style="cursor: pointer;">@(entity.FileName.Substring(0, entity.FileName.LastIndexOf('.')))</a></td>
+                                    <td>@entity.ContributionStatus</td>
+                                    <td>@(Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd"))</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function btn_download(keyValue) {
+            $.download("../../ExtendManage/Contribution/Download", "keyValue=" + keyValue, 'post');
+
+        }
+        
+        function SaveContri() {
+            var postData = {
+                Title: $("#ContriTitle").val(),
+                Description: $("#Description").val(),
+                FileName: $("#FileName").val(),
+                FilePath: $("#FilePath").val()
+            }
+            if (postData.Title == "") {
+                dialogMsg("请输入标题", 2);
+                return;
+            }
+            if (postData.FilePath == "") {
+                dialogMsg("请上传稿件", 2);
+                return;
+            }
+            $.SaveForm({
+                url: "../../ExtendManage/Contribution/SaveFormFront",
+                param: postData,
+                loading: "正在保存数据...",
+                success: function (data) {
+                    if (data.type == "1") {
+                        var entity = data.resultdata;
+                        var html = "";
+                        html += '<tr>';
+                        html += '<td>' + entity.Title + '</td>';
+                        html += '<td>' + entity.Description + '</td>';
+                        html += '<td><a href="javascript:;" onclick="btn_download(\'' + entity.ContributionId + '\')" style="cursor: pointer;">' + entity.FileName.substring(0, entity.FileName.lastIndexOf('.')) + '</a></td>';
+                        html += '<td>' + (entity.ContributionStatus == null ? "" : entity.ContributionStatus) + '</td>';
+                        html += '<td>' + entity.CreateDate + '</td>';
+                        html += '</tr>';
+                        $("#contb").prepend(html);
+                    }
+                }
+            });
+        }
+        function upfile() {
+            //上传应用图标
+            $.ajaxFileUpload({
+                url: "/ExtendManage/Books/UploadDocument",
+                secureuri: false,
+                fileElementId: 'uploadFile1',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.type == 1) {
+                        $("#FileName").val(data.resultdata.fileName);
+                        $("#FilePath").val(data.resultdata.filePath);
+                    }
+                    dialogMsg(data.message, data.type);
+                    $('#uploadFile1').on('change', upfile);
+                }
+            });
+        }
+        $(function () {
+            $(".contri-nav ul li").click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+                $(".contri-content").hide().eq($(this).index()).show();
+            });
+            $("#uploadFile1").filestyle({ icon: false });
+            $('#uploadFile1').on('change', upfile);
+        });
+    </script>
+</div>

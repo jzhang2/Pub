@@ -567,28 +567,28 @@
       <publishTime>05/30/2016 11:27:49</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Busines.dll">
-      <publishTime>02/11/2017 01:32:04</publishTime>
+      <publishTime>02/16/2017 16:33:06</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Cache.dll">
-      <publishTime>02/11/2017 01:32:04</publishTime>
+      <publishTime>02/16/2017 16:33:06</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Code.dll">
       <publishTime>02/08/2017 17:21:39</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Entity.dll">
-      <publishTime>02/11/2017 01:32:03</publishTime>
+      <publishTime>02/15/2017 16:02:27</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.IService.dll">
-      <publishTime>02/11/2017 01:32:03</publishTime>
+      <publishTime>02/16/2017 16:33:05</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Mapping.dll">
-      <publishTime>02/11/2017 01:32:03</publishTime>
+      <publishTime>02/15/2017 16:02:28</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Service.dll">
-      <publishTime>02/11/2017 01:32:04</publishTime>
+      <publishTime>02/16/2017 16:33:06</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Web.dll">
-      <publishTime>02/15/2017 00:04:51</publishTime>
+      <publishTime>02/16/2017 16:33:07</publishTime>
     </File>
     <File Include="bin/LeaRun.Cache.dll">
       <publishTime>01/11/2017 17:54:42</publishTime>
@@ -3525,7 +3525,7 @@
       <publishTime>02/07/2017 11:10:26</publishTime>
     </File>
     <File Include="css/style.css">
-      <publishTime>02/14/2017 23:27:09</publishTime>
+      <publishTime>02/16/2017 15:45:19</publishTime>
     </File>
     <File Include="css/VarelaRound.css">
       <publishTime>01/10/2017 13:38:05</publishTime>
@@ -3575,6 +3575,9 @@
     <File Include="images/dz.bmp">
       <publishTime>01/11/2017 12:22:56</publishTime>
     </File>
+    <File Include="images/icomments.png">
+      <publishTime>02/15/2017 15:50:19</publishTime>
+    </File>
     <File Include="images/image_1.jpg">
       <publishTime>01/10/2017 13:32:56</publishTime>
     </File>
@@ -3619,6 +3622,9 @@
     </File>
     <File Include="images/testimonial_person4.jpg">
       <publishTime>01/10/2017 13:32:56</publishTime>
+    </File>
+    <File Include="images/tup.png">
+      <publishTime>02/15/2017 15:50:19</publishTime>
     </File>
     <File Include="images/zzfw.bmp">
       <publishTime>01/11/2017 12:27:15</publishTime>
@@ -3834,7 +3840,7 @@
       <publishTime>01/10/2017 13:32:56</publishTime>
     </File>
     <File Include="js/main.js">
-      <publishTime>02/07/2017 20:42:38</publishTime>
+      <publishTime>02/15/2017 11:04:50</publishTime>
     </File>
     <File Include="js/modernizr-2.6.2.min.js">
       <publishTime>01/10/2017 13:32:56</publishTime>
@@ -4536,28 +4542,28 @@
       <publishTime>05/30/2016 11:19:08</publishTime>
     </File>
     <File Include="Views/Default/AboutUs.cshtml">
-      <publishTime>01/17/2017 23:49:51</publishTime>
+      <publishTime>02/16/2017 11:00:29</publishTime>
     </File>
     <File Include="Views/Default/Books.cshtml">
       <publishTime>02/15/2017 00:02:42</publishTime>
     </File>
     <File Include="Views/Default/Detail.cshtml">
-      <publishTime>02/14/2017 23:17:21</publishTime>
+      <publishTime>02/15/2017 16:01:18</publishTime>
     </File>
     <File Include="Views/Default/ForgotPassWord.cshtml">
       <publishTime>02/07/2017 22:21:52</publishTime>
     </File>
     <File Include="Views/Default/Index.cshtml">
-      <publishTime>02/15/2017 00:03:19</publishTime>
+      <publishTime>02/15/2017 16:01:09</publishTime>
     </File>
     <File Include="Views/Default/MapCulture.cshtml">
       <publishTime>02/14/2017 23:50:09</publishTime>
     </File>
     <File Include="Views/Default/MyAccount.cshtml">
-      <publishTime>02/14/2017 21:44:13</publishTime>
+      <publishTime>02/16/2017 16:30:45</publishTime>
     </File>
     <File Include="Views/Default/News.cshtml">
-      <publishTime>02/14/2017 23:49:44</publishTime>
+      <publishTime>02/15/2017 16:01:28</publishTime>
     </File>
     <File Include="Views/Default/PBook.cshtml">
       <publishTime>01/19/2017 23:04:43</publishTime>
@@ -4566,7 +4572,7 @@
       <publishTime>02/07/2017 23:11:14</publishTime>
     </File>
     <File Include="Views/Default/Service.cshtml">
-      <publishTime>01/17/2017 23:38:26</publishTime>
+      <publishTime>02/16/2017 11:00:39</publishTime>
     </File>
     <File Include="Views/Default/SignIn.cshtml">
       <publishTime>02/07/2017 22:00:37</publishTime>
@@ -4614,7 +4620,7 @@
       <publishTime>08/22/2016 14:18:52</publishTime>
     </File>
     <File Include="Views/Login/Index.cshtml">
-      <publishTime>12/27/2016 21:15:45</publishTime>
+      <publishTime>02/15/2017 14:23:36</publishTime>
     </File>
     <File Include="Views/PersonCenter/Index.cshtml">
       <publishTime>01/05/2017 16:55:29</publishTime>
@@ -4638,7 +4644,7 @@
       <publishTime>08/22/2016 14:18:52</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutHome.cshtml">
-      <publishTime>02/14/2017 23:45:28</publishTime>
+      <publishTime>02/16/2017 14:46:35</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutIndex.cshtml">
       <publishTime>08/25/2016 16:20:36</publishTime>

@@ -48,49 +48,7 @@
                     <div class="header-inner">
                         <h1 style="margin-top: 25px;"><a href="/"><img src="~/images/logo.png"/></a>
                         </h1>
-                        <nav role="navigation">
-                            <ul class="sf-menu" id="fh5co-primary-menu">
-                                <li><a href="/">首页</a></li>
-                                <li><a href="/News">西图动态</a></li>
-                                <li>
-                                    <a href="/MapCulture" class="sf-with-ul">地图文化</a>
-                                    @*<ul class="fh5co-sub-menu">
-                                        <li><a href="#/preview/?item=build-free-html5-bootstrap-template" target="_blank">地图百科</a></li>
-                                        <li><a href="#/preview/?item=work-free-html5-template-bootstrap" target="_blank">地图故事</a></li>
-                                        <li><a href="#/preview/?item=light-free-html5-template-bootstrap" target="_blank">趣味地图</a></li>
-                                    </ul>*@
-                                </li>
-                                <li><a href="/Books">网上书店</a>
-                                    @*<ul class="fh5co-sub-menu" style="width: 100px;">
-                                        <li><a href="javascript:;" data-id="5">电子书库</a></li>
-                                        <li><a href="javascript:;" data-id="6">实体书库</a></li>
-                                    </ul>*@
-                                </li>
-                                <li><a href="#">产品定制</a></li>
-                                <li><a href="/Service">业务服务</a></li>
-                                <li><a href="/AboutUs">关于我们</a></li>
-                                @if (OperatorProvider.Provider.IsLogin())
-                                {
-                                    string name = !string.IsNullOrEmpty(OperatorProvider.Provider.Current().RealName) ? OperatorProvider.Provider.Current().RealName : OperatorProvider.Provider.Current().Account;
-                                    <li>
-                                        <a href="javascript:;" id="HeadIcon_imgs"><img width="34" height="34" style="margin-top: -4px" src="@(OperatorProvider.Provider.Current().HeadIcon ?? "/images/头像.png")"/>@(name.Length > 16 ? (name.Substring(0, 13) + "...") : name)</a>
-                                        <ul class="fh5co-sub-menu" style="width: 100px;">
-                                            <li><a href="/MyAccount/0">个人资料</a></li>
-                                            <li><a href="/MyAccount/1">我的定制</a></li>
-                                            <li><a href="/MyAccount/2">投诉建议</a></li>
-                                            <li><a href="/MyAccount/3">我的投稿</a></li>
-                                            <li><a href="javascript:;" onclick="indexOut();">退出登录</a></li>
-                                        </ul>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li style="margin-left: 20px;"><a class="navbtn" href="/SignIn">登录</a></li>
-                                    <li><a class="regbtn btn btn-primary" href="/SignUp">注册</a></li>
-                                }
-                            </ul>
-
-                        </nav>
+                        @{ Html.RenderAction("_Nav", "Default"); }
                     </div>
                 </div>
             </div>

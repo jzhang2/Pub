@@ -14,10 +14,10 @@
             <div class="content-quicknva">
                 <ul>
                     <li>
-                        <a href="javascript:;" data-id="5" class="active">电子书库</a>
+                        <a href="javascript:;" data-id="5" @((ViewContext.RouteData.Values["id"] == null || (ViewContext.RouteData.Values["id"] != null && "5" == ViewContext.RouteData.Values["id"].ToString())) ? "class=active" : "")>电子书库</a>
                     </li>
                     <li>
-                        <a href="javascript:;" data-id="6">实体书库</a>
+                        <a href="javascript:;" data-id="6" @((ViewContext.RouteData.Values["id"] != null && "6" == ViewContext.RouteData.Values["id"].ToString()) ? "class=active" : "")>实体书库</a>
                     </li>
                     <li style="float: right" class="col-xs-search">
                         <form id="custom-search-form" class="form-search pull-right">

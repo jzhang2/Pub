@@ -1,10 +1,8 @@
 using System;
 using LeaRun.Application.Code;
 
-namespace LeaRun.Application.Entity.ExtendManage
-{
-    public class SuggestionEntity : BaseEntity
-    {
+namespace LeaRun.Application.Entity.ExtendManage {
+    public class SuggestionEntity : BaseEntity {
         #region 实体成员
         /// <summary>
         /// SuggestionId
@@ -82,19 +80,19 @@ namespace LeaRun.Application.Entity.ExtendManage
         /// <summary>
         /// 新增调用
         /// </summary>
-        public override void Create()
-        {
+        public override void Create() {
             this.SuggestionId = Guid.NewGuid().ToString();
             this.CreateDate = DateTime.Now;
-            this.CreateUserId = OperatorProvider.Provider.Current().UserId;
-            this.CreateUserName = OperatorProvider.Provider.Current().UserName;
+            if (OperatorProvider.Provider.Current() != null && OperatorProvider.Provider.Current().UserId != null) {
+                this.CreateUserId = OperatorProvider.Provider.Current().UserId;
+                this.CreateUserName = OperatorProvider.Provider.Current().UserName;
+            }
         }
         /// <summary>
         /// 编辑调用
         /// </summary>
         /// <param name="keyValue"></param>
-        public override void Modify(string keyValue)
-        {
+        public override void Modify(string keyValue) {
             this.SuggestionId = keyValue;
             this.ModifyDate = DateTime.Now;
             this.ModifyUserId = OperatorProvider.Provider.Current().UserId;

@@ -13,9 +13,9 @@
         <div class="row">
             <div class="content-quicknva">
                 <ul>
-                    @for (int i = 0; i < Model.DataItemList.Count; i++) {
+                    @for (int i = 0; i < Model.NewsNav.Count; i++) {
                         <li @(i % 2 == 0 ? "class=col-xs-6-nav" : "")>
-                            <a href="javascript:;" @(i==0?"class=active":"")>@Model.DataItemList[i].ItemName</a>
+                            <a href="javascript:;" @(((ViewContext.RouteData.Values["id"] == null && i == 0) || (ViewContext.RouteData.Values["id"] != null && Model.NewsNav[i].ItemName == ViewContext.RouteData.Values["id"].ToString())) ? "class=active" : "")>@Model.NewsNav[i].ItemName</a>
                         </li>
                     }
                     <li style="float: right" class="col-xs-search">
@@ -44,7 +44,6 @@
 </div>
 <script>
     var page = 1;
-    var category = '';
     function initdata() {
         var queryJson = {
             Category: $(".content-quicknva ul li a.active").text(),
@@ -74,7 +73,7 @@
                         html += '<p>' + data.rows[i].NewsContent + '</p>';
                         html += '</div>';
                         html += '<p class="fh5co-property-specification">';
-                        html += '<span title="' + data.rows[i].AuthorName + '">' + (data.rows[i].AuthorName.length > 12 ? (data.rows[i].AuthorName.substring(0, 10) + '...') : data.rows[i].AuthorName) + '</span>  <span class="comments-bar"><i class="icon-thumbs-o-up"></i>' + data.rows[i].ThumbUp + '<i class="icon-comments"></i>' + data.rows[i].CommentsCount + '</span>';
+                        html += '<span title="' + data.rows[i].AuthorName + '">' + (data.rows[i].AuthorName.length > 12 ? (data.rows[i].AuthorName.substring(0, 10) + '...') : data.rows[i].AuthorName) + '</span>  <span class="comments-bar"><i class="thumbs-up"><img src="/images/tup.png" /></i>' + data.rows[i].ThumbUp + '<i class="icomments"><img src="/images/icomments.png" /></i>' + data.rows[i].CommentsCount + '</span>';
                         html += '</p>';
                         html += '</div>';
                         html += '</a>';

@@ -2,6 +2,8 @@
 using LeaRun.Application.Code;
 using LeaRun.Util;
 using System.Web;
+using System.Web.Security;
+using LeaRun.Util.WebControl;
 
 namespace LeaRun.Application.Web {
     /// <summary>
@@ -25,15 +27,28 @@ namespace LeaRun.Application.Web {
         /// </summary>
         /// <param name="filterContext"></param>
         public override void OnAuthorization(AuthorizationContext filterContext) {
+            var action = filterContext.ActionDescriptor;
+            if (action.IsDefined(typeof(HandlerFrontLoginAttribute), true)) return;
             //登录拦截是否忽略
             if (_customMode == LoginMode.Ignore) {
                 return;
             }
+            var isAjax = filterContext.HttpContext.Request.IsAjaxRequest();
             //登录是否过期
             if (OperatorProvider.Provider.IsOverdue()) {
                 WebHelper.WriteCookie("learun_login_error", "Overdue");//登录已超时,请重新登录
                 if (_loginType == LoginType.FrontEnd) {
-                    filterContext.Result = new RedirectResult("~/SignIn");
+                    if (isAjax)
+                    {
+                        filterContext.Result = new JsonResult {
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                            Data = new { type = ResultType.success, message = "请先登录",redirectTo = "/SignIn" }
+                        };
+                    }
+                    else
+                    {
+                        filterContext.Result = new RedirectResult("~/SignIn");
+                    }
                 }
                 else {
                     filterContext.Result = new RedirectResult("~/Login/Default");
@@ -45,7 +60,15 @@ namespace LeaRun.Application.Web {
             if (OnLine == 0) {
                 WebHelper.WriteCookie("learun_login_error", "OnLine");//您的帐号已在其它地方登录,请重新登录
                 if (_loginType == LoginType.FrontEnd) {
-                    filterContext.Result = new RedirectResult("~/SignIn");
+                    if (isAjax) {
+                        filterContext.Result = new JsonResult {
+                            JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                            Data = new { type = ResultType.success, message = "请先登录", redirectTo = "/SignIn" }
+                        };
+                    }
+                    else {
+                        filterContext.Result = new RedirectResult("~/SignIn");
+                    }
                 }
                 else {
                     filterContext.Result = new RedirectResult("~/Login/Default");

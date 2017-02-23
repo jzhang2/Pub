@@ -154,8 +154,11 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         {
             this.NewsId = keyValue;
             this.ModifyDate = DateTime.Now;
-            this.ModifyUserId = OperatorProvider.Provider.Current().UserId;
-            this.ModifyUserName = OperatorProvider.Provider.Current().UserName;
+            if (OperatorProvider.Provider.Current() != null && OperatorProvider.Provider.Current().UserId != null)
+            {
+                this.ModifyUserId = OperatorProvider.Provider.Current().UserId;
+                this.ModifyUserName = OperatorProvider.Provider.Current().UserName;
+            }
         }
         #endregion
     }
