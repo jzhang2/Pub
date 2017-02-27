@@ -204,7 +204,7 @@
       <publishTime>01/17/2017 22:55:08</publishTime>
     </File>
     <File Include="Areas/ExtendManage/Views/Books/Form.cshtml">
-      <publishTime>02/14/2017 21:54:32</publishTime>
+      <publishTime>02/25/2017 02:26:55</publishTime>
     </File>
     <File Include="Areas/ExtendManage/Views/Books/Index.cshtml">
       <publishTime>01/05/2017 22:45:39</publishTime>
@@ -213,7 +213,7 @@
       <publishTime>01/15/2017 11:31:58</publishTime>
     </File>
     <File Include="Areas/ExtendManage/Views/Books/PBookForm.cshtml">
-      <publishTime>02/14/2017 21:54:23</publishTime>
+      <publishTime>02/25/2017 02:28:32</publishTime>
     </File>
     <File Include="Areas/ExtendManage/Views/Contribution/ContributionForm.cshtml">
       <publishTime>01/09/2017 16:07:11</publishTime>
@@ -239,14 +239,23 @@
     <File Include="Areas/ExtendManage/Views/Customer/Index.cshtml">
       <publishTime>01/09/2017 15:46:36</publishTime>
     </File>
+    <File Include="Areas/ExtendManage/Views/Customization/Customiza.cshtml">
+      <publishTime>02/27/2017 12:44:50</publishTime>
+    </File>
+    <File Include="Areas/ExtendManage/Views/Customization/Form.cshtml">
+      <publishTime>02/25/2017 02:43:20</publishTime>
+    </File>
+    <File Include="Areas/ExtendManage/Views/Customization/Index.cshtml">
+      <publishTime>02/27/2017 12:44:43</publishTime>
+    </File>
     <File Include="Areas/ExtendManage/Views/News/Form.cshtml">
-      <publishTime>02/06/2017 14:26:18</publishTime>
+      <publishTime>02/25/2017 02:28:52</publishTime>
     </File>
     <File Include="Areas/ExtendManage/Views/News/Index.cshtml">
       <publishTime>02/09/2017 16:44:59</publishTime>
     </File>
     <File Include="Areas/ExtendManage/Views/Service/Form.cshtml">
-      <publishTime>02/06/2017 14:26:24</publishTime>
+      <publishTime>02/25/2017 02:29:04</publishTime>
     </File>
     <File Include="Areas/ExtendManage/Views/Service/Index.cshtml">
       <publishTime>01/05/2017 22:46:29</publishTime>
@@ -255,7 +264,7 @@
       <publishTime>12/31/2016 18:01:20</publishTime>
     </File>
     <File Include="Areas/ExtendManage/Views/Suggestion/Index.cshtml">
-      <publishTime>01/09/2017 16:25:25</publishTime>
+      <publishTime>02/25/2017 03:00:53</publishTime>
     </File>
     <File Include="Areas/ExtendManage/Views/Suggestion/Reply.cshtml">
       <publishTime>12/31/2016 19:44:54</publishTime>
@@ -567,28 +576,28 @@
       <publishTime>05/30/2016 11:27:49</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Busines.dll">
-      <publishTime>02/16/2017 16:33:06</publishTime>
+      <publishTime>02/27/2017 22:16:15</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Cache.dll">
-      <publishTime>02/16/2017 16:33:06</publishTime>
+      <publishTime>02/27/2017 22:16:16</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Code.dll">
       <publishTime>02/08/2017 17:21:39</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Entity.dll">
-      <publishTime>02/15/2017 16:02:27</publishTime>
+      <publishTime>02/27/2017 22:16:13</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.IService.dll">
-      <publishTime>02/16/2017 16:33:05</publishTime>
+      <publishTime>02/27/2017 22:16:14</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Mapping.dll">
-      <publishTime>02/15/2017 16:02:28</publishTime>
+      <publishTime>02/27/2017 22:16:13</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Service.dll">
-      <publishTime>02/16/2017 16:33:06</publishTime>
+      <publishTime>02/27/2017 22:16:15</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Web.dll">
-      <publishTime>02/16/2017 16:33:07</publishTime>
+      <publishTime>02/27/2017 22:16:17</publishTime>
     </File>
     <File Include="bin/LeaRun.Cache.dll">
       <publishTime>01/11/2017 17:54:42</publishTime>
@@ -3087,7 +3096,7 @@
       <publishTime>09/05/2016 14:53:12</publishTime>
     </File>
     <File Include="Content/scripts/plugins/uploadify/ajaxfileupload.js">
-      <publishTime>08/22/2016 14:18:34</publishTime>
+      <publishTime>02/17/2017 10:14:16</publishTime>
     </File>
     <File Include="Content/scripts/plugins/uploadify/bootstrap-filestyle.min.js">
       <publishTime>01/20/2017 16:09:17</publishTime>
@@ -3129,7 +3138,7 @@
       <publishTime>10/08/2016 17:20:15</publishTime>
     </File>
     <File Include="Content/scripts/utils/learun-form.js">
-      <publishTime>02/14/2017 15:49:28</publishTime>
+      <publishTime>02/20/2017 23:40:33</publishTime>
     </File>
     <File Include="Content/scripts/utils/learun-im.js">
       <publishTime>10/09/2016 10:23:58</publishTime>
@@ -3525,7 +3534,7 @@
       <publishTime>02/07/2017 11:10:26</publishTime>
     </File>
     <File Include="css/style.css">
-      <publishTime>02/16/2017 15:45:19</publishTime>
+      <publishTime>02/26/2017 23:38:56</publishTime>
     </File>
     <File Include="css/VarelaRound.css">
       <publishTime>01/10/2017 13:38:05</publishTime>
@@ -3568,6 +3577,9 @@
     </File>
     <File Include="images/baneer1.png">
       <publishTime>01/11/2017 17:17:37</publishTime>
+    </File>
+    <File Include="images/baneersin.png">
+      <publishTime>02/20/2017 21:35:16</publishTime>
     </File>
     <File Include="images/banner.png">
       <publishTime>02/09/2017 16:51:20</publishTime>
@@ -4545,7 +4557,13 @@
       <publishTime>02/16/2017 11:00:29</publishTime>
     </File>
     <File Include="Views/Default/Books.cshtml">
-      <publishTime>02/15/2017 00:02:42</publishTime>
+      <publishTime>02/24/2017 01:13:20</publishTime>
+    </File>
+    <File Include="Views/Default/Contributor.cshtml">
+      <publishTime>02/20/2017 23:42:08</publishTime>
+    </File>
+    <File Include="Views/Default/Customization.cshtml">
+      <publishTime>02/27/2017 00:28:50</publishTime>
     </File>
     <File Include="Views/Default/Detail.cshtml">
       <publishTime>02/15/2017 16:01:18</publishTime>
@@ -4557,25 +4575,28 @@
       <publishTime>02/15/2017 16:01:09</publishTime>
     </File>
     <File Include="Views/Default/MapCulture.cshtml">
-      <publishTime>02/14/2017 23:50:09</publishTime>
+      <publishTime>02/24/2017 00:49:34</publishTime>
     </File>
     <File Include="Views/Default/MyAccount.cshtml">
-      <publishTime>02/16/2017 16:30:45</publishTime>
+      <publishTime>02/27/2017 00:22:03</publishTime>
     </File>
     <File Include="Views/Default/News.cshtml">
-      <publishTime>02/15/2017 16:01:28</publishTime>
+      <publishTime>02/24/2017 00:52:20</publishTime>
     </File>
     <File Include="Views/Default/PBook.cshtml">
       <publishTime>01/19/2017 23:04:43</publishTime>
+    </File>
+    <File Include="Views/Default/Reader.cshtml">
+      <publishTime>02/27/2017 00:22:49</publishTime>
     </File>
     <File Include="Views/Default/ResetPwd.cshtml">
       <publishTime>02/07/2017 23:11:14</publishTime>
     </File>
     <File Include="Views/Default/Service.cshtml">
-      <publishTime>02/16/2017 11:00:39</publishTime>
+      <publishTime>02/16/2017 23:15:09</publishTime>
     </File>
     <File Include="Views/Default/SignIn.cshtml">
-      <publishTime>02/07/2017 22:00:37</publishTime>
+      <publishTime>02/20/2017 21:38:19</publishTime>
     </File>
     <File Include="Views/Default/SignUp.cshtml">
       <publishTime>02/07/2017 21:37:26</publishTime>
@@ -4617,7 +4638,7 @@
       <publishTime>12/27/2016 21:27:06</publishTime>
     </File>
     <File Include="Views/Login/Default.cshtml">
-      <publishTime>08/22/2016 14:18:52</publishTime>
+      <publishTime>02/17/2017 10:14:32</publishTime>
     </File>
     <File Include="Views/Login/Index.cshtml">
       <publishTime>02/15/2017 14:23:36</publishTime>
@@ -4635,7 +4656,7 @@
       <publishTime>08/22/2016 14:18:52</publishTime>
     </File>
     <File Include="Views/Shared/_Footer.cshtml">
-      <publishTime>01/17/2017 23:53:26</publishTime>
+      <publishTime>02/25/2017 03:09:38</publishTime>
     </File>
     <File Include="Views/Shared/_Form.cshtml">
       <publishTime>01/17/2017 10:52:24</publishTime>
@@ -4644,10 +4665,13 @@
       <publishTime>08/22/2016 14:18:52</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutHome.cshtml">
-      <publishTime>02/16/2017 14:46:35</publishTime>
+      <publishTime>02/23/2017 00:39:10</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutIndex.cshtml">
       <publishTime>08/25/2016 16:20:36</publishTime>
+    </File>
+    <File Include="Views/Shared/_Nav.cshtml">
+      <publishTime>02/25/2017 03:09:28</publishTime>
     </File>
     <File Include="Views/Shared/_OrderForm.cshtml">
       <publishTime>08/22/2016 14:18:52</publishTime>

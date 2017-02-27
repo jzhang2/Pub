@@ -61,6 +61,7 @@
     <Compile Include="ExtendManage\BannerNewsBLL.cs" />
     <Compile Include="ExtendManage\CommentsBLL.cs" />
     <Compile Include="ExtendManage\ContributionBLL.cs" />
+    <Compile Include="ExtendManage\CustomizationBLL.cs" />
     <Compile Include="ExtendManage\SecurityCodeBLL.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerBLL.cs" />
     <Compile Include="ExtendManage\SuggestionBLL.cs" />

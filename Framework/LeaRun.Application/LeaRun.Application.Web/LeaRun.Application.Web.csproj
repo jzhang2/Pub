@@ -63,6 +63,11 @@
       <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -179,6 +184,7 @@
     <Compile Include="Areas\ExtendManage\Controllers\BooksController.cs" />
     <Compile Include="Areas\ExtendManage\Controllers\ContributionController.cs" />
     <Compile Include="Areas\ExtendManage\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\ExtendManage\Controllers\CustomizationController.cs" />
     <Compile Include="Areas\ExtendManage\Controllers\NewsController.cs" />
     <Compile Include="Areas\ExtendManage\Controllers\ServiceController.cs" />
     <Compile Include="Areas\ExtendManage\Controllers\SuggestionAnswerController.cs" />
@@ -1638,6 +1644,11 @@
     <Content Include="Content\scripts\plugins\summernote\font\summernote.woff" />
     <Content Include="Areas\ExtendManage\Views\BannerNews\LinksIndex.cshtml" />
     <Content Include="Areas\ExtendManage\Views\BannerNews\LinksForm.cshtml" />
+    <Content Include="Areas\ExtendManage\Views\Customization\Form.cshtml" />
+    <Content Include="Areas\ExtendManage\Views\Customization\Index.cshtml" />
+    <Content Include="Areas\ExtendManage\Views\Customization\Customiza.cshtml" />
+    <Content Include="Areas\ExtendManage\Views\Books\Ebook.cshtml" />
+    <Content Include="Areas\ExtendManage\Views\Books\EForm.cshtml" />
     <None Include="Properties\PublishProfiles\6.1.pubxml" />
     <Content Include="Areas\FlowManage\Views\FlowLaunch\Index.cshtml" />
     <Content Include="Areas\FlowManage\Views\FormDesign\FormPreview.cshtml" />
@@ -1695,6 +1706,7 @@
     <Content Include="Views\Default\Contributor.cshtml" />
     <Content Include="Views\Default\Reader.cshtml" />
     <Content Include="Views\Shared\_Nav.cshtml" />
+    <Content Include="Views\Default\Customization.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -10,10 +10,24 @@
     var editor = null;
     $(function () {
         $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['misc', ['fullscreen', 'codeview']],
+
+            ],
             height: 270,
             placeholder: '这里输入文章内容...',
             lang: 'zh-CN',
-            fontNames: ['微软雅黑', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],
+            fontNames: ['微软雅黑', '宋体', '楷体', '黑体', '隶书', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],
+            fontNamesIgnoreCheck: ['微软雅黑', '宋体', '楷体', '黑体', '隶书'],
             callbacks: {
                 onImageUpload: function (files) {
                     var formData = new FormData();

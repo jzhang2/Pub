@@ -65,6 +65,7 @@
     <Compile Include="ExtendManage\BannerNewsService.cs" />
     <Compile Include="ExtendManage\CommentsService.cs" />
     <Compile Include="ExtendManage\ContributionService.cs" />
+    <Compile Include="ExtendManage\CustomizationService.cs" />
     <Compile Include="ExtendManage\SecurityCodeService.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerService.cs" />
     <Compile Include="ExtendManage\SuggestionService.cs" />

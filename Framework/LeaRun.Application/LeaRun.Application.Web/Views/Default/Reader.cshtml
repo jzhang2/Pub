@@ -380,6 +380,14 @@
 <script>
     function SaveSuggestion() {
         var postData = $("#form2").GetWebControls();
+        if (postData.Title == "") {
+            dialogMsg("请输入标题", 2);
+            return;
+        }
+        if (postData.Contents == "") {
+            dialogMsg("请输入内容", 2);
+            return;
+        }
         postData["Gender"] = $('#form1 input[name="Gender"]:checked ').val();
         $.SaveForm({
             url: "../../ExtendManage/Suggestion/SaveFormFront",

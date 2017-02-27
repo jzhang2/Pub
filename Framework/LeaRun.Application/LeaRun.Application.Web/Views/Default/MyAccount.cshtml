@@ -105,7 +105,62 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-10 col-sm-12 col-xs-12 right-content" style="display:none"></div>
+            <div class="col-md-10 col-sm-12 col-xs-12 right-content" style="display:none">
+                <div class="col-md-12" style="background: white;">
+                    <div class="MyProfile col-md-12 col-sm-12 col-xs-12 cus-nav" style="">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="javascript:;">模块化定制</a></li>
+                            <li><a href="javascript:;">自定义定制</a></li>
+                        </ul>
+                    </div>
+                    <div class="MyProfile col-md-12 col-sm-12 col-xs-12 cus-content">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>原型</th>
+                                    <th>尺寸</th>
+                                    <th>材质</th>
+                                    <th>装裱形式</th>
+                                    <th>创建时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (CustomizationEntity entity in Model.CustomizationList.Where(t=>t.TypeId==1)) {
+                                    <tr>
+                                        <td>@entity.Category</td>
+                                        <td>@entity.Size</td>
+                                        <td>@entity.Material</td>
+                                        <td>@entity.Frame</td>
+                                        <td>@(Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="MyProfile col-md-12 col-sm-12 col-xs-12 cus-content" style="display:none">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>联系方式</th>
+                                    <th>需求</th>
+                                    <th>联系时间</th>
+                                    <th>创建时间</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (CustomizationEntity entity in Model.CustomizationList.Where(t => t.TypeId == 2)) {
+                                    <tr>
+                                        <td>@entity.Contact</td>
+                                        <td>@entity.Description</td>
+                                        <td>@entity.ContactTime</td>
+                                        <td>@(Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-10 col-sm-12 col-xs-12 right-content" style="display: none">
                 <div class="col-md-12" style="background: white;">
                     <div class="MyProfile col-md-12 col-sm-12 col-xs-12 sugg-nav" style="">
@@ -257,6 +312,14 @@
     }
     function SaveSuggestion() {
         var postData = $("#form2").GetWebControls();
+        if (postData.Title == "") {
+            dialogMsg("请输入标题", 2);
+            return;
+        }
+        if (postData.Contents == "") {
+            dialogMsg("请输入内容", 2);
+            return;
+        }
         postData["Gender"] = $('#form1 input[name="Gender"]:checked ').val();
         $.SaveForm({
             url: "../../ExtendManage/Suggestion/SaveFormFront",
@@ -352,6 +415,10 @@
         $(".contri-nav ul li").click(function () {
             $(this).addClass("active").siblings().removeClass("active");
             $(".contri-content").hide().eq($(this).index()).show();
+        });
+        $(".cus-nav ul li").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            $(".cus-content").hide().eq($(this).index()).show();
         });
         $("#uploadFile1").filestyle({ icon: false });
         $('#uploadFile').on('change', uphead);

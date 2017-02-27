@@ -71,10 +71,14 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         /// 新闻内容
         /// </summary>		
         public string NewsContent { get; set; }
+        public string MusicPath { get; set; }
+        public string FilePath { get; set; }
         /// <summary>
         /// 浏览量
         /// </summary>		
         public int? PV { get; set; }
+        public int? PageCount { get; set; }
+        public int? CanViewCount { get; set; }
         /// <summary>
         /// 发布时间
         /// </summary>		

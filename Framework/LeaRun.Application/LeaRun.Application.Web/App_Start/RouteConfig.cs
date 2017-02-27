@@ -8,7 +8,11 @@ namespace LeaRun.Application.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+                name: "Customization",
+                url: "Customization",
+                defaults: new { controller = "Default", action = "Customization", id = UrlParameter.Optional }
+            );
             routes.MapRoute(
                 name: "ResetPwd",
                 url: "ResetPwd",

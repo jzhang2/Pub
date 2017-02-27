@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "文章管理";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    var TypeId = request('TypeId');
+    var keyValue = request('keyValue');
+    var category = request('category');
+    var EnCode = request('EnCode');
+    var editor = null;
+    $(function () {
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['misc', ['fullscreen', 'codeview']],
+
+            ],
+            height: 270,
+            placeholder: '这里输入书籍简介...',
+            lang: 'zh-CN',
+            fontNames: ['微软雅黑', '宋体', '楷体', '黑体', '隶书', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],
+            fontNamesIgnoreCheck: ['微软雅黑', '宋体', '楷体', '黑体', '隶书'],
+            callbacks: {
+                onImageUpload: function (files) {
+                    var formData = new FormData();
+                    formData.append("file", files[0]);
+                    $.ajax({
+                        dataType: 'json',
+                        data: formData,
+                        type: "POST",
+                        url: "/ExtendManage/Books/UploadImage",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            if (data.type == 1) {
+                                $('#summernote').summernote('insertImage', data.resultdata);
+                            } else {
+                                dialogMsg(data.message, 1);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        initControl();
+        $('#uploadFile1').on('change', uphead);
+    });
+    function uphead() {
+        $.ajaxFileUpload({
+            url: "/ExtendManage/Books/UploadFile",
+            secureuri: false,
+            fileElementId: 'uploadFile1',
+            dataType: 'json',
+            success: function (data) {
+                if (data.type == 1) {
+                    $("#FilePath").val(data.resultdata);
+                }
+                dialogMsg(data.message, data.type);
+                $('#uploadFile1').on('change', uphead);
+            }
+        });
+    }
+
+    //初始化控件
+    function initControl() {
+        //栏目
+        $("#Category").ComboBox({
+            param: { EnCode: EnCode },
+            url: "../../SystemManage/DataItemDetail/GetDataItemListJson",
+            description: "==请选择==",
+            id: "ItemValue",
+            text: "ItemName",
+            height: "230px"
+        });
+        //获取表单
+        if (!!keyValue) {
+            $.SetForm({
+                url: "../../ExtendManage/Books/GetFormJson",
+                param: { keyValue: keyValue },
+                success: function (data) {
+                    $("#form1").SetWebControls(data);
+                    $('#summernote').summernote('code', data.NewsContent);
+                    if (data.NewsImage) {
+                        document.getElementById('uploadPreview').src = data.NewsImage;
+                    }
+                }
+            });
+        } else {
+            $("#Category").ComboBoxTreeSetValue(category);
+        }
+        $('#uploadFile').change(function () {
+            var f = document.getElementById('uploadFile').files[0];
+            var src = window.URL.createObjectURL(f);
+            document.getElementById('uploadPreview').src = src;
+
+            //上传应用图标
+            $.ajaxFileUpload({
+                url: "/ExtendManage/Books/UploadFile",
+                secureuri: false,
+                fileElementId: 'uploadFile',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.type == 1) {
+                        $("#NewsImage").val(data.resultdata);
+                    }
+                    dialogMsg(data.message, 1);
+                }
+            });
+        });
+    }
+    //保存表单
+    function AcceptClick() {
+        if (!$('#form1').Validform()) {
+            return false;
+        }
+        var postData = {
+            FullHead: $("#FullHead").val(),
+            Category: $("#Category").attr('data-value'),
+            ReleaseTime: $("#ReleaseTime").val(),
+            AuthorName: $("#AuthorName").val(),
+            NewsLink: $("#NewsLink").val(),
+            NewsImage: $("#NewsImage").val(),
+            BuyLink: $("#BuyLink").val(),
+            TagWord: $("#TagWord").val(),
+            Keyword: $("#Keyword").val(),
+            Price: $("#Price").val(),
+            NewsContent: $('#summernote').summernote('code'),
+            TypeId: TypeId,
+            FilePath: $("#FilePath").val(),
+        }
+        $.SaveForm({
+            url: "../../ExtendManage/Books/SaveBook?keyValue=" + keyValue,
+            param: postData,
+            loading: "正在保存数据...",
+            success: function () {
+                $.currentIframe().$("#gridTable").trigger("reloadGrid");
+            }
+        })
+    }
+</script>
+<div style="margin-top: 20px; margin-right: 30px;">
+    <table class="form" style="table-layout: auto;">
+        <tr>
+            <td class="formTitle">书名<font face="宋体">*</font></td>
+            <td class="formValue" colspan="3">
+                <input id="FullHead" type="text" class="form-control" placeholder="请输入书名" isvalid="yes" checkexpession="NotNull" />
+            </td>
+        </tr>
+        <tr>
+            <td class="formTitle">分类<font face="宋体">*</font></td>
+            <td class="formValue">
+                <div id="Category" type="select" class="ui-select"></div>
+            </td>
+            <td class="formTitle">发布时间<font face="宋体">*</font></td>
+            <td class="formValue">
+                <input id="ReleaseTime" type="text" class="form-control" value="@LeaRun.Util.Time.GetToday("yyyy/MM/dd HH:mm")" />
+            </td>
+        </tr>
+        <tr>
+            <td class="formTitle">作者<font face="宋体">*</font></td>
+            <td class="formValue">
+                <input id="AuthorName" type="text" class="form-control" placeholder="请输入作者" isvalid="yes" checkexpession="NotNull" />
+            </td>
+            <td class="formTitle">封面</td>
+            <td class="formValue">
+                <div class="file">
+                    <img id="uploadPreview" style="width: 40px; height: 40px;" src="~/Content/images/logo-headere47d5.png" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="NewsImage" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="formTitle">价格</td>
+            <td class="formValue">
+                <input id="Price" type="number" class="form-control" placeholder="请输入价格" />
+            </td>
+            <td class="formTitle">上传书籍</td>
+            <td class="formValue">
+                <input type="file" name="uploadFile1" id="uploadFile1"><input type="hidden" id="FilePath" />
+            </td>
+        </tr>
+        <tr>
+            <td class="formTitle">下载链接</td>
+            <td class="formValue">
+                <input id="BuyLink" type="text" class="form-control" placeholder="请输入下载链接" />
+            </td>
+        </tr>
+        <tr>
+            <th class="formTitle" valign="top" style="padding-top: 4px;">简介</th>
+            <td class="formValue" colspan="3">
+                <div id="summernote"></div>
+            </td>
+        </tr>
+    </table>
+</div>

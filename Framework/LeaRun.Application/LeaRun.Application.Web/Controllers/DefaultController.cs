@@ -96,6 +96,7 @@ namespace LeaRun.Application.Web.Controllers {
         public CustomerEntity Customer = new CustomerEntity();
         public List<SuggestionEntity> MySuggestionList = new List<SuggestionEntity>();
         public List<ContributionEntity> ContributionList = new List<ContributionEntity>();
+        public List<CustomizationEntity> CustomizationList = new List<CustomizationEntity>();
     }
 
     public class UserComments : CommentsEntity
@@ -129,6 +130,7 @@ namespace LeaRun.Application.Web.Controllers {
         private SuggestionBLL suggestionBll = new SuggestionBLL();
         private ContributionBLL contributionBll = new ContributionBLL();
         private ThumbUpService service = new ThumbUpService();
+        private CustomizationService customizationService = new CustomizationService();
 
         #endregion
 
@@ -150,6 +152,11 @@ namespace LeaRun.Application.Web.Controllers {
         }
 
         public ActionResult SignIn()
+        {
+            return View();
+        }
+
+        public ActionResult Customization()
         {
             return View();
         }
@@ -413,6 +420,7 @@ namespace LeaRun.Application.Web.Controllers {
             viewModel.Customer = customerbll.GetEntity(OperatorProvider.Provider.Current().UserId);
             viewModel.MySuggestionList = suggestionBll.GetUserSuggestion(OperatorProvider.Provider.Current().UserId).ToList();
             viewModel.ContributionList = contributionBll.GetUserContribution(OperatorProvider.Provider.Current().UserId).ToList();
+            viewModel.CustomizationList = customizationService.GetUserCustomization(OperatorProvider.Provider.Current().UserId).ToList();
             return View(viewModel);
         }
         public ActionResult _Footer() {

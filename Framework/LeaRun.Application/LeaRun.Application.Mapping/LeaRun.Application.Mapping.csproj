@@ -69,6 +69,7 @@
     <Compile Include="ExtendManage\BannerNewsMap.cs" />
     <Compile Include="ExtendManage\CommentsMap.cs" />
     <Compile Include="ExtendManage\ContributionMap.cs" />
+    <Compile Include="ExtendManage\CustomizationMap.cs" />
     <Compile Include="ExtendManage\SecurityCodeMap.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerMap.cs" />
     <Compile Include="ExtendManage\SuggestionMap.cs" />

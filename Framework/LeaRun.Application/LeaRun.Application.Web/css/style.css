@@ -861,6 +861,14 @@ h1, h2, h3, h4, h5, h6, figure {
 #fh5co-hero .flexslider .flex-direction-nav {
     display: none;
 }
+.material-btn button {
+    -ms-border-radius: 0;
+    border-radius: 0;
+}
+.material-btn button.active {
+    background: #FEA405;
+    color: white;
+}
 
 .fh5co-box h2 {
     text-align: right;

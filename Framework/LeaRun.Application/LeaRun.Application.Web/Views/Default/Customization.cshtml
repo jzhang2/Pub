@@ -1,0 +1,202 @@
+﻿@{
+    ViewBag.Title = "产品定制";
+    ViewBag.navIndex = 4;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@using LeaRun.Application.Entity.ExtendManage
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+<script src="~/Content/scripts/plugins/uploadify/ajaxfileupload.js"></script>
+<script src="~/Content/scripts/plugins/datepicker/WdatePicker.js"></script>
+<script src="~/Content/scripts/utils/learun-ui.js"></script>
+<script src="~/Content/scripts/utils/learun-form.js"></script>
+<link href="~/Content/scripts/plugins/dialog/dialog.css" rel="stylesheet" />
+<script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
+<script src="~/Content/scripts/plugins/uploadify/bootstrap-filestyle.min.js"></script>
+<style>
+    .file img {
+        border-radius: 50%;
+    }
+</style>
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive" />
+</div>
+@Html.AntiForgeryToken()
+<div id="best-deal" class="myaccount">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-sm-12 col-xs-12 right-content">
+                <div class="col-md-12" style="background: white;">
+                    <div class="MyProfile col-md-12 col-sm-12 col-xs-12 sugg-nav" style="">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="javascript:;">模块化定制</a></li>
+                            <li><a href="javascript:;">自定义定制</a></li>
+                        </ul>
+                    </div>
+                    <div class="MyProfile col-md-6 col-sm-12 col-xs-12 sugg-content">
+                        <form class="form-horizontal" role="form" id="form2">
+                            <div class="form-group">
+                                <label for="Category" class="control-label col-sm-3">定制说明</label>
+                                <div class="col-sm-9">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Category" class="control-label col-sm-3">选择原型</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="Category">
+                                        <option value="-1">请选择原型</option>
+                                        <option value="原型一">原型一</option>
+                                        <option value="原型二">原型二</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Category" class="control-label col-sm-3">选择尺寸</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="Size">
+                                        <option value="-1">请选择尺寸</option>
+                                        <option value="双拼(1.2*1.7)">双拼(1.2*1.7)</option>
+                                        <option value="四拼(1.5*2.0)">四拼(1.5*2.0)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Title" class="control-label col-sm-3">选择材质</label>
+                                <div class="col-sm-9">
+                                    <div class="btn-group material-btn" role="group">
+                                        <button type="button" class="btn btn-secondary" value="绘图纸">绘图纸</button>
+                                        <button type="button" class="btn btn-secondary" value="相纸">相纸</button>
+                                        <button type="button" class="btn btn-secondary" value="白画布">白画布</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Category" class="control-label col-sm-3">装裱形式</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" id="Frame">
+                                        <option value="-1">请选择装裱形式</option>
+                                        <option value="普通挂杆">普通挂杆</option>
+                                        <option value="合金裱框">合金裱框</option>
+                                        <option value="实木裱框">实木裱框</option>
+                                        <option value="塑料裱框">塑料裱框</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button onclick="SaveCus1();" type="button" class="btn btn-default signinbtn" style="margin-right: 20px;">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="MyProfile col-md-6 col-sm-12 col-xs-12 sugg-content" style="display: none;">
+                        <form class="form-horizontal" role="form" id="form3">
+                            <div class="form-group">
+                                <label for="Contact" class="control-label col-sm-3">联系方式</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="Contact" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Description" class="control-label col-sm-3">定制需求</label>
+                                <div class="col-sm-9">
+                                    <textarea id="Description" class="form-control" style="height: 80px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ContactTime" class="control-label col-sm-3">联系时间</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="ContactTime" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button onclick="SaveCus2();" type="button" class="btn btn-default signinbtn" style="margin-right: 20px;">提交</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function SaveCus1() {
+        var postData = $("#form2").GetWebControls();
+        postData["Material"] = $('#form2 button.active').val();
+        if (postData["Category"] == "-1") {
+            dialogMsg("请选择原型", 2);
+            $("#Category").focus();
+            return;
+        }
+        if (postData["Size"] == "-1") {
+            dialogMsg("请选择尺寸", 2);
+            $("#Size").focus();
+            return;
+        }
+        if ($('#form2 button.active').length==0) {
+            dialogMsg("请选择材质", 2);
+            return;
+        }
+        if (postData["Frame"] == "-1") {
+            dialogMsg("请选择装裱形式", 2);
+            $("#Frame").focus();
+            return;
+        }
+        postData["TypeId"] = 1;
+        $.SaveForm({
+            url: "../../ExtendManage/Customization/SaveFormFront",
+            param: postData,
+            loading: "正在保存数据...",
+            success: function (data) {
+            }
+        });
+    }
+    function SaveCus2() {
+        var postData = $("#form3").GetWebControls();
+        if (postData["Contact"] == "") {
+            dialogMsg("请输入联系方式", 2);
+            $("#Contact").focus();
+            return;
+        }
+        if (postData["Description"] == "") {
+            dialogMsg("请输入定制需求", 2);
+            $("#Description").focus();
+            return;
+        }
+        if (postData["ContactTime"] == "") {
+            dialogMsg("请输入联系时间", 2);
+            $("#ContactTime").focus();
+            return;
+        }
+        postData["TypeId"] = 2;
+        $.SaveForm({
+            url: "../../ExtendManage/Customization/SaveFormFront",
+            param: postData,
+            loading: "正在保存数据...",
+            success: function (data) {
+            }
+        });
+    }
+
+    $(function () {
+        var tabindex = '@(ViewContext.RouteData.Values["id"])';
+        $(".sugg-nav ul li").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            $(".sugg-content").hide().eq($(this).index()).show();
+        });
+        $(".material-btn button").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            if ($(this).val() == "白画布") {
+                $("#Frame option[value='实木裱框']").remove();
+                $("#Frame option[value='合金裱框']").remove();
+            } else {
+                var optionExists = (($("#Frame option[value='实木裱框']").length + $("#Frame option[value='实木裱框']").length) > 1);
+                if (!optionExists) {
+                    $('#Frame').append("<option value='实木裱框'>实木裱框</option><option value='合金裱框'>合金裱框</option>");
+                }
+            }
+        });
+    });
+</script>

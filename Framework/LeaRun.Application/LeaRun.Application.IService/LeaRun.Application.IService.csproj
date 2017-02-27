@@ -71,6 +71,7 @@
     <Compile Include="ExtendManage\BannerNewsIService.cs" />
     <Compile Include="ExtendManage\CommentsIService.cs" />
     <Compile Include="ExtendManage\ContributionIService.cs" />
+    <Compile Include="ExtendManage\CustomizationIService.cs" />
     <Compile Include="ExtendManage\SecurityCodeIService.cs" />
     <Compile Include="ExtendManage\SuggestionAnswerIService.cs" />
     <Compile Include="ExtendManage\SuggestionIService.cs" />
