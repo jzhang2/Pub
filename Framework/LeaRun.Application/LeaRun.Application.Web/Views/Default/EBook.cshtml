@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = Model.Ebook.FullHead;
+    ViewBag.navIndex = -1;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
+<link href="~/Content/styles/font-awesome.min.css" rel="stylesheet" />
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive" />
+</div>
+<div id="best-deal">
+    <div class="container" style="background: white; padding: 35px 25px;">
+        <div style="text-align: center;">
+            <h3 style="margin-bottom: 20px;">
+                @Model.Ebook.FullHead <i class="fa fa-bookmark ebook-bookmark" title="存书签"></i>
+            </h3>
+        </div>
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-md-6">
+                <div class="btn-group btn-group-sm ebook-btn pull-left" role="group">
+                    <button type="button" class="btn">字体:</button>
+                    <button type="button" class="btn ebook-font" onclick="changesize(this,'ebook-content-large')">大</button>
+                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-normal')">中</button>
+                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-small')">小</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group btn-group-sm ebook-btn pull-right" role="group">
+                    <button type="button" class="btn ebook-font ebook-peyes">护眼</button>
+                    <button type="button" class="btn ebook-font ebook-light">关灯</button>
+                </div>
+            </div>
+        </div>
+        <div class="ebook-content-normal" id="ebook-content">
+
+        </div>
+        <div class="row" style="text-align: center;">
+            <div class="btn-group btn-group-sm ebook-btn ebook-pager" role="group">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function getpage(p) {
+        var pagecount = '@Model.Ebook.PageCount';
+        $.ajax({
+            url: "/Default/GetEBookPage",
+            data: { id: '@ViewContext.RouteData.Values["id"]', page: p },
+            type: "get",
+            //dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data != "获取书籍内容错误。") {
+                    $("#ebook-content").html(data);
+                    $("#ebook-content img").addClass("img-responsive");
+                    var pager = "";
+                    if (p - 1 > 0) {
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (p - 1) + ");\">上一章</button>";
+                    }
+                    if (p + 1 < pagecount) {
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (p + 1) + ");\">下一章</button>";
+                    }
+                    $(".ebook-pager").html(pager);
+                    $("html,body").scrollTop($("#best-deal").offset().top);
+                }
+            }
+        });
+    };
+    function changesize(obj, fs) {
+        $("#ebook-content").removeClass("ebook-content-small").removeClass("ebook-content-large").removeClass("ebook-content-normal").addClass(fs);
+        $(obj).addClass("active").siblings().removeClass("active");
+    }
+    $(function () {
+        $(".ebook-peyes").click(function () {
+            $(".ebook-light").text("关灯");
+            if ($(this).hasClass("active")) {
+                $("#best-deal").removeClass("ebook-content-light").removeClass("ebook-content-peyes");
+                $(this).removeClass("active");
+            } else {
+                $("#best-deal").removeClass("ebook-content-light").addClass("ebook-content-peyes");
+                $(this).addClass("active");
+            }
+            $(this).siblings().removeClass("active");
+        });
+        $(".ebook-light").click(function () {
+            if ($(this).hasClass("active")) {
+                $("#best-deal").removeClass("ebook-content-peyes").removeClass("ebook-content-light");
+                $(this).text("关灯").removeClass("active");
+            } else {
+                $("#best-deal").removeClass("ebook-content-peyes").addClass("ebook-content-light");
+                $(this).text("开灯").addClass("active");
+            }
+            $(this).siblings().removeClass("active");
+        });
+        getpage(1);
+    });
+
+</script>

@@ -39,6 +39,11 @@ namespace LeaRun.Application.Web
                 defaults: new { controller = "Default", action = "Books", id = UrlParameter.Optional }
             );
             routes.MapRoute(
+                name: "EBook",
+                url: "EBook/{id}",
+                defaults: new { controller = "Default", action = "EBook", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                 name: "Service",
                 url: "Service/{id}",
                 defaults: new { controller = "Default", action = "Service", id = UrlParameter.Optional }

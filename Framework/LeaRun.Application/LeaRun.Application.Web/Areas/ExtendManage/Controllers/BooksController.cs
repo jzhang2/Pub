@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using LeaRun.Application.Busines.PublicInfoManage;
@@ -125,23 +127,43 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
         [HttpPost]
         [AjaxOnly]
         [ValidateInput(false)]
-        public ActionResult SaveBook(string keyValue, NewsEntity newsEntity) {
-            int totalPagesCount = 0;
-            var import = ImportBook(Server.MapPath("~" + newsEntity.FilePath) , ref totalPagesCount);
-            if (import)
+        public ActionResult SaveBook(string keyValue, NewsEntity newsEntity)
+        {
+            var result = "";
+            try
             {
+                string url = string.Format("http://localhost:8010/Resource/EBook/yy2.html");
+                var req = (HttpWebRequest)WebRequest.Create(url);
+                req.Method = "GET";
+                req.ContentType = "application/x-www-form-urlencoded;charset=gb2312";
+                HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                result = reader.ReadToEnd();
+            }
+            catch (Exception)
+            {
+            }
+            
+            int totalPagesCount = 0;
+            var ePath = string.Format("/Resource/EBook/{0}/", Guid.NewGuid());
+            var import = ImportBook(Server.MapPath("~" + newsEntity.FilePath), ref totalPagesCount, ePath);
+            if (import) {
+                newsEntity.EPath = ePath;
+                newsEntity.PageCount = totalPagesCount;
                 newsBLL.SaveForm(keyValue, newsEntity);
                 return Success("操作成功。");
             }
-            else
-            {
+            else {
                 return Error("上传书籍失败，请检查文档是否正确。");
             }
-            
+
         }
 
-        public bool ImportBook(object path, ref int totalPagesCount) {
+        public bool ImportBook(object path, ref int totalPagesCount, string ePath) {
             try {
+                string fullPath = Server.MapPath("~" + ePath);
+                Directory.CreateDirectory(fullPath);
+
                 object missObj = Missing.Value;
                 object ReadOnly = false;
                 object Visible = false;
@@ -195,7 +217,9 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
                     //object outputFileName = doc.Name.Replace(".docx", ".html");
                     object fileFormat = WdSaveFormat.wdFormatHTML;
 
-                    object newDocName = @"C:\Users\hchen1\Desktop\ddd\yy" + pageNumber.ToString() + ".html";
+                    object newDocName = Server.MapPath("~" + ePath + pageNumber + ".html");
+                    newDoc.Fields.Update();
+                    newDoc.WebOptions.Encoding = Microsoft.Office.Core.MsoEncoding.msoEncodingUTF8;
                     newDoc.SaveAs(ref newDocName, ref fileFormat, ref missObj, ref missObj, ref missObj, ref missObj,
                         ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj,
                         ref missObj, ref missObj, ref missObj);

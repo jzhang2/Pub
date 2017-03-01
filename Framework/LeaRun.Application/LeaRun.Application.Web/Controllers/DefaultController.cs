@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LeaRun.Application.Busines.AuthorizeManage;
@@ -29,8 +31,7 @@ namespace LeaRun.Application.Web.Controllers {
 
     #region 
 
-    public class NewsEntityThumbUp : NewsEntity
-    {
+    public class NewsEntityThumbUp : NewsEntity {
         private ThumbUpService service = new ThumbUpService();
         private CommentsService commentsService = new CommentsService();
 
@@ -38,12 +39,10 @@ namespace LeaRun.Application.Web.Controllers {
         {
             get
             {
-                if (!string.IsNullOrEmpty(NewsId))
-                {
+                if (!string.IsNullOrEmpty(NewsId)) {
                     return service.GetCount(NewsId, "");
                 }
-                else
-                {
+                else {
                     return 0;
                 }
             }
@@ -54,12 +53,10 @@ namespace LeaRun.Application.Web.Controllers {
             get
             {
                 if (!string.IsNullOrEmpty(NewsId) && OperatorProvider.Provider.Current() != null &&
-                    OperatorProvider.Provider.Current().UserId != null)
-                {
+                    OperatorProvider.Provider.Current().UserId != null) {
                     return service.GetCount(NewsId, OperatorProvider.Provider.Current().UserId) > 0;
                 }
-                else
-                {
+                else {
                     return true;
                 }
             }
@@ -69,20 +66,17 @@ namespace LeaRun.Application.Web.Controllers {
         {
             get
             {
-                if (!string.IsNullOrEmpty(NewsId))
-                {
+                if (!string.IsNullOrEmpty(NewsId)) {
                     return commentsService.GetList("", NewsId).ToList().Count;
                 }
-                else
-                {
+                else {
                     return 0;
                 }
             }
         }
     }
 
-    public class HomeViewModel
-    {
+    public class HomeViewModel {
         public List<NewsEntity> NewsList = new List<NewsEntity>();
         public List<NewsEntityThumbUp> NewsEntityThumbUp = new List<NewsEntityThumbUp>();
         public List<NewsEntity> MapNewsList = new List<NewsEntity>();
@@ -97,18 +91,17 @@ namespace LeaRun.Application.Web.Controllers {
         public List<SuggestionEntity> MySuggestionList = new List<SuggestionEntity>();
         public List<ContributionEntity> ContributionList = new List<ContributionEntity>();
         public List<CustomizationEntity> CustomizationList = new List<CustomizationEntity>();
+        public NewsEntity Ebook = new NewsEntity();
     }
 
-    public class UserComments : CommentsEntity
-    {
+    public class UserComments : CommentsEntity {
         public string FullName { get; set; }
         public string HeadIcon { get; set; }
         public string ReplyName { get; set; }
         public string ReplyEmail { get; set; }
     }
 
-    public class SuggestionReply : SuggestionEntity
-    {
+    public class SuggestionReply : SuggestionEntity {
         public string FullName { get; set; }
         public string HeadIcon { get; set; }
         public string Contents { get; set; }
@@ -136,28 +129,23 @@ namespace LeaRun.Application.Web.Controllers {
 
         #region empty action
 
-        public ActionResult SignUp()
-        {
+        public ActionResult SignUp() {
             return View();
         }
 
-        public ActionResult Books()
-        {
+        public ActionResult Books() {
             return View();
         }
 
-        public ActionResult ForgotPassWord()
-        {
+        public ActionResult ForgotPassWord() {
             return View();
         }
 
-        public ActionResult SignIn()
-        {
+        public ActionResult SignIn() {
             return View();
         }
 
-        public ActionResult Customization()
-        {
+        public ActionResult Customization() {
             return View();
         }
 
@@ -187,7 +175,7 @@ namespace LeaRun.Application.Web.Controllers {
 
         public ActionResult News(string Category) {
             var viewModel = new HomeViewModel();
-            viewModel.NewsNav = dataItemCache.GetDataItemList("MapNews").OrderBy(t=>t.SortCode).ToList();
+            viewModel.NewsNav = dataItemCache.GetDataItemList("MapNews").OrderBy(t => t.SortCode).ToList();
             return View(viewModel);
         }
         public ActionResult MapCulture(string Category) {
@@ -240,6 +228,13 @@ namespace LeaRun.Application.Web.Controllers {
             }
             return View(viewModel);
         }
+        public ActionResult EBook(string id) {
+            var viewModel = new HomeViewModel();
+            if (!string.IsNullOrEmpty(id)) {
+                viewModel.Ebook = newsBll.GetEntity(id);
+            }
+            return View(viewModel);
+        }
         public ActionResult Detail(string id) {
             var viewModel = new HomeViewModel();
             if (!string.IsNullOrEmpty(id)) {
@@ -250,17 +245,14 @@ namespace LeaRun.Application.Web.Controllers {
 
         #region comments
 
-        public ActionResult GetCommentsJson(string NewsId)
-        {
+        public ActionResult GetCommentsJson(string NewsId) {
             var treeList = new List<TreeGridEntity>();
-            if (!string.IsNullOrEmpty(NewsId))
-            {
+            if (!string.IsNullOrEmpty(NewsId)) {
                 var data =
                     new Repository<UserComments>(DbFactory.Base()).FindList(
                         "select co.*,c.[FullName],c.[HeadIcon],c1.[FullName] as ReplyName,c.Email,c1.Email as ReplyEmail from [dbo].[Extend_Comments] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CustomerId left join [dbo].[Client_Customer] c1 on c1.CustomerId=co.ReplyCustomerId where co.NewsId='" +
                         NewsId + "' order by co.CreateDate");
-                foreach (UserComments item in data)
-                {
+                foreach (UserComments item in data) {
                     TreeGridEntity tree = new TreeGridEntity();
                     bool hasChildren = data.Count(t => t.ParentId == item.CommentsId) != 0;
                     tree.id = item.CommentsId;
@@ -276,14 +268,11 @@ namespace LeaRun.Application.Web.Controllers {
 
 
         [HttpGet]
-        public ActionResult ReplyComments(string CommentsId, string Reply, string ReplyCustomerId, string NewsId)
-        {
-            if (OperatorProvider.Provider.Current() == null || OperatorProvider.Provider.Current().UserId == null)
-            {
+        public ActionResult ReplyComments(string CommentsId, string Reply, string ReplyCustomerId, string NewsId) {
+            if (OperatorProvider.Provider.Current() == null || OperatorProvider.Provider.Current().UserId == null) {
                 return Error("您还未登录");
             }
-            try
-            {
+            try {
                 var entity = new CommentsEntity();
                 entity.ParentId = CommentsId;
                 entity.Comments = Reply;
@@ -298,22 +287,18 @@ namespace LeaRun.Application.Web.Controllers {
                         entity.CommentsId + "' order by co.CreateDate");
                 return Content(data.FirstOrDefault().ToJson());
             }
-            catch (Exception ee)
-            {
+            catch (Exception ee) {
                 return Error("评论失败");
             }
 
         }
 
         [HttpGet]
-        public ActionResult AddComments(string Reply, string NewsId)
-        {
-            if (OperatorProvider.Provider.Current() == null || OperatorProvider.Provider.Current().UserId == null)
-            {
+        public ActionResult AddComments(string Reply, string NewsId) {
+            if (OperatorProvider.Provider.Current() == null || OperatorProvider.Provider.Current().UserId == null) {
                 return Error("您还未登录");
             }
-            try
-            {
+            try {
                 var entity = new CommentsEntity();
                 entity.Comments = Reply;
                 entity.CustomerId = OperatorProvider.Provider.Current().UserId;
@@ -326,15 +311,14 @@ namespace LeaRun.Application.Web.Controllers {
                         entity.CommentsId + "' order by co.CreateDate");
                 return Content(data.FirstOrDefault().ToJson());
             }
-            catch (Exception ee)
-            {
+            catch (Exception ee) {
                 return Error("回复失败");
             }
 
         }
 
         #endregion
-        
+
         public ActionResult GetSuggestionJson() {
             var data = new Repository<SuggestionReply>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c.Email,c1.Contents as ReplyContents,c1.CreateDate as ReplyDate from [dbo].[Extend_Suggestion] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CreateUserId left join [dbo].[Extend_SuggestionAnswer] c1 on c1.SuggestionId=co.SuggestionId order by co.CreateDate");
             return Content(data.ToJson());
@@ -370,10 +354,32 @@ namespace LeaRun.Application.Web.Controllers {
 
         #region method
 
-        public List<NewsEntity> SubStringList(List<NewsEntity> data, int length)
-        {
-            foreach (NewsEntity entity in data)
-            {
+        [AjaxOnly]
+        [ValidateInput(false)]
+        public ActionResult GetEBookPage(string id, string page) {
+            try {
+                if (!string.IsNullOrEmpty(id)) {
+                    var ebook = newsBll.GetEntity(id);
+                    string url = string.Format("http://" + System.Web.HttpContext.Current.Request.Url.Authority + ebook.EPath + page + ".html");
+                    var req = (HttpWebRequest)WebRequest.Create(url);
+                    req.Method = "GET";
+                    req.ContentType = "application/x-www-form-urlencoded";
+                    HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    var result = reader.ReadToEnd();
+                    result = result.Replace("href=\"", "href=\"" + ebook.EPath)
+                        .Replace("src=\"", "src=\"" + ebook.EPath);
+                    return Content(result);
+                }
+                return Content("获取书籍内容错误。");
+            }
+            catch (Exception) {
+                return Content("获取书籍内容错误。");
+            }
+        }
+
+        public List<NewsEntity> SubStringList(List<NewsEntity> data, int length) {
+            foreach (NewsEntity entity in data) {
                 if (entity.NewsContent == null) continue;
                 var content =
                     WebHelper.StripTagsCharArray(System.Web.HttpContext.Current.Server.HtmlDecode(entity.NewsContent));
@@ -385,12 +391,10 @@ namespace LeaRun.Application.Web.Controllers {
         }
 
         [HttpGet]
-        public ActionResult GetNewsJson(Pagination pagination, string queryJson)
-        {
+        public ActionResult GetNewsJson(Pagination pagination, string queryJson) {
             var watch = CommonHelper.TimerStart();
             var data = newsBll.GetPageList(pagination, queryJson).ToList();
-            foreach (NewsEntity entity in data)
-            {
+            foreach (NewsEntity entity in data) {
                 if (entity.NewsContent == null) continue;
                 var content =
                     WebHelper.StripTagsCharArray(System.Web.HttpContext.Current.Server.HtmlDecode(entity.NewsContent));
@@ -400,8 +404,7 @@ namespace LeaRun.Application.Web.Controllers {
             }
             var thumb = new List<NewsEntityThumbUp>();
             data.ForEach(x => thumb.Add(CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(x)));
-            var JsonData = new
-            {
+            var JsonData = new {
                 rows = thumb,
                 total = pagination.total,
                 page = pagination.page,

@@ -1372,6 +1372,8 @@
     <Content Include="Resource\DocumentFile\System\20151216\fdd4920b-5514-48e0-8dea-99cba2675202.png" />
     <Content Include="Resource\DocumentFile\System\20151216\ff20943f-493e-43eb-a763-0b518c2b5fbf.png" />
     <Content Include="Resource\DocumentFile\System\20151217\3fc957d9-451f-4755-92fd-8967cb53012a.txt" />
+    <Content Include="Resource\EBook\yy1.html" />
+    <Content Include="Resource\EBook\yy2.html" />
     <Content Include="Resource\WeChatFile\0c18da8a-20ed-462f-aa21-7dc73ec9bf12.JPG" />
     <Content Include="Resource\WeChatFile\0c396507-4627-4329-b356-7e6e99bf49b5.png" />
     <Content Include="Resource\WeChatFile\2175be63-9a5b-4115-b5a5-d1494c6007ea.JPG" />
@@ -1702,6 +1704,7 @@
     <Content Include="Views\Default\Reader.cshtml" />
     <Content Include="Views\Shared\_Nav.cshtml" />
     <Content Include="Views\Default\Customization.cshtml" />
+    <Content Include="Views\Default\EBook.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1727,6 +1730,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resource\BookFile\" />
+    <Folder Include="Resource\EBook\yy1.files\" />
+    <Folder Include="Resource\EBook\yy2.files\" />
     <Folder Include="Resource\PhotoFile\" />
   </ItemGroup>
   <ItemGroup>

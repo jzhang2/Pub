@@ -35,6 +35,7 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         /// 完整标题
         /// </summary>		
         public string FullHead { get; set; }
+        public string EPath { get; set; }
         /// <summary>
         /// 标题颜色
         /// </summary>		

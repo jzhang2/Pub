@@ -440,7 +440,7 @@ h1, h2, h3, h4, h5, h6, figure {
     padding: 7px 24px;
 }
 
-.sendver,.sendver:hover,.sendver:focus {
+.sendver, .sendver:hover, .sendver:focus {
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
@@ -475,7 +475,14 @@ h1, h2, h3, h4, h5, h6, figure {
     .col-xs-12-nav {
         width: 100%;
     }
+
+    .ebook-btn button {
+        -ms-border-radius: 0;
+        border-radius: 0;
+        font-size: 10px !important;
+    }
 }
+
 @media screen and (max-width: 768px) {
     .right-content {
         background: white;
@@ -486,10 +493,11 @@ h1, h2, h3, h4, h5, h6, figure {
     .col-xs-6-nav {
         width: 50%;
     }
+
     #quick-nav ul li {
-    margin-right: 0px !important;
+        margin-right: 0px !important;
         margin-bottom: 5px !important;
-}
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -626,9 +634,11 @@ h1, h2, h3, h4, h5, h6, figure {
     padding: 20px;
     margin: 50px 0 10px 0;
 }
-.header-quicknva li a img{
-    margin-top: -4px;
-}
+
+    .header-quicknva li a img {
+        margin-top: -4px;
+    }
+
     .header-quicknva .regbtn {
         background: #fff;
         color: #FF5A5D;
@@ -861,10 +871,51 @@ h1, h2, h3, h4, h5, h6, figure {
 #fh5co-hero .flexslider .flex-direction-nav {
     display: none;
 }
+
 .material-btn button {
     -ms-border-radius: 0;
     border-radius: 0;
 }
+
+.ebook-btn button {
+    -ms-border-radius: 0;
+    border-radius: 0;
+    background-color: transparent;
+    border: solid 1px #E6EAED !important;
+}
+.ebook-content-normal p{
+    font-size: 14px !important;
+}
+.ebook-content-large p{
+    font-size: 18px !important;
+}
+.ebook-content-small p{
+    font-size: 12px !important;
+}
+    .ebook-btn button.ebook-font:hover {
+        background-color: #0CAEE8;
+    }
+    .ebook-btn button.active {
+        background-color: #0CAEE8;
+        color: white;
+    }
+    .ebook-bookmark {
+        float: right; color: lightgray; margin-right: 5px;cursor:pointer
+    }
+    .ebook-content-peyes,.ebook-content-peyes .container {
+        background: green !important;
+        color: white !important;
+    }
+    .ebook-content-peyes p,.ebook-content-peyes h1, .ebook-content-peyes h2, .ebook-content-peyes h3, .ebook-content-peyes h4, .ebook-content-peyes h5, .ebook-content-peyes h6, .ebook-content-peyes figure{
+        color: white !important;
+    }
+    .ebook-content-light,.ebook-content-light .container {
+        background: black !important;
+        color: white !important;
+    }
+    .ebook-content-light p,.ebook-content-light h1, .ebook-content-light h2, .ebook-content-light h3, .ebook-content-light h4, .ebook-content-light h5, .ebook-content-light h6, .ebook-content-light figure{
+        color: white !important;
+    }
 .material-btn button.active {
     background: #FEA405;
     color: white;
@@ -1250,12 +1301,14 @@ h1, h2, h3, h4, h5, h6, figure {
     padding: 15px 0;
     min-height: 110px;
 }
+
 .fh5co-agent p {
     /*min-height: 80px;*/
 }
-    .fh5co-property .fh5co-property-innter.books {
-        padding: 30px 30px 30px 30px;
-    }
+
+.fh5co-property .fh5co-property-innter.books {
+    padding: 30px 30px 30px 30px;
+}
 
 .fh5co-property .fh5co-property-specification.books {
     border-top: 1px solid #f0f0f0;
@@ -1299,9 +1352,9 @@ h1, h2, h3, h4, h5, h6, figure {
     margin-bottom: 5px;
     color: #118DF0;
     text-overflow: ellipsis;
-         overflow: hidden;
-         word-break: break-all;
-         white-space: nowrap;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
 }
 
 .fh5co-property-title p {
@@ -1309,28 +1362,28 @@ h1, h2, h3, h4, h5, h6, figure {
     font-size: 14px;
     margin-bottom: 15px;
     text-overflow: ellipsis;
-         overflow: hidden;
-         word-break: break-all;
-         white-space: nowrap;
-         
-}
-.fh5co-property-title {
-    text-overflow: ellipsis;
-         overflow: hidden;
-         word-break: break-all;
-         white-space: nowrap;
-         
-}
-.fh5co-property-title h5 {
-    margin-bottom: 5px;
-    color: #030303;
-    font-weight: bold;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
 }
 
-.fh5co-property-title a {
-    color: #030303;
-    font-weight: bold;
+.fh5co-property-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
 }
+
+    .fh5co-property-title h5 {
+        margin-bottom: 5px;
+        color: #030303;
+        font-weight: bold;
+    }
+
+    .fh5co-property-title a {
+        color: #030303;
+        font-weight: bold;
+    }
 
 .fh5co-property .fh5co-property-innter h3 a:hover, .fh5co-property .fh5co-property-innter h3 a:active, .fh5co-property .fh5co-property-innter h3 a:focus {
     text-decoration: none;
@@ -2467,31 +2520,31 @@ h1, h2, h3, h4, h5, h6, figure {
     margin: 0;
 }
 
-    .myaccount .account-nav ul li {
-        list-style-type: none;
-        padding: 5px 15px;
-        cursor: pointer;
+.myaccount .account-nav ul li {
+    list-style-type: none;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+    .myaccount .account-nav ul li.active {
+        background: #0A84DA;
     }
 
-        .myaccount .account-nav ul li.active {
-            background: #0A84DA;
+        .myaccount .account-nav ul li.active a {
+            color: white;
         }
 
-            .myaccount .account-nav ul li.active a {
-                color: white;
-            }
-
-        .myaccount .account-nav ul li a {
-            color: #4B4B4B;
-        }
-
-            .myaccount .account-nav ul li a:hover,.myaccount ul li a:active,.myaccount ul li a:focus {
-                text-decoration: none;
-            }
-
-    .myaccount .account-nav ul img {
-        margin-right: 5px;
+    .myaccount .account-nav ul li a {
+        color: #4B4B4B;
     }
+
+        .myaccount .account-nav ul li a:hover, .myaccount ul li a:active, .myaccount ul li a:focus {
+            text-decoration: none;
+        }
+
+.myaccount .account-nav ul img {
+    margin-right: 5px;
+}
 
 .myaccount .row {
     display: -webkit-box;
@@ -2506,72 +2559,85 @@ h1, h2, h3, h4, h5, h6, figure {
         flex-direction: column;
         /*background: white;*/
     }
+
 .MyProfile {
     padding: 30px;
     color: #96a0ae;
     font-weight: normal;
 }
-.MyProfile label{
-    font-weight: normal;
-}
+
+    .MyProfile label {
+        font-weight: normal;
+    }
+
 .file {
-        position: relative;
-        display: inline-block;
-        overflow: hidden;
-        text-decoration: none;
-        text-indent: 0;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: 0;
+    cursor: pointer !important;
+}
+
+    .file input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
         cursor: pointer !important;
     }
 
-        .file input {
-            position: absolute;
-            font-size: 100px;
-            right: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer !important;
-        }
+    .file:hover {
+        text-decoration: none;
+        cursor: pointer !important;
+    }
 
-        .file:hover {
-            text-decoration: none;
-            cursor: pointer !important;
-        }
-        .alignleft {
- display: inline;
- float: left;
+.alignleft {
+    display: inline;
+    float: left;
 }
+
 .alignright {
- display: inline;
- float: right;
+    display: inline;
+    float: right;
 }
+
 .aligncenter {
- clear: both;
- display: block;
- margin:auto;
+    clear: both;
+    display: block;
+    margin: auto;
 }
-.aligncenter img{
- margin:0 auto;
-}
+
+    .aligncenter img {
+        margin: 0 auto;
+    }
+
 .book-title {
     padding: 60px 35px 0 35px;
 }
-.book-title h4{
-    margin: 10px 0;
-}
+
+    .book-title h4 {
+        margin: 10px 0;
+    }
+
 .book-content {
     margin-top: 60px;
 }
-.book-content ul.nav-pills {
-    border-bottom: solid 1px #3775B6;
-    margin-bottom: 20px;
-}
-.book-content ul.nav-pills li a {
-    padding: 5px 15px;
-    border-radius: 0;
-    cursor: default;
-}
+
+    .book-content ul.nav-pills {
+        border-bottom: solid 1px #3775B6;
+        margin-bottom: 20px;
+    }
+
+        .book-content ul.nav-pills li a {
+            padding: 5px 15px;
+            border-radius: 0;
+            cursor: default;
+        }
+
 .contri-input .btn {
-        display: inline-block;
+    display: inline-block;
     margin-bottom: 0;
     font-weight: normal;
     text-align: center;
@@ -2598,9 +2664,11 @@ a.btn, button.btn {
 .thumb_up_icon {
     cursor: pointer;
 }
+
 .comments-bar img {
     margin-top: -5px;
 }
+
 #HeadIcon_imgs img {
     border-radius: 50%;
 }
