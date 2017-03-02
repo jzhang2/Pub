@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using LeaRun.Application.Busines.AuthorizeManage;
 using LeaRun.Application.Busines.BaseManage;
 using LeaRun.Application.Busines.CustomerManage;
@@ -29,7 +31,7 @@ using LeaRun.Util.WebControl;
 
 namespace LeaRun.Application.Web.Controllers {
 
-    #region 
+    #region
 
     public class NewsEntityThumbUp : NewsEntity {
         private ThumbUpService service = new ThumbUpService();
@@ -76,6 +78,13 @@ namespace LeaRun.Application.Web.Controllers {
         }
     }
 
+    public class EBookEntity {
+        public NewsEntity EBook { get; set; }
+        public string PageContent { get; set; }
+        public string SortContent { get; set; }
+        public bool IsBookMark { get; set; }
+        public List<BookMarkEntity> BookMarkEntities { get; set; }
+    }
     public class HomeViewModel {
         public List<NewsEntity> NewsList = new List<NewsEntity>();
         public List<NewsEntityThumbUp> NewsEntityThumbUp = new List<NewsEntityThumbUp>();
@@ -124,7 +133,8 @@ namespace LeaRun.Application.Web.Controllers {
         private ContributionBLL contributionBll = new ContributionBLL();
         private ThumbUpService service = new ThumbUpService();
         private CustomizationService customizationService = new CustomizationService();
-
+        private BookMarkService bookMarkService = new BookMarkService();
+        private string baseUrl = Config.GetValue("EBookSite");
         #endregion
 
         #region empty action
@@ -359,23 +369,120 @@ namespace LeaRun.Application.Web.Controllers {
         public ActionResult GetEBookPage(string id, string page) {
             try {
                 if (!string.IsNullOrEmpty(id)) {
-                    var ebook = newsBll.GetEntity(id);
-                    string url = string.Format("http://" + System.Web.HttpContext.Current.Request.Url.Authority + ebook.EPath + page + ".html");
+                    string url = string.Format(baseUrl + "Default/Default?id=" + id + "&page=" + page);
                     var req = (HttpWebRequest)WebRequest.Create(url);
                     req.Method = "GET";
-                    req.ContentType = "application/x-www-form-urlencoded";
+                    req.ContentType = "application/json";
                     HttpWebResponse response = (HttpWebResponse)req.GetResponse();
                     StreamReader reader = new StreamReader(response.GetResponseStream());
                     var result = reader.ReadToEnd();
-                    result = result.Replace("href=\"", "href=\"" + ebook.EPath)
-                        .Replace("src=\"", "src=\"" + ebook.EPath);
-                    return Content(result);
+                    var eBookEntity = new JavaScriptSerializer().Deserialize<EBookEntity>(result);
+                    if (OperatorProvider.Provider.Current() != null && OperatorProvider.Provider.Current().UserId != null) {
+                        eBookEntity.BookMarkEntities = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, eBookEntity.EBook.NewsId, "");
+                        if (eBookEntity.BookMarkEntities != null && !string.IsNullOrEmpty(page) && eBookEntity.BookMarkEntities.Any(t => t.Page.ToString() == page)) {
+                            eBookEntity.IsBookMark = true;
+                        }
+                    }
+                    return Success("", eBookEntity);
                 }
-                return Content("获取书籍内容错误。");
+                return Error("获取书籍内容错误。");
+            }
+            catch (Exception ee) {
+                return Error("获取书籍内容错误。");
+            }
+        }
+
+        public ActionResult Default(string id, string page) {
+            try {
+                EBookEntity eBookEntity = new EBookEntity();
+                if (!string.IsNullOrEmpty(id)) {
+                    eBookEntity.EBook = newsBll.GetEntity(id);
+                    if (!string.IsNullOrEmpty(page)) {
+                        //string url = string.Format(baseUrl + ebook.EPath + page + ".html");
+                        string url = "http://localhost:8010/Resource/EBook/yy2.html";
+                        var req = (HttpWebRequest)WebRequest.Create(url);
+                        req.Method = "GET";
+                        req.ContentType = "application/x-www-form-urlencoded";
+                        HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        var result = reader.ReadToEnd();
+                        result = result.Replace("href=\"", "href=\"" + baseUrl + eBookEntity.EBook.EPath)
+                            .Replace("src=\"", "src=\"" + baseUrl + eBookEntity.EBook.EPath);
+                        eBookEntity.PageContent = result;
+                        Regex reg = new Regex("(?is)<body[^>]*>(?<body>.*?)</body>");
+                        string content = "";
+                        content = reg.Match(result).Groups["body"].Value;
+                        content = WebHelper.StripTagsCharArray(content);
+                        content = content.Replace(" ", "");
+                        //content = content.Replace("\u3000", "");
+                        //content = content.Replace("\u0020", "");
+                        content = content.Replace("\r", "");
+                        content = content.Replace("\n", "");
+                        content = content.Replace("\t", "");
+                        content = content.Replace("&nbsp;", "");
+
+                        content = content.Length > 100 ? content.Substring(0, 100) : content;
+                        eBookEntity.SortContent = content;
+                    }
+                    return Content(eBookEntity.ToJson());
+                }
+                return Content("");
             }
             catch (Exception) {
-                return Content("获取书籍内容错误。");
+                return Error("");
             }
+        }
+
+        [AjaxOnly]
+        [ValidateInput(false)]
+        [HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public ActionResult SaveBookMark(string id, string page, string sortcontent) {
+            try {
+                if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(page)) {
+                    var bookMarks = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, id, page);
+                    var bookMark = bookMarks.FirstOrDefault(t => t.Page.ToString() == page);
+                    if (bookMark != null) {
+                        bookMarkService.RemoveForm(bookMark.BookMarkId);
+                        return Success("0");
+                    }
+                    else {
+                        var entity = new BookMarkEntity {
+                            NewsId = id,
+                            Page = Convert.ToInt32(page),
+                            PageContent = sortcontent
+                        };
+                        bookMarkService.SaveForm("", entity);
+                        return Success("1");
+                    }
+                }
+                return Error("操作失败。");
+            }
+            catch (Exception) {
+                return Error("操作失败。");
+            }
+        }
+        [HttpGet]
+        public ActionResult GetEBooksJson(Pagination pagination, string queryJson) {
+            var watch = CommonHelper.TimerStart();
+            var data = newsBll.GetPageList(pagination, queryJson).ToList();
+            foreach (NewsEntity entity in data) {
+                if (entity.NewsContent == null) continue;
+                var content =
+                    WebHelper.StripTagsCharArray(System.Web.HttpContext.Current.Server.HtmlDecode(entity.NewsContent));
+                entity.NewsContent = content.Length > 60
+                    ? content.Substring(0, 60)
+                    : content;
+            }
+            var thumb = new List<NewsEntityThumbUp>();
+            data.ForEach(x => thumb.Add(CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(x)));
+            var JsonData = new {
+                rows = thumb,
+                total = pagination.total,
+                page = pagination.page,
+                records = pagination.records,
+                costtime = CommonHelper.TimerEnd(watch)
+            };
+            return Content(JsonData.ToJson());
         }
 
         public List<NewsEntity> SubStringList(List<NewsEntity> data, int length) {
@@ -392,6 +499,19 @@ namespace LeaRun.Application.Web.Controllers {
 
         [HttpGet]
         public ActionResult GetNewsJson(Pagination pagination, string queryJson) {
+            var queryParam = queryJson.ToJObject();
+            if (!queryParam["TypeId"].IsEmpty() && queryParam["TypeId"].ToString() == "5") {
+                queryParam["TypeId"] = 9;
+                var para = "sord=" + pagination.sord + "&sidx=CreateDate&page=" + pagination.page + "&rows=" + pagination.rows + "&queryJson=" + queryParam.ToJson();
+                string url = baseUrl + "Default/GetEBooksJson?" + para;
+                var req = (HttpWebRequest)WebRequest.Create(url);
+                req.Method = "GET";
+                req.ContentType = "application/json";
+                HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                var result = reader.ReadToEnd();
+                return Content(result);
+            }
             var watch = CommonHelper.TimerStart();
             var data = newsBll.GetPageList(pagination, queryJson).ToList();
             foreach (NewsEntity entity in data) {

@@ -61,6 +61,7 @@
     <Compile Include="CustomerManage\OrderEntryEntity.cs" />
     <Compile Include="CustomerManage\ViewModel\ReceivableReportModel.cs" />
     <Compile Include="ExtendManage\BannerNewsEntity.cs" />
+    <Compile Include="ExtendManage\BookMarkEntity.cs" />
     <Compile Include="ExtendManage\CommentsEntity.cs" />
     <Compile Include="ExtendManage\ContributionEntity.cs" />
     <Compile Include="ExtendManage\CustomizationEntity.cs" />

@@ -1,19 +1,17 @@
 ﻿@{
-    ViewBag.Title = Model.Ebook.FullHead;
     ViewBag.navIndex = -1;
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
 <script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
 <link href="~/Content/styles/font-awesome.min.css" rel="stylesheet" />
-@model LeaRun.Application.Web.Controllers.HomeViewModel
 <div>
     <img src="~/images/baneer1.png" class="img-responsive" />
 </div>
 <div id="best-deal">
     <div class="container" style="background: white; padding: 35px 25px;">
         <div style="text-align: center;">
-            <h3 style="margin-bottom: 20px;">
-                @Model.Ebook.FullHead <i class="fa fa-bookmark ebook-bookmark" title="存书签"></i>
+            <h3 style="margin-bottom: 20px;" id="title">
+                <i class="fa fa-bookmark ebook-bookmark" title="加入书签"></i>
             </h3>
         </div>
         <div class="row" style="margin-bottom: 20px;">
@@ -39,21 +37,33 @@
             <div class="btn-group btn-group-sm ebook-btn ebook-pager" role="group">
             </div>
         </div>
+        <input id="sortcontent" type="hidden"/>
     </div>
 </div>
 <script>
+    var pagecount = 0;
+    var page = 1;
     function getpage(p) {
-        var pagecount = '@Model.Ebook.PageCount';
+        page = p;
         $.ajax({
             url: "/Default/GetEBookPage",
             data: { id: '@ViewContext.RouteData.Values["id"]', page: p },
             type: "get",
-            //dataType: "json",
+            dataType: "json",
             async: false,
             success: function (data) {
-                if (data != "获取书籍内容错误。") {
-                    $("#ebook-content").html(data);
+                if (data.type == "1") {
+                    document.title = data.resultdata.EBook.FullHead;
+                    pagecount = data.resultdata.EBook.PageCount;
+                    $("#title").prepend(data.resultdata.EBook.FullHead);
+                    $("#ebook-content").html(data.resultdata.PageContent);
                     $("#ebook-content img").addClass("img-responsive");
+                    $("#sortcontent").val(data.resultdata.SortContent);
+                    if (data.resultdata.IsBookMark) {
+                        $("#title i").attr("title", "删除书签").addClass("booked");
+                    } else {
+                        $("#title i").attr("title", "加入书签").removeClass("booked");
+                    }
                     var pager = "";
                     if (p - 1 > 0) {
                         pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (p - 1) + ");\">上一章</button>";
@@ -63,6 +73,8 @@
                     }
                     $(".ebook-pager").html(pager);
                     $("html,body").scrollTop($("#best-deal").offset().top);
+                } else {
+                    dialogMsg(data.message, data.type);
                 }
             }
         });
@@ -92,6 +104,26 @@
                 $(this).text("开灯").addClass("active");
             }
             $(this).siblings().removeClass("active");
+        });
+        $(".fa-bookmark").click(function() {
+            $.ajax({
+                url: "/Default/SaveBookMark",
+                data: { id: '@ViewContext.RouteData.Values["id"]', page: page, sortcontent: $("#sortcontent").val() },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if (data.type == "1") {
+                        if (data.message == "0") {
+                            $("#title i").attr("title","加入书签").removeClass("booked");
+                        } else {
+                            $("#title i").attr("title", "删除书签").addClass("booked");
+                        }
+                    } else {
+                        dialogMsg(data.message, data.type);
+                    }
+                }
+            });
         });
         getpage(1);
     });

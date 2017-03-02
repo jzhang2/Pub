@@ -59,6 +59,7 @@
     <Compile Include="CustomerManage\OrderBLL.cs" />
     <Compile Include="CustomerManage\OrderEntryBLL.cs" />
     <Compile Include="ExtendManage\BannerNewsBLL.cs" />
+    <Compile Include="ExtendManage\BookMarkBLL.cs" />
     <Compile Include="ExtendManage\CommentsBLL.cs" />
     <Compile Include="ExtendManage\ContributionBLL.cs" />
     <Compile Include="ExtendManage\CustomizationBLL.cs" />
