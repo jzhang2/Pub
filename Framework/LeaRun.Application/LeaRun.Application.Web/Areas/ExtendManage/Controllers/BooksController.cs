@@ -127,47 +127,39 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
         [HttpPost]
         [AjaxOnly]
         [ValidateInput(false)]
-        public ActionResult SaveBook(string keyValue, NewsEntity newsEntity)
-        {
+        public ActionResult SaveBook(string keyValue, NewsEntity newsEntity) {
             var result = "";
-            try
-            {
-                string url = string.Format("http://localhost:8010/Resource/EBook/yy2.html");
-                var req = (HttpWebRequest)WebRequest.Create(url);
-                req.Method = "GET";
-                req.ContentType = "application/x-www-form-urlencoded;charset=gb2312";
-                HttpWebResponse response = (HttpWebResponse)req.GetResponse();
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-                result = reader.ReadToEnd();
+            try {
+                int totalPagesCount = 0;
+                var ePath = string.Format("/Resource/EBook/{0}/", Guid.NewGuid());
+                var import = ImportBook(Server.MapPath("~" + newsEntity.FilePath), ref totalPagesCount, ePath);
+                if (import) {
+                    newsEntity.EPath = ePath;
+                    newsEntity.PageCount = totalPagesCount;
+                    newsBLL.SaveForm(keyValue, newsEntity);
+                    return Success("操作成功。");
+                }
+                else {
+                    return Error("上传书籍失败，请检查文档是否正确。");
+                }
             }
-            catch (Exception)
-            {
+            catch (Exception ee) {
+                return Error(ee.Message);
             }
-            
-            int totalPagesCount = 0;
-            var ePath = string.Format("/Resource/EBook/{0}/", Guid.NewGuid());
-            var import = ImportBook(Server.MapPath("~" + newsEntity.FilePath), ref totalPagesCount, ePath);
-            if (import) {
-                newsEntity.EPath = ePath;
-                newsEntity.PageCount = totalPagesCount;
-                newsBLL.SaveForm(keyValue, newsEntity);
-                return Success("操作成功。");
-            }
-            else {
-                return Error("上传书籍失败，请检查文档是否正确。");
-            }
-
         }
 
         public bool ImportBook(object path, ref int totalPagesCount, string ePath) {
+            Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+            object missObj = Missing.Value;
+            object saveChanges = WdSaveOptions.wdDoNotSaveChanges;
             try {
                 string fullPath = Server.MapPath("~" + ePath);
                 Directory.CreateDirectory(fullPath);
 
-                object missObj = Missing.Value;
+                
                 object ReadOnly = false;
                 object Visible = false;
-                Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+
                 Microsoft.Office.Interop.Word.Document doc = app.Documents.Open(ref path, ref missObj, ref ReadOnly,
                     ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj,
                     ref missObj, ref Visible, ref missObj, ref missObj, ref missObj, ref missObj);
@@ -186,7 +178,6 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
                 object Start;
                 object End;
                 object what = WdGoToItem.wdGoToPage;
-                object saveChanges = WdSaveOptions.wdDoNotSaveChanges;
                 object which = WdGoToDirection.wdGoToFirst;
                 do {
                     doc.Activate();
@@ -235,12 +226,12 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
                         }
                     }
                 } while (pageNumber <= totalPagesCount);
-
                 app.Quit(ref saveChanges, ref missObj, ref missObj);
                 return true;
             }
             catch (Exception ex) {
-                return false;
+                app.Quit(ref saveChanges, ref missObj, ref missObj);
+                throw ex;
             }
         }
 

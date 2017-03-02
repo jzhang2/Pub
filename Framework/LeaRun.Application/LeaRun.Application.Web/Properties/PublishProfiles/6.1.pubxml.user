@@ -203,6 +203,12 @@
     <File Include="Areas/ExtendManage/Views/BannerNews/LinksIndex.cshtml">
       <publishTime>01/17/2017 22:55:08</publishTime>
     </File>
+    <File Include="Areas/ExtendManage/Views/Books/Ebook.cshtml">
+      <publishTime>02/27/2017 23:42:20</publishTime>
+    </File>
+    <File Include="Areas/ExtendManage/Views/Books/EForm.cshtml">
+      <publishTime>02/28/2017 00:23:56</publishTime>
+    </File>
     <File Include="Areas/ExtendManage/Views/Books/Form.cshtml">
       <publishTime>02/25/2017 02:26:55</publishTime>
     </File>
@@ -576,28 +582,28 @@
       <publishTime>05/30/2016 11:27:49</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Busines.dll">
-      <publishTime>02/27/2017 22:16:15</publishTime>
+      <publishTime>03/03/2017 00:38:49</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Cache.dll">
-      <publishTime>02/27/2017 22:16:16</publishTime>
+      <publishTime>03/03/2017 00:38:49</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Code.dll">
       <publishTime>02/08/2017 17:21:39</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Entity.dll">
-      <publishTime>02/27/2017 22:16:13</publishTime>
+      <publishTime>03/03/2017 00:38:48</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.IService.dll">
-      <publishTime>02/27/2017 22:16:14</publishTime>
+      <publishTime>03/03/2017 00:38:48</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Mapping.dll">
-      <publishTime>02/27/2017 22:16:13</publishTime>
+      <publishTime>03/03/2017 00:38:48</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Service.dll">
-      <publishTime>02/27/2017 22:16:15</publishTime>
+      <publishTime>03/03/2017 00:38:48</publishTime>
     </File>
     <File Include="bin/LeaRun.Application.Web.dll">
-      <publishTime>02/27/2017 22:16:17</publishTime>
+      <publishTime>03/03/2017 00:59:06</publishTime>
     </File>
     <File Include="bin/LeaRun.Cache.dll">
       <publishTime>01/11/2017 17:54:42</publishTime>
@@ -3534,7 +3540,7 @@
       <publishTime>02/07/2017 11:10:26</publishTime>
     </File>
     <File Include="css/style.css">
-      <publishTime>02/26/2017 23:38:56</publishTime>
+      <publishTime>03/02/2017 16:46:14</publishTime>
     </File>
     <File Include="css/VarelaRound.css">
       <publishTime>01/10/2017 13:38:05</publishTime>
@@ -3861,7 +3867,7 @@
       <publishTime>01/10/2017 13:32:56</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>05/30/2016 10:56:06</publishTime>
+      <publishTime>02/28/2017 00:39:17</publishTime>
     </File>
     <File Include="Resource/DocumentFile/24a055d6-5924-44c5-be52-3715cdd68011/20160120/03b420c4-8194-4fbf-b124-4bbc254d672d.jpg">
       <publishTime>05/30/2016 10:58:33</publishTime>
@@ -4557,7 +4563,7 @@
       <publishTime>02/16/2017 11:00:29</publishTime>
     </File>
     <File Include="Views/Default/Books.cshtml">
-      <publishTime>02/24/2017 01:13:20</publishTime>
+      <publishTime>03/02/2017 14:32:45</publishTime>
     </File>
     <File Include="Views/Default/Contributor.cshtml">
       <publishTime>02/20/2017 23:42:08</publishTime>
@@ -4565,20 +4571,26 @@
     <File Include="Views/Default/Customization.cshtml">
       <publishTime>02/27/2017 00:28:50</publishTime>
     </File>
+    <File Include="Views/Default/Default.cshtml">
+      <publishTime>03/01/2017 23:08:02</publishTime>
+    </File>
     <File Include="Views/Default/Detail.cshtml">
       <publishTime>02/15/2017 16:01:18</publishTime>
+    </File>
+    <File Include="Views/Default/EBook.cshtml">
+      <publishTime>03/02/2017 16:52:26</publishTime>
     </File>
     <File Include="Views/Default/ForgotPassWord.cshtml">
       <publishTime>02/07/2017 22:21:52</publishTime>
     </File>
     <File Include="Views/Default/Index.cshtml">
-      <publishTime>02/15/2017 16:01:09</publishTime>
+      <publishTime>02/27/2017 23:09:45</publishTime>
     </File>
     <File Include="Views/Default/MapCulture.cshtml">
       <publishTime>02/24/2017 00:49:34</publishTime>
     </File>
     <File Include="Views/Default/MyAccount.cshtml">
-      <publishTime>02/27/2017 00:22:03</publishTime>
+      <publishTime>03/03/2017 00:18:29</publishTime>
     </File>
     <File Include="Views/Default/News.cshtml">
       <publishTime>02/24/2017 00:52:20</publishTime>
@@ -4620,7 +4632,7 @@
       <publishTime>08/23/2016 10:40:52</publishTime>
     </File>
     <File Include="Views/Home/AdminLTE.cshtml">
-      <publishTime>01/05/2017 23:18:36</publishTime>
+      <publishTime>03/03/2017 00:18:29</publishTime>
     </File>
     <File Include="Views/Home/AdminLTEDesktop.cshtml">
       <publishTime>08/25/2016 15:47:58</publishTime>
@@ -4641,7 +4653,7 @@
       <publishTime>02/17/2017 10:14:32</publishTime>
     </File>
     <File Include="Views/Login/Index.cshtml">
-      <publishTime>02/15/2017 14:23:36</publishTime>
+      <publishTime>03/03/2017 00:18:29</publishTime>
     </File>
     <File Include="Views/PersonCenter/Index.cshtml">
       <publishTime>01/05/2017 16:55:29</publishTime>
@@ -4671,7 +4683,7 @@
       <publishTime>08/25/2016 16:20:36</publishTime>
     </File>
     <File Include="Views/Shared/_Nav.cshtml">
-      <publishTime>02/25/2017 03:09:28</publishTime>
+      <publishTime>03/03/2017 00:18:29</publishTime>
     </File>
     <File Include="Views/Shared/_OrderForm.cshtml">
       <publishTime>08/22/2016 14:18:52</publishTime>
@@ -4689,10 +4701,10 @@
       <publishTime>08/22/2016 14:18:50</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/08/2017 17:21:46</publishTime>
+      <publishTime>03/03/2017 00:38:52</publishTime>
     </File>
     <File Include="XmlConfig/database.config">
-      <publishTime>12/26/2016 16:46:23</publishTime>
+      <publishTime>03/03/2017 00:18:29</publishTime>
     </File>
     <File Include="XmlConfig/ioc.config">
       <publishTime>05/30/2016 10:56:06</publishTime>
@@ -4704,7 +4716,7 @@
       <publishTime>08/24/2016 14:22:46</publishTime>
     </File>
     <File Include="XmlConfig/system.config">
-      <publishTime>01/13/2017 22:52:22</publishTime>
+      <publishTime>03/03/2017 00:18:29</publishTime>
     </File>
   </ItemGroup>
 </Project>
