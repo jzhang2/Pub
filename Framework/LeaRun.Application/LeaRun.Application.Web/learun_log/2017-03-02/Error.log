@@ -4,3 +4,9 @@
 4. 主机: WL00070355.active.local   Ip  : 10.110.121.109   浏览器: Chrome 56.0    
 5. 异常: Object reference not set to an instance of an object.
 -----------------------------------------------------------------------------------------------------------------------------
+1. 调试: >> 操作时间: 3/2/2017 11:43:06 PM   操作人: System（超级管理员） 
+2. 地址: /AuthorizeManage/Module/RemoveForm    
+3. 类名: LeaRun.Application.Web.Areas.AuthorizeManage.Controllers.ModuleController 
+4. 主机: WL00070355.active.local   Ip  : 192.168.1.3   浏览器: Chrome 56.0    
+5. 异常: 当前所选数据有子节点数据！
+-----------------------------------------------------------------------------------------------------------------------------

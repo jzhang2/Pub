@@ -1,77 +1,13 @@
 ﻿@using LeaRun.Application.Code
 <nav role="navigation">
     <ul class="sf-menu" id="fh5co-primary-menu">
-        <li><a href="/">首页</a></li>
-        <li>
-            <a href="/News">西图动态</a>
-            @if (Model.NewsNav.Count > 0) {
-                <ul class="fh5co-sub-menu">
-                    @for (int i = 0; i < Model.NewsNav.Count; i++) {
-                        <li>
-                            <a href="/News/@(Server.UrlEncode(Model.NewsNav[i].ItemName))">@Model.NewsNav[i].ItemName</a>
-                        </li>
-                    }
-                </ul>
-            }
-        </li>
-        <li>
-            <a href="/MapCulture" class="sf-with-ul">地图文化</a>
-            @if (Model.MapNav.Count > 0) {
-                <ul class="fh5co-sub-menu">
-                    @for (int i = 0; i < Model.MapNav.Count; i++) {
-                        <li>
-                            <a href="/MapCulture/@(Server.UrlEncode(Model.MapNav[i].ItemName))">@Model.MapNav[i].ItemName</a>
-                        </li>
-                    }
-                </ul>
-            }
-        </li>
-        <li>
-            <a href="/Books">网上书店</a>
-            <ul class="fh5co-sub-menu">
-                <li><a href="/Books/5">电子书</a></li>
-                <li><a href="/Books/6">实体书</a></li>
-            </ul>
-        </li>
-        <li><a href="/Customization">产品定制</a></li>
-        <li>
-            <a href="/Reader">业务服务</a><ul class="fh5co-sub-menu">
-                <li class="col-xs-6-nav">
-                    <a href="/Reader">读者服务</a>
-                </li>
-                <li>
-                    <a href="/Contributor">作者服务</a>
-                </li>
-                @for (int i = 0; i < Model.NewsList.Count; i++) {
-                    <li>
-                        <a href="/Service/@Model.NewsList[i].NewsId">@Model.NewsList[i].FullHead</a>
-                    </li>
-                }
-            </ul>
-        </li>
-        <li>
-            <a href="/AboutUs">关于我们</a>
-            @if (Model.MapNav.Count > 0)
-            {
-                <ul class="fh5co-sub-menu">
-                    @for (int i = 0; i < Model.AboutUs.Count; i++)
-                    {
-                        <li>
-                            <a href="/AboutUs/@Model.AboutUs[i].NewsId">@Model.AboutUs[i].FullHead</a>
-                        </li>
-                    }
-                </ul>
-            }
-        </li>
         @if (OperatorProvider.Provider.IsLogin()) {
             string name = !string.IsNullOrEmpty(OperatorProvider.Provider.Current().RealName) ? OperatorProvider.Provider.Current().RealName : OperatorProvider.Provider.Current().Account;
             <li>
                 <a href="javascript:;" id="HeadIcon_imgs" style="font-size: 14px;"><img width="34" height="34" style="margin-top: -4px" src="@(OperatorProvider.Provider.Current().HeadIcon ?? "/images/头像.png")" />&nbsp;&nbsp;@(name.Length > 16 ? (name.Substring(0, 13) + "...") : name)</a>
                 <ul class="fh5co-sub-menu">
                     <li><a href="/MyAccount/0">个人资料</a></li>
-                    <li><a href="/MyAccount/1">我的定制</a></li>
-                    <li><a href="/MyAccount/2">投诉建议</a></li>
-                    <li><a href="/MyAccount/3">我的投稿</a></li>
+                    <li><a href="/MyAccount/1">我的书签</a></li>
                     <li><a href="javascript:;" onclick="indexOut();">退出登录</a></li>
                 </ul>
             </li>
