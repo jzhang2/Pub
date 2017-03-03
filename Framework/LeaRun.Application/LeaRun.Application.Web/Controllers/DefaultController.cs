@@ -239,11 +239,7 @@ namespace LeaRun.Application.Web.Controllers {
             return View(viewModel);
         }
         public ActionResult EBook(string id) {
-            var viewModel = new HomeViewModel();
-            if (!string.IsNullOrEmpty(id)) {
-                viewModel.Ebook = newsBll.GetEntity(id);
-            }
-            return View(viewModel);
+            return View();
         }
         public ActionResult Detail(string id) {
             var viewModel = new HomeViewModel();
@@ -398,8 +394,7 @@ namespace LeaRun.Application.Web.Controllers {
                 if (!string.IsNullOrEmpty(id)) {
                     eBookEntity.EBook = newsBll.GetEntity(id);
                     if (!string.IsNullOrEmpty(page)) {
-                        //string url = string.Format(baseUrl + ebook.EPath + page + ".html");
-                        string url = "http://localhost:8010/Resource/EBook/yy2.html";
+                        string url = string.Format(baseUrl + eBookEntity.EBook.EPath + page + ".html");
                         var req = (HttpWebRequest)WebRequest.Create(url);
                         req.Method = "GET";
                         req.ContentType = "application/x-www-form-urlencoded";
