@@ -11,7 +11,7 @@
     <div class="container" style="background: white; padding: 35px 25px;">
         <div style="text-align: center;">
             <h3 style="margin-bottom: 20px;" id="title">
-                <i class="fa fa-bookmark ebook-bookmark" title="加入书签"></i>
+                <span id="bookname"></span><i class="fa fa-bookmark ebook-bookmark" title="加入书签"></i>
             </h3>
         </div>
         <div class="row" style="margin-bottom: 20px;">
@@ -55,7 +55,7 @@
                 if (data.type == "1") {
                     document.title = data.resultdata.EBook.FullHead;
                     pagecount = data.resultdata.EBook.PageCount;
-                    $("#title").prepend(data.resultdata.EBook.FullHead);
+                    $("#bookname").html(data.resultdata.EBook.FullHead);
                     $("#ebook-content").html(data.resultdata.PageContent);
                     $("#ebook-content img").addClass("img-responsive");
                     $("#sortcontent").val(data.resultdata.SortContent);
