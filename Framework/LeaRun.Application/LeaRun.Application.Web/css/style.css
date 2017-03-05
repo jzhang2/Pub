@@ -910,6 +910,9 @@ h1, h2, h3, h4, h5, h6, figure {
         background: #DCECD2 !important;
         color: black !important;
     }
+    .ebook-content-peyes .ebook-btn .btn {
+        border:solid 1px gray !important;
+    }
     .ebook-content-peyes p,.ebook-content-peyes h1, .ebook-content-peyes h2, .ebook-content-peyes h3, .ebook-content-peyes h4, .ebook-content-peyes h5, .ebook-content-peyes h6, .ebook-content-peyes figure{
         color: black !important;
     }
