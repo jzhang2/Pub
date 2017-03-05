@@ -11,7 +11,7 @@
 <div class="content-navbar">
     <div class="container">
         <div class="row">
-            <div class="content-quicknva">
+            @*<div class="content-quicknva">
                 <ul>
                     <li>
                         <a href="javascript:;" data-id="5" @((ViewContext.RouteData.Values["id"] == null || (ViewContext.RouteData.Values["id"] != null && "5" == ViewContext.RouteData.Values["id"].ToString())) ? "class=active" : "")>电子书库</a>
@@ -29,7 +29,7 @@
                     </li>
 
                 </ul>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
@@ -51,7 +51,7 @@
         var queryJson = {
             Category: '',
             FullHead: $("#keyword").val(),
-            TypeId: $(".content-quicknva ul li a.active").attr("data-id")
+            TypeId: 9
         }
         $.ajax({
             url: "/Default/GetNewsJson",

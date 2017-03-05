@@ -7,7 +7,7 @@
                 <a href="javascript:;" id="HeadIcon_imgs" style="font-size: 14px;"><img width="34" height="34" style="margin-top: -4px" src="@(OperatorProvider.Provider.Current().HeadIcon ?? "/images/头像.png")" />&nbsp;&nbsp;@(name.Length > 16 ? (name.Substring(0, 13) + "...") : name)</a>
                 <ul class="fh5co-sub-menu">
                     <li><a href="/MyAccount/0">个人资料</a></li>
-                    <li><a href="/MyAccount/1">我的书签</a></li>
+                    @*<li><a href="/MyAccount/1">我的书签</a></li>*@
                     <li><a href="javascript:;" onclick="indexOut();">退出登录</a></li>
                 </ul>
             </li>

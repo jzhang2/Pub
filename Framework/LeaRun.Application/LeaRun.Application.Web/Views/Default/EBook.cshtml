@@ -1,12 +1,10 @@
 ﻿@{
     ViewBag.navIndex = -1;
-    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    Layout = "~/Views/Shared/_LayoutEBook.cshtml";
 }
+<script src="~/Content/scripts/utils/learun-ui.js"></script>
 <script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
 <link href="~/Content/styles/font-awesome.min.css" rel="stylesheet" />
-<div>
-    <img src="~/images/baneer1.png" class="img-responsive" />
-</div>
 <div id="best-deal">
     <div class="container" style="background: white; padding: 35px 25px;">
         <div style="text-align: center;">
@@ -115,8 +113,10 @@
                 success: function (data) {
                     if (data.type == "1") {
                         if (data.message == "0") {
+                            dialogMsg("删除书签", data.type);
                             $("#title i").attr("title","加入书签").removeClass("booked");
                         } else {
+                            dialogMsg("加入书签", data.type);
                             $("#title i").attr("title", "删除书签").addClass("booked");
                         }
                     } else {
