@@ -3,6 +3,7 @@
     ViewBag.navIndex = -1;
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
+<script src="~/Content/scripts/utils/learun-ui.js"></script>
 <script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
 @model LeaRun.Application.Web.Controllers.HomeViewModel
 <div>
@@ -12,13 +13,21 @@
     <div class="container" style="background: white; padding: 35px 25px;">
         <div style="border-bottom: solid 1px #E6EAED; margin-bottom: 25px; padding-bottom: 10px;">
             <h3 style="margin-bottom: 5px;">@Model.Detial.FullHead</h3>
-            <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="thumbs-up"><img src="/images/tup.png" /></i>@Model.Detial.ThumbUp<i class="icomments"><img src="/images/icomments.png" /></i>@Model.Detial.CommentsCount</span>
+            <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="thumbs-up"><img src="/images/tup.png" /></i><span id="thumbup">@Model.Detial.ThumbUp</span><i class="icomments"><img src="/images/icomments.png" /></i><span id="commentscount">@Model.Detial.CommentsCount</span></span>
         </div>
         <div>
             @Html.Raw(HttpUtility.HtmlDecode(Model.Detial.NewsContent))
         </div>
+        @if (Model.Detial.Attachment != null) {
+            <p style="margin-top: 20px;">附件：<a style="cursor: pointer;color:#337ab7" href="javascript:;" onclick="btn_download('@Model.Detial.NewsId')" >@Model.Detial.AttachmentName</a></p>
+        }
         <div style="vertical-align: central; text-align: center;">
-            <img @(!Model.Detial.IsThumbed ? "class=thumb_up_icon" : "") src="/images/点赞.png" />
+            @if (Model.Detial.IsThumbed) {
+                <img class="thumb_up_icon" src="/images/点赞.png" />
+            }
+            else {
+                <img class="thumb_up_icon" src="/images/点赞.png" />
+            }
             <p id="tcount">@Model.Detial.ThumbUp 人点赞</p>
         </div>
         <style>
@@ -311,6 +320,10 @@
     </div>
 </div>
 <script>
+    function btn_download(keyValue) {
+        $.download("/Default/Download", "keyValue=" + keyValue, 'post');
+
+    }
     $(".thumb_up_icon").click(function () {
         $.ajax({
             url: "/Default/ThumbUp",
@@ -322,8 +335,8 @@
                 if (data.type == 1) {
                     $(".thumb_up_icon").unbind();
                     layer.msg('+1', { icon: 1, time: 2000, shift: 5 });
+                    $("#thumbup").html('@(Model.Detial.ThumbUp+1)');
                     $("#tcount").html('@(Model.Detial.ThumbUp+1)' + ' 人点赞');
-                    $(".thumb_up_icon").removeClass("thumb_up_icon");
                 } else {
                     layer.msg(data.message, { icon: 1, time: 2000, shift: 5 });
                 }
@@ -412,6 +425,7 @@
 
                         $(".feed-activity-list").append(str);
                         $("#tcomments").val("");
+                        $("#commentscount").html('@(Model.Detial.CommentsCount + 1)');
                     } else {
                         layer.msg(result.message, { icon: 1, time: 2000, shift: 5 });
                     }
@@ -465,6 +479,7 @@
                     } else {
                         $(obj).closest(".well").append(str);
                     }
+                    $("#commentscount").html('@(Model.Detial.CommentsCount + 1)');
                     $(".drcom").remove();
                 } else {
                     layer.msg(result.message, { icon: 1, time: 2000, shift: 5 });

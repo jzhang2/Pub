@@ -20,7 +20,14 @@
                 <div class="book-title">
                     <h4>书名：@Model.CurrentArticle.FullHead</h4>
                     <h4>作者：@Model.CurrentArticle.AuthorName</h4>
-                    <a href="@Model.CurrentArticle.BuyLink" class="btn btn-default sendver" target="_blank" style="float: none">淘宝购买</a>
+                    <h4>概述：</h4>
+                    <p>@Model.CurrentArticle.Description</p>
+                    @if (Model.CurrentArticle.TypeId == 5) {
+                        <a href="@Model.CurrentArticle.NewsLink" class="btn btn-default sendver" target="_blank" style="float: none">点击阅读</a>
+                    }
+                    else {
+                        <a href="@Model.CurrentArticle.BuyLink" class="btn btn-default sendver" target="_blank" style="float: none">淘宝购买</a>
+                    }
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@
     var category = request('category');
     var EnCode = request('EnCode');
     var editor = null;
-    $(function () {
+    $(function() {
         $('#summernote').summernote({
             toolbar: [
                 ['style', ['style']],
@@ -21,7 +21,6 @@
                 ['table', ['table']],
                 ['insert', ['link', 'picture', 'video']],
                 ['misc', ['fullscreen', 'codeview']],
-
             ],
             height: 270,
             placeholder: '这里输入文章内容...',
@@ -29,7 +28,7 @@
             fontNames: ['微软雅黑', '宋体', '楷体', '黑体', '隶书', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Helvetica', 'Impact', 'Tahoma', 'Times New Roman', 'Verdana'],
             fontNamesIgnoreCheck: ['微软雅黑', '宋体', '楷体', '黑体', '隶书'],
             callbacks: {
-                onImageUpload: function (files) {
+                onImageUpload: function(files) {
                     var formData = new FormData();
                     formData.append("file", files[0]);
                     $.ajax({
@@ -40,7 +39,7 @@
                         cache: false,
                         contentType: false,
                         processData: false,
-                        success: function (data) {
+                        success: function(data) {
                             if (data.type == 1) {
                                 $('#summernote').summernote('insertImage', data.resultdata);
                             } else {
@@ -52,7 +51,24 @@
             }
         });
         initControl();
-    })
+        $('#uploadFile1').on('change', uphead);
+    });
+    function uphead() {
+        $.ajaxFileUpload({
+            url: "/ExtendManage/Books/UploadDocument",
+            secureuri: false,
+            fileElementId: 'uploadFile1',
+            dataType: 'json',
+            success: function (data) {
+                if (data.type == 1) {
+                    $("#AttachmentName").val(data.resultdata.fileName);
+                    $("#Attachment").val(data.resultdata.filePath);
+                }
+                dialogMsg(data.message, data.type);
+                $('#uploadFile1').on('change', uphead);
+            }
+        });
+    }
     //初始化控件
     function initControl() {
         //栏目
@@ -114,7 +130,10 @@
             TagWord: $("#TagWord").val(),
             Keyword: $("#Keyword").val(),
             NewsContent: $('#summernote').summernote('code'),
-            TypeId: TypeId
+            TypeId: TypeId,
+            Attachment: $("#Attachment").val(),
+            AttachmentName: $("#AttachmentName").val(),
+            //Description: $("#Description").val(),
         }
         $.SaveForm({
             url: "../../ExtendManage/News/SaveForm?keyValue=" + keyValue,
@@ -157,9 +176,17 @@
             </td>
         </tr>
         <tr>
+            @*<td class="formTitle">概述</td>
+            <td class="formValue">
+                <input id="Description" type="text" class="form-control" placeholder="概述" />
+            </td>*@
             <td class="formTitle">排序</td>
             <td class="formValue">
-                <input id="SortCode" type="number" class="form-control" placeholder="排序" />
+                <input id="SortCode" type="number" class="form-control" placeholder="排序"/>
+            </td>
+            <td class="formTitle">附件</td>
+            <td class="formValue">
+                <input type="file" name="uploadFile1" id="uploadFile1"><input type="hidden" id="AttachmentName" /><input type="hidden" id="Attachment" />
             </td>
         </tr>
         <tr>

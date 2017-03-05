@@ -92,7 +92,7 @@
                 fileElementId: 'uploadFile',
                 dataType: 'json',
                 success: function (data) {
-                    if (data.type==1) {
+                    if (data.type == 1) {
                         $("#NewsImage").val(data.resultdata);
                     }
                     dialogMsg(data.message, 1);
@@ -116,7 +116,8 @@
             Keyword: $("#Keyword").val(),
             Price: $("#Price").val(),
             NewsContent: $('#summernote').summernote('code'),
-            TypeId: TypeId
+            TypeId: TypeId,
+            Description: $("#Description").val(),
         }
         $.SaveForm({
             url: "../../ExtendManage/Books/SaveForm?keyValue=" + keyValue,
@@ -149,19 +150,25 @@
         <tr>
             <td class="formTitle">作者<font face="宋体">*</font></td>
             <td class="formValue">
-                <input id="AuthorName" type="text" class="form-control" placeholder="请输入作者" isvalid="yes" checkexpession="NotNull"/>
+                <input id="AuthorName" type="text" class="form-control" placeholder="请输入作者" isvalid="yes" checkexpession="NotNull" />
             </td>
             <td class="formTitle">封面</td>
             <td class="formValue">
                 <div class="file">
-                        <img id="uploadPreview" style="width: 40px; height: 40px;" src="~/Content/images/logo-headere47d5.png"/><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="NewsImage"/>
+                    <img id="uploadPreview" style="width: 40px; height: 40px;" src="~/Content/images/logo-headere47d5.png" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="NewsImage" />
                 </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="formTitle">概述</td>
+            <td class="formValue">
+                <textarea id="Description" class="form-control" style="height: 40px;"></textarea>
             </td>
         </tr>
         <tr>
             <td class="formTitle">购买链接</td>
             <td class="formValue">
-                <input id="BuyLink" type="text" class="form-control" placeholder="请输入购买链接"/>
+                <input id="BuyLink" type="text" class="form-control" placeholder="请输入购买链接" />
             </td>
             <td class="formTitle">价格</td>
             <td class="formValue">

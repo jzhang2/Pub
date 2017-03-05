@@ -121,6 +121,9 @@
                                     <th>尺寸</th>
                                     <th>材质</th>
                                     <th>装裱形式</th>
+                                    <th>联系人</th>
+                                    <th>联系方式</th>
+                                    <th>联系时间</th>
                                     <th>创建时间</th>
                                 </tr>
                             </thead>
@@ -131,6 +134,9 @@
                                         <td>@entity.Size</td>
                                         <td>@entity.Material</td>
                                         <td>@entity.Frame</td>
+                                        <td>@entity.Contactor</td>
+                                        <td>@entity.Contact</td>
+                                        <td>@entity.ContactTime</td>
                                         <td>@(Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd"))</td>
                                     </tr>
                                 }
@@ -140,18 +146,20 @@
                     <div class="MyProfile col-md-12 col-sm-12 col-xs-12 cus-content" style="display:none">
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th>联系方式</th>
-                                    <th>需求</th>
-                                    <th>联系时间</th>
-                                    <th>创建时间</th>
-                                </tr>
+                            <tr>
+                                <th>需求</th>
+                                <th>联系人</th>
+                                <th>联系方式</th>
+                                <th>联系时间</th>
+                                <th>创建时间</th>
+                            </tr>
                             </thead>
                             <tbody>
                                 @foreach (CustomizationEntity entity in Model.CustomizationList.Where(t => t.TypeId == 2)) {
                                     <tr>
-                                        <td>@entity.Contact</td>
                                         <td>@entity.Description</td>
+                                        <td>@entity.Contactor</td>
+                                        <td>@entity.Contact</td>
                                         <td>@entity.ContactTime</td>
                                         <td>@(Convert.ToDateTime(entity.CreateDate).ToString("yyyy-MM-dd"))</td>
                                     </tr>

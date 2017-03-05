@@ -41,6 +41,8 @@ namespace LeaRun.Application.Entity.ExtendManage
         /// </summary>
         /// <returns></returns>
         public string Contact { get; set; }
+
+        public string Contactor { get; set; }
         /// <summary>
         /// Description
         /// </summary>

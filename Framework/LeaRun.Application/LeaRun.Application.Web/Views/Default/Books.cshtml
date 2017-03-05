@@ -63,11 +63,7 @@
                     var html = "";
                     $.each(data.rows, function (i) {
                         html += '<div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">';
-                        if ($(".content-quicknva ul li a.active").attr("data-id") == "5") {
-                            html += '<a href="/Ebook/' + data.rows[i].NewsId + '">';
-                        } else {
-                            html += '<a href="/Pbook/' + data.rows[i].NewsId + '">';
-                        }
+                        html += '<a href="/Pbook/' + data.rows[i].NewsId + '">';
                         html += '<div class="fh5co-property books">';
                         html += '<figure>';
                         html += '<img src="' + data.rows[i].NewsImage + '" alt="" class="img-responsive">';
@@ -82,7 +78,7 @@
                         html += '<div class="price-status">';
                         html += '<span class="price">￥' + data.rows[i].Price + ' </span>';
                         html += '</div>';
-                        html += '<p>' + data.rows[i].NewsContent + '</p>';
+                        html += '<p>' + data.rows[i].Description + '</p>';
                         html += '</div>';
                         html += '<p class="fh5co-property-specification books">';
                         html += '<span><strong>阅读数</strong>' + data.rows[i].PV + '</span>';
