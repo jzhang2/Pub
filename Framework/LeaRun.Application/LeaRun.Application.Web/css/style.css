@@ -917,7 +917,7 @@ h1, h2, h3, h4, h5, h6, figure {
         color: black !important;
     }
     .ebook-content-light,.ebook-content-light .container {
-        background: black !important;
+        background: #666666 !important;
         color: white !important;
     }
     .ebook-content-light p,.ebook-content-light h1, .ebook-content-light h2, .ebook-content-light h3, .ebook-content-light h4, .ebook-content-light h5, .ebook-content-light h6, .ebook-content-light figure{
