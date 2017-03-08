@@ -100,6 +100,7 @@ namespace LeaRun.Application.Web.Controllers {
         public List<SuggestionEntity> MySuggestionList = new List<SuggestionEntity>();
         public List<ContributionEntity> ContributionList = new List<ContributionEntity>();
         public List<CustomizationEntity> CustomizationList = new List<CustomizationEntity>();
+        public List<DataItemModel> BookCategory = new List<DataItemModel>();
         public NewsEntity Ebook = new NewsEntity();
     }
 

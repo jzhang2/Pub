@@ -1989,6 +1989,8 @@ word-break: normal;
         padding-top: 15px;
         padding-bottom: 15px;
         margin-bottom: 0;
+        padding-right: 15px;
+        padding-left: 15px;
     }
 
         .content-navbar ul li a {
@@ -2678,4 +2680,109 @@ a.btn, button.btn {
 
 #HeadIcon_imgs img {
     border-radius: 50%;
+}
+.news-category {
+    padding: 0px 15px 35px 15px;
+}
+.news-category a {
+    padding: 0 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color:#4e586f
+}
+.news-category-nav {
+    background: #f7f7f9;border-bottom: solid 1px #E6EAED;padding: 10px 0
+}
+.news-category a:hover,.news-category a.active {
+    color:#CD5C54
+}
+.detail-content {
+    word-wrap: break-word;
+    word-break: normal;
+}
+/* Style the Image Used to Trigger the Modal */
+.detail-content img {
+    /*border-radius: 5px;*/
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.detail-content img:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption { 
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+    position: absolute;
+    top: 45px;
+    right: 20px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content,.modal-content img,.detail-content img {
+        width: 100% !important;
+    }
 }

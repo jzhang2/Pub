@@ -33,9 +33,12 @@
         </div>
     </div>
 </div>
-<div id="best-deal" class="fh5co-agents">
-    <div class="container" style="padding: 35px 25px;">
+<div id="best-deal" class="fh5co-agents" style="padding-top:0">
+    <div class="container" style="padding: 35px 25px; padding-top: 0px;">
         <div class="row">
+            <div class="news-category">
+                <div class="news-category-nav"></div>
+            </div>
             <div id="news-content"></div>
             <div class="col-md-12" style="text-align: center; display: none;" id="page-more">
                 <a href="javascript:;" class="btn btn-primary">加载更多</a>
@@ -48,56 +51,85 @@
     var TypeId = -1;
     var category = '';
     function initdata() {
-        var queryJson = {
-            Category: '',
-            FullHead: $("#keyword").val(),
-            TypeId: $(".content-quicknva ul li a.active").attr("data-id")
+        var EnCode = 'EBook';
+        if ($(".content-quicknva ul li a.active").attr("data-id") == "6") {
+            EnCode = "PBook";
         }
         $.ajax({
-            url: "/Default/GetNewsJson",
+            url: "/SystemManage/DataItemDetail/GetDataItemListJson",
             type: "get",
             dataType: "json",
-            data: { sord: "DESC", sidx: "CreateDate", page: page, rows: 9, queryJson: JSON.stringify(queryJson) },
+            data: { EnCode: EnCode },
             success: function (data) {
-                if (data.rows.length > 0) {
+                if (data.length > 0) {
                     var html = "";
-                    $.each(data.rows, function (i) {
-                        html += '<div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">';
-                        html += '<a href="/Pbook/' + data.rows[i].NewsId + '">';
-                        html += '<div class="fh5co-property books">';
-                        html += '<figure>';
-                        html += '<img src="' + data.rows[i].NewsImage + '" alt="" class="img-responsive">';
-                        if (data.rows[i].IsRecommend == "1") {
-                            html += '<span class="tag">推荐</span>';
+                    for (var j = 0; j < data.length; j++) {
+                        if (($(".news-category-nav a.active").text() == '' && j == 0) || ($(".news-category-nav a.active").text() != '' && $(".news-category-nav a.active").text() == data[j].ItemName)) {
+                            html += "<a class='active'>" + data[j].ItemName + "</a>";
+                        } else {
+                            html += "<a>" + data[j].ItemName + "</a>";
                         }
-                        html += '</figure>';
-                        html += '<div class="fh5co-property-innter books">';
-                        html += '<h3 title="' + data.rows[i].FullHead + '">';
-                        html += data.rows[i].FullHead;
-                        html += '</h3>';
-                        html += '<div class="price-status">';
-                        html += '<span class="price">￥' + data.rows[i].Price + ' </span>';
-                        html += '</div>';
-                        html += '<p>' + data.rows[i].Description + '</p>';
-                        html += '</div>';
-                        html += '<p class="fh5co-property-specification books">';
-                        html += '<span><strong>阅读数</strong>' + data.rows[i].PV + '</span>';
-                        html += '</p>';
-                        html += '</div>';
-                        html += '</a>';
-                        html += '</div>';
-
-                    });
-                    $("#news-content").append(html);
-                    contentWayPoint();
-                    if (data.page < data.total) {
-                        $("#page-more").show();
-                    } else {
-                        $("#page-more").hide();
                     }
+                    $(".news-category-nav").html(html);
+                    $(".news-category-nav a").click(function () {
+                        $(".news-category-nav a").removeClass("active");
+                        $(this).addClass("active");
+                        $("#news-content").empty();
+                        initdata();
+                    });
+                    var queryJson = {
+                        Category: $(".news-category-nav a.active").text(),
+                        FullHead: $("#keyword").val(),
+                        TypeId: $(".content-quicknva ul li a.active").attr("data-id")
+                    }
+                    $.ajax({
+                        url: "/Default/GetNewsJson",
+                        type: "get",
+                        dataType: "json",
+                        data: { sord: "DESC", sidx: "CreateDate", page: page, rows: 9, queryJson: JSON.stringify(queryJson) },
+                        success: function (data) {
+                            if (data.rows.length > 0) {
+                                var html = "";
+                                $.each(data.rows, function (i) {
+                                    html += '<div class="col-md-4 item-block animate-box fadeIn animated-fast" data-animate-effect="fadeIn">';
+                                    html += '<a href="/Pbook/' + data.rows[i].NewsId + '">';
+                                    html += '<div class="fh5co-property books">';
+                                    html += '<figure>';
+                                    html += '<img src="' + data.rows[i].NewsImage + '" alt="" class="img-responsive">';
+                                    if (data.rows[i].IsRecommend == "1") {
+                                        html += '<span class="tag">推荐</span>';
+                                    }
+                                    html += '</figure>';
+                                    html += '<div class="fh5co-property-innter books">';
+                                    html += '<h3 title="' + data.rows[i].FullHead + '">';
+                                    html += data.rows[i].FullHead;
+                                    html += '</h3>';
+                                    html += '<div class="price-status">';
+                                    html += '<span class="price">￥' + data.rows[i].Price + ' </span>';
+                                    html += '</div>';
+                                    html += '<p>' + data.rows[i].Description + '</p>';
+                                    html += '</div>';
+                                    html += '<p class="fh5co-property-specification books">';
+                                    html += '<span><strong>阅读数</strong>' + data.rows[i].PV + '</span>';
+                                    html += '</p>';
+                                    html += '</div>';
+                                    html += '</a>';
+                                    html += '</div>';
+
+                                });
+                                $("#news-content").append(html);
+                                contentWayPoint();
+                                if (data.page < data.total) {
+                                    $("#page-more").show();
+                                } else {
+                                    $("#page-more").hide();
+                                }
+                            }
+                        }
+                    });
                 }
             }
-        });
+        });        
     }
     $(function () {
         $(".content-quicknva ul li a").click(function () {
@@ -105,8 +137,10 @@
             $(this).addClass("active");
             TypeId = $(".content-quicknva ul li a.active").attr("data-id");
             $("#news-content").empty();
+            $(".news-category-nav a").removeClass("active");
             initdata();
         });
+        
         $("#page-more").click(function () {
             page = page + 1;
             initdata();

@@ -62,7 +62,7 @@
                         html += '<div class="col-md-4 text-center item-block animate-box" data-animate-effect="fadeIn">';
                         html += '<div class="fh5co-agent">';
                         html += '<figure>';
-                        html += '<img class="img-responsive" src="' + data.rows[i].NewsImage + '" alt="">';
+                        html += '<a href="/Detail/' + data.rows[i].NewsId + '"><img class="img-responsive" src="' + data.rows[i].NewsImage + '" alt=""></a>';
                         html += '</figure>';
                         html += '<div style="padding-left: 15px; padding-right: 15px;min-height: 80px;">';
                         html += '<p>' + data.rows[i].NewsContent + '</p>';
