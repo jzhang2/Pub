@@ -74,6 +74,8 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         public string NewsContent { get; set; }
         public string MusicPath { get; set; }
         public string FilePath { get; set; }
+        public string Attachment { get; set; }
+        public string AttachmentName { get; set; }
         /// <summary>
         /// 浏览量
         /// </summary>		

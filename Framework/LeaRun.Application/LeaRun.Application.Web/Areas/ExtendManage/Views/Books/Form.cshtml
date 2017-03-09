@@ -117,7 +117,8 @@
             Keyword: $("#Keyword").val(),
             Price: $("#Price").val(),
             NewsContent: $('#summernote').summernote('code'),
-            TypeId: TypeId
+            TypeId: TypeId,
+            Description: $("#Description").val(),
         }
         $.SaveForm({
             url: "../../ExtendManage/Books/SaveForm?keyValue=" + keyValue,
@@ -160,9 +161,13 @@
             </td>
         </tr>
         <tr>
+            <td class="formTitle">概述</td>
+            <td class="formValue">
+                <textarea id="Description" class="form-control" style="height: 40px;"></textarea>
+            </td>
             <td class="formTitle">价格</td>
             <td class="formValue">
-                <input id="Price" type="number" class="form-control" placeholder="请输入价格" />
+                <input id="Price" type="number" class="form-control" placeholder="请输入价格"/>
             </td>
         </tr>
         <tr>

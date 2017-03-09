@@ -417,22 +417,28 @@
                         str += '</a>';
                         str += '<div class="media-body pcoments">';
                         //str += '<small class="pull-right"><a href="javascript:;" onclick="btnrp(this,\'' + result[i].CommentsId + '\',\'' + (result[i].FullName == null ? result[i].Email : result[i].FullName) + '\',\'' + result[i].CustomerId + '\')">回复</a></small>';
+                        var Category;
+                        if (result[i].Category == "1") {
+                            Category = "建议";
+                        } else if (result[i].Category == "2") {
+                            Category = "投诉";
+                        }
                         if (result[i].CreateUserId == null) {
-                            str += '<strong>游客</strong> ' + result[i].CreateDate + ' <br>';
+                            str += '<strong>游客 【' + Category + '】</strong> ' + result[i].CreateDate + ' <br>';
                         } else {
-                            str += '<strong>' + (result[i].FullName == null ? result[i].Email : result[i].FullName) + '</strong> ' + result[i].CreateDate + ' <br>';
+                            str += '<strong>' + (result[i].FullName == null ? result[i].Email : result[i].FullName) + ' 【' + Category + '】</strong> ' + result[i].CreateDate + ' <br>';
                         }
                         str += '<div>' + result[i].Contents + '</div>';
                         if (result[i].IsReply == "1") {
                             str += '<div class="well">';
-                                    str += '<div class="feed-element">';
-                                    str += '<div class="media-body">';
-                                    str += '<strong>官方回复</strong> ' + result[i].ReplyDate + ' <br>';
-                                    str += '<div>';
-                                    str += '<div>' + result[i].ReplyContents + '</div>';
-                                    str += '</div>';
-                                    str += '</div>';
-                                    str += '</div>';
+                            str += '<div class="feed-element">';
+                            str += '<div class="media-body">';
+                            str += '<strong>官方回复</strong> ' + result[i].ReplyDate + ' <br>';
+                            str += '<div>';
+                            str += '<div>' + result[i].ReplyContents + '</div>';
+                            str += '</div>';
+                            str += '</div>';
+                            str += '</div>';
                             str += '</div>';
 
                         }

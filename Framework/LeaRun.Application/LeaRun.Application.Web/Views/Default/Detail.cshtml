@@ -3,314 +3,364 @@
     ViewBag.navIndex = -1;
     Layout = "~/Views/Shared/_LayoutHome.cshtml";
 }
+<script src="~/Content/scripts/utils/learun-ui.js"></script>
 <script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
 @model LeaRun.Application.Web.Controllers.HomeViewModel
 <div>
     <img src="~/images/baneer1.png" class="img-responsive" />
 </div>
 <div id="best-deal">
-    <div class="container" style="background: white; padding: 35px 25px;">
-        <div style="border-bottom: solid 1px #E6EAED; margin-bottom: 25px; padding-bottom: 10px;">
-            <h3 style="margin-bottom: 5px;">@Model.Detial.FullHead</h3>
-            <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="thumbs-up"><img src="/images/tup.png" /></i>@Model.Detial.ThumbUp<i class="icomments"><img src="/images/icomments.png" /></i>@Model.Detial.CommentsCount</span>
+<div class="container" style="background: white; padding: 35px 25px;">
+<div style="border-bottom: solid 1px #E6EAED; margin-bottom: 25px; padding-bottom: 10px;">
+    <h3 style="margin-bottom: 5px;">@Model.Detial.FullHead</h3>
+    <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="thumbs-up"><img src="/images/tup.png" /></i><span id="thumbup">@Model.Detial.ThumbUp</span><i class="icomments"><img src="/images/icomments.png" /></i><span id="commentscount">@Model.Detial.CommentsCount</span></span>
+</div>
+<div class="detail-content">
+    @Html.Raw(HttpUtility.HtmlDecode(Model.Detial.NewsContent))
+</div>
+@if (Model.Detial.Attachment != null)
+{
+    <p style="margin-top: 20px;">附件：<a style="cursor: pointer; color: #337ab7" href="javascript:;" onclick="btn_download('@Model.Detial.NewsId')">@Model.Detial.AttachmentName</a>
+    </p>
+}
+<div style="vertical-align: central; text-align: center;">
+    @if (Model.Detial.IsThumbed)
+    {
+        <img class="thumb_up_icon" src="/images/点赞.png"/>
+    }
+    else
+    {
+        <img class="thumb_up_icon" src="/images/点赞.png"/>
+    }
+    <p id="tcount">@Model.Detial.ThumbUp 人点赞</p>
+</div>
+<style>
+    .ibox {
+        clear: both;
+        margin-bottom: 25px;
+        margin-top: 0px;
+        padding: 0;
+    }
+
+    .ibox::after, .ibox::before {
+        display: table;
+    }
+
+    .ibox-title {
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        background-color: #ffffff;
+        border-color: #e7eaec;
+        border-image: none;
+        border-style: solid solid none;
+        border-width: 2px 0 0;
+        color: inherit;
+        margin-bottom: 0px;
+        padding: 15px 15px 7px;
+        min-height: 48px;
+    }
+
+    .ibox-content {
+        background-color: #ffffff;
+        color: inherit;
+        padding: 15px 20px 20px 20px;
+        border-color: #e7eaec;
+        border-image: none;
+        border-style: solid solid none;
+        border-width: 1px 0;
+    }
+
+    .ibox-content {
+        clear: both;
+    }
+
+    .feed-element {
+        padding-bottom: 15px;
+    }
+
+    .feed-element, .feed-element .media {
+        margin-top: 15px;
+    }
+
+    .chat-element, .media-body {
+        overflow: hidden;
+    }
+
+    .sidebar-panel .feed-element, .media-body, .sidebar-panel p {
+        font-size: 12px;
+    }
+
+    .feed-element, .media-body {
+        overflow: hidden;
+    }
+
+    .feed-activity-list .feed-element {
+        border-bottom: 1px solid #e7eaec;
+    }
+
+    :first-child.feed-element {
+        margin-top: 0px;
+    }
+
+    .pull-left {
+        float: left !important;
+    }
+
+    .pull-left {
+        float: left;
+    }
+
+    .feed-element > .pull-left {
+        margin-right: 10px;
+    }
+
+    .media, .media-body {
+        overflow: hidden;
+        zoom: 1;
+    }
+
+    .media-body {
+        width: 10000px;
+    }
+
+    .media-body, .media-left, .media-right {
+        display: table-cell;
+        vertical-align: top;
+    }
+
+    .small, small {
+        font-size: 85%;
+    }
+
+    .label {
+        display: inline;
+        padding: .2em .6em .3em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25em;
+    }
+
+    .pull-right {
+        float: right !important;
+    }
+
+    .pull-right {
+        float: right;
+    }
+
+    .text-muted {
+        color: #777;
+    }
+
+    .text-muted {
+        color: #888888;
+    }
+
+    .well {
+        min-height: 20px;
+        padding: 19px;
+        margin-bottom: 20px;
+        background-color: #f5f5f5;
+        border: 1px solid #e3e3e3;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+        box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.05);
+    }
+
+    .feed-element .well {
+        border: 1px solid #e7eaec;
+        box-shadow: none;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        padding: 10px 20px;
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .btn-white {
+        color: inherit;
+        background: white;
+        border: 1px solid #e7eaec;
+    }
+
+    .float-e-margins .btn {
+        margin-bottom: 5px;
+    }
+
+    .fa {
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .fa-thumbs-up::before {
+        content: "\f164";
+    }
+
+    img {
+        vertical-align: middle;
+    }
+
+    .img-circle {
+        border-radius: 50%;
+    }
+
+    .img-circle {
+        border-radius: 50%;
+    }
+
+    .feed-element img.img-circle, .dropdown-messages-box img.img-circle {
+        width: 38px;
+        height: 38px;
+    }
+
+    .text-navy {
+        color: #1ab394;
+    }
+
+    .feed-element .actions {
+        margin-top: 10px;
+    }
+
+    .fa-heart::before {
+        content: "\f004";
+    }
+
+    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+        font-family: inherit;
+        font-weight: 500;
+        line-height: 1.1;
+        color: inherit;
+    }
+
+    .h4, .h5, .h6, h4, h5, h6 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .h5, h5 {
+        font-size: 14px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 100;
+    }
+
+    h5 {
+        font-size: 12px;
+    }
+
+    h3, h4, h5 {
+        margin-top: 5px;
+        font-weight: 600;
+    }
+
+    .ibox-content h1, .ibox-content h2, .ibox-content h3, .ibox-content h4, .ibox-content h5, .ibox-title h1, .ibox-title h2, .ibox-title h3, .ibox-title h4, .ibox-title h5 {
+        margin-top: 5px;
+    }
+
+    .ibox-title h5 {
+        display: inline-block;
+        font-size: 14px;
+        margin: 0 0 7px;
+        padding: 0;
+        text-overflow: ellipsis;
+        float: left;
+    }
+
+    .ibox-tools {
+        display: block;
+        float: none;
+        margin-top: 0px;
+        position: relative;
+        padding: 0;
+        text-align: right;
+    }
+
+    .label {
+        background-color: #d1dade;
+        color: #5e5e5e;
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 3px 8px;
+        text-shadow: none;
+    }
+
+    .label-warning-light, .badge-warning-light {
+        background-color: #f8ac59;
+        color: #ffffff;
+    }
+
+    .ibox-title .label {
+        float: left;
+        margin-left: 4px;
+    }
+</style>
+<div>
+    <div class="ibox float-e-margins" id="dibox">
+        <div class="ibox-title">
+            <h5>评论(@Model.Detial.CommentsCount)</h5>
+            <textarea class="form-control" id="tcomments"></textarea>
+            <a href="javascript:;" id="btn-comment" class="btn btn-sm btn-info pull-right" style="margin: 15px 0; border-radius: 8px; margin-right: 0">评论</a>
         </div>
-        <div>
-            @Html.Raw(HttpUtility.HtmlDecode(Model.Detial.NewsContent))
-        </div>
-        <div style="vertical-align: central; text-align: center;">
-            <img @(!Model.Detial.IsThumbed ? "class=thumb_up_icon" : "") src="/images/点赞.png" />
-            <p id="tcount">@Model.Detial.ThumbUp 人点赞</p>
-        </div>
-        <style>
-            .ibox {
-                clear: both;
-                margin-bottom: 25px;
-                margin-top: 0px;
-                padding: 0;
-            }
-
-                .ibox::after, .ibox::before {
-                    display: table;
-                }
-
-            .ibox-title {
-                -moz-border-bottom-colors: none;
-                -moz-border-left-colors: none;
-                -moz-border-right-colors: none;
-                -moz-border-top-colors: none;
-                background-color: #ffffff;
-                border-color: #e7eaec;
-                border-image: none;
-                border-style: solid solid none;
-                border-width: 2px 0 0;
-                color: inherit;
-                margin-bottom: 0px;
-                padding: 15px 15px 7px;
-                min-height: 48px;
-            }
-
-            .ibox-content {
-                background-color: #ffffff;
-                color: inherit;
-                padding: 15px 20px 20px 20px;
-                border-color: #e7eaec;
-                border-image: none;
-                border-style: solid solid none;
-                border-width: 1px 0;
-            }
-
-            .ibox-content {
-                clear: both;
-            }
-
-            .feed-element {
-                padding-bottom: 15px;
-            }
-
-                .feed-element, .feed-element .media {
-                    margin-top: 15px;
-                }
-
-            .chat-element, .media-body {
-                overflow: hidden;
-            }
-
-            .sidebar-panel .feed-element, .media-body, .sidebar-panel p {
-                font-size: 12px;
-            }
-
-            .feed-element, .media-body {
-                overflow: hidden;
-            }
-
-            .feed-activity-list .feed-element {
-                border-bottom: 1px solid #e7eaec;
-            }
-
-            :first-child.feed-element {
-                margin-top: 0px;
-            }
-
-            .pull-left {
-                float: left !important;
-            }
-
-            .pull-left {
-                float: left;
-            }
-
-            .feed-element > .pull-left {
-                margin-right: 10px;
-            }
-
-            .media, .media-body {
-                overflow: hidden;
-                zoom: 1;
-            }
-
-            .media-body {
-                width: 10000px;
-            }
-
-            .media-body, .media-left, .media-right {
-                display: table-cell;
-                vertical-align: top;
-            }
-
-            .small, small {
-                font-size: 85%;
-            }
-
-            .label {
-                display: inline;
-                padding: .2em .6em .3em;
-                font-size: 75%;
-                font-weight: 700;
-                line-height: 1;
-                color: #fff;
-                text-align: center;
-                white-space: nowrap;
-                vertical-align: baseline;
-                border-radius: .25em;
-            }
-
-            .pull-right {
-                float: right !important;
-            }
-
-            .pull-right {
-                float: right;
-            }
-
-            .text-muted {
-                color: #777;
-            }
-
-            .text-muted {
-                color: #888888;
-            }
-
-            .well {
-                min-height: 20px;
-                padding: 19px;
-                margin-bottom: 20px;
-                background-color: #f5f5f5;
-                border: 1px solid #e3e3e3;
-                border-radius: 4px;
-                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-                box-shadow: inset 0px 1px 1px rgba(0,0,0,0.05);
-            }
-
-            .feed-element .well {
-                border: 1px solid #e7eaec;
-                box-shadow: none;
-                margin-top: 10px;
-                margin-bottom: 5px;
-                padding: 10px 20px;
-                font-size: 11px;
-                line-height: 16px;
-            }
-
-            .btn-white {
-                color: inherit;
-                background: white;
-                border: 1px solid #e7eaec;
-            }
-
-            .float-e-margins .btn {
-                margin-bottom: 5px;
-            }
-
-            .fa {
-                display: inline-block;
-                font: normal normal normal 14px/1 FontAwesome;
-                font-size: inherit;
-                text-rendering: auto;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-
-            .fa-thumbs-up::before {
-                content: "\f164";
-            }
-
-            img {
-                vertical-align: middle;
-            }
-
-            .img-circle {
-                border-radius: 50%;
-            }
-
-            .img-circle {
-                border-radius: 50%;
-            }
-
-            .feed-element img.img-circle, .dropdown-messages-box img.img-circle {
-                width: 38px;
-                height: 38px;
-            }
-
-            .text-navy {
-                color: #1ab394;
-            }
-
-            .feed-element .actions {
-                margin-top: 10px;
-            }
-
-            .fa-heart::before {
-                content: "\f004";
-            }
-
-            .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-                font-family: inherit;
-                font-weight: 500;
-                line-height: 1.1;
-                color: inherit;
-            }
-
-            .h4, .h5, .h6, h4, h5, h6 {
-                margin-top: 10px;
-                margin-bottom: 10px;
-            }
-
-            .h5, h5 {
-                font-size: 14px;
-            }
-
-            h1, h2, h3, h4, h5, h6 {
-                font-weight: 100;
-            }
-
-            h5 {
-                font-size: 12px;
-            }
-
-            h3, h4, h5 {
-                margin-top: 5px;
-                font-weight: 600;
-            }
-
-            .ibox-content h1, .ibox-content h2, .ibox-content h3, .ibox-content h4, .ibox-content h5, .ibox-title h1, .ibox-title h2, .ibox-title h3, .ibox-title h4, .ibox-title h5 {
-                margin-top: 5px;
-            }
-
-            .ibox-title h5 {
-                display: inline-block;
-                font-size: 14px;
-                margin: 0 0 7px;
-                padding: 0;
-                text-overflow: ellipsis;
-                float: left;
-            }
-
-            .ibox-tools {
-                display: block;
-                float: none;
-                margin-top: 0px;
-                position: relative;
-                padding: 0;
-                text-align: right;
-            }
-
-            .label {
-                background-color: #d1dade;
-                color: #5e5e5e;
-                font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-                font-size: 10px;
-                font-weight: 600;
-                padding: 3px 8px;
-                text-shadow: none;
-            }
-
-            .label-warning-light, .badge-warning-light {
-                background-color: #f8ac59;
-                color: #ffffff;
-            }
-
-            .ibox-title .label {
-                float: left;
-                margin-left: 4px;
-            }
-        </style>
-        <div>
-            <div class="ibox float-e-margins" id="dibox">
-                <div class="ibox-title">
-                    <h5>评论(@Model.Detial.CommentsCount)</h5>
-                    <textarea class="form-control" id="tcomments"></textarea>
-                    <a href="javascript:;" id="btn-comment" class="btn btn-sm btn-info pull-right" style="margin:15px 0; border-radius: 8px;margin-right: 0">评论</a>
-                </div>
-                <div class="ibox-content">
-                    <div>
-                        <div class="feed-activity-list"></div>
-                    </div>
-                </div>
+        <div class="ibox-content">
+            <div>
+                <div class="feed-activity-list"></div>
             </div>
         </div>
     </div>
 </div>
+</div>
+</div>
+<div id="myModal" class="modal">
+
+    <!-- The Close Button -->
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+    <!-- Modal Content (The Image) -->
+    <img class="modal-content" id="img01">
+
+    <!-- Modal Caption (Image Text) -->
+    <div id="caption"></div>
+</div>
 <script>
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = $(".detail-content img");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    $(".detail-content img").click(function() {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    });
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+    modalImg.onclick = function () {
+        modal.style.display = "none";
+    }
+    function btn_download(keyValue) {
+        $.download("/Default/Download", "keyValue=" + keyValue, 'post');
+
+    }
     $(".thumb_up_icon").click(function () {
         $.ajax({
             url: "/Default/ThumbUp",
@@ -322,8 +372,8 @@
                 if (data.type == 1) {
                     $(".thumb_up_icon").unbind();
                     layer.msg('+1', { icon: 1, time: 2000, shift: 5 });
+                    $("#thumbup").html('@(Model.Detial.ThumbUp+1)');
                     $("#tcount").html('@(Model.Detial.ThumbUp+1)' + ' 人点赞');
-                    $(".thumb_up_icon").removeClass("thumb_up_icon");
                 } else {
                     layer.msg(data.message, { icon: 1, time: 2000, shift: 5 });
                 }
@@ -412,6 +462,7 @@
 
                         $(".feed-activity-list").append(str);
                         $("#tcomments").val("");
+                        $("#commentscount").html('@(Model.Detial.CommentsCount + 1)');
                     } else {
                         layer.msg(result.message, { icon: 1, time: 2000, shift: 5 });
                     }
@@ -465,6 +516,7 @@
                     } else {
                         $(obj).closest(".well").append(str);
                     }
+                    $("#commentscount").html('@(Model.Detial.CommentsCount + 1)');
                     $(".drcom").remove();
                 } else {
                     layer.msg(result.message, { icon: 1, time: 2000, shift: 5 });

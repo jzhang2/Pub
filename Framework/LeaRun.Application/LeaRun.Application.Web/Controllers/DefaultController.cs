@@ -100,6 +100,7 @@ namespace LeaRun.Application.Web.Controllers {
         public List<SuggestionEntity> MySuggestionList = new List<SuggestionEntity>();
         public List<ContributionEntity> ContributionList = new List<ContributionEntity>();
         public List<CustomizationEntity> CustomizationList = new List<CustomizationEntity>();
+        public List<DataItemModel> BookCategory = new List<DataItemModel>();
         public NewsEntity Ebook = new NewsEntity();
     }
 
@@ -166,7 +167,7 @@ namespace LeaRun.Application.Web.Controllers {
             Pagination pagination = new Pagination();
             pagination.page = 1;
             pagination.rows = 4;
-            pagination.sidx = "CreateDate";
+            pagination.sidx = "PV,CreateDate";
             pagination.sord = "DESC";
             var NewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:3,EnabledMark:1 }").ToList(), 57);
             NewsList.ForEach(
@@ -176,9 +177,11 @@ namespace LeaRun.Application.Web.Controllers {
                 newsBll.GetPageList(pagination, "{ TypeId:4,EnabledMark:1 }").ToList(), 57);
 
             pagination.rows = 10000;
+            pagination.sidx = "IsRecommend,CreateDate";
             viewModel.PBooksList =
-                SubStringList(newsBll.GetPageList(pagination, "{ TypeId:6,EnabledMark:1,IsRecommend:1 }").ToList(), 57);
+                SubStringList(newsBll.GetPageList(pagination, "{ TypeId:6,EnabledMark:1 }").ToList(), 57);
 
+            pagination.sidx = "CreateDate";
             viewModel.BannerNewsList = bannerNewsBll.GetPageList(pagination, "{Type:1}").ToList();
             return View(viewModel);
         }
@@ -239,11 +242,7 @@ namespace LeaRun.Application.Web.Controllers {
             return View(viewModel);
         }
         public ActionResult EBook(string id) {
-            var viewModel = new HomeViewModel();
-            if (!string.IsNullOrEmpty(id)) {
-                viewModel.Ebook = newsBll.GetEntity(id);
-            }
-            return View(viewModel);
+            return View();
         }
         public ActionResult Detail(string id) {
             var viewModel = new HomeViewModel();
@@ -330,7 +329,7 @@ namespace LeaRun.Application.Web.Controllers {
         #endregion
 
         public ActionResult GetSuggestionJson() {
-            var data = new Repository<SuggestionReply>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c.Email,c1.Contents as ReplyContents,c1.CreateDate as ReplyDate from [dbo].[Extend_Suggestion] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CreateUserId left join [dbo].[Extend_SuggestionAnswer] c1 on c1.SuggestionId=co.SuggestionId order by co.CreateDate");
+            var data = new Repository<SuggestionReply>(DbFactory.Base()).FindList("select co.*,c.[FullName],c.[HeadIcon],c.Email,c1.Contents as ReplyContents,c1.CreateDate as ReplyDate from [dbo].[Extend_Suggestion] co left join [dbo].[Client_Customer] c on c.CustomerId=co.CreateUserId left join [dbo].[Extend_SuggestionAnswer] c1 on c1.SuggestionId=co.SuggestionId where (co.EnabledMark !=0 or co.EnabledMark is null) order by co.CreateDate");
             return Content(data.ToJson());
         }
 
@@ -363,7 +362,16 @@ namespace LeaRun.Application.Web.Controllers {
         }
 
         #region method
-
+        [HttpPost]
+        [HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public void Download(string keyValue) {
+            var data = newsBll.GetEntity(keyValue);
+            string filename = Server.UrlDecode(data.AttachmentName);//返回客户端文件名称
+            string filepath = this.Server.MapPath(data.Attachment);
+            if (FileDownHelper.FileExists(filepath)) {
+                FileDownHelper.DownLoadold(filepath, filename);
+            }
+        }
         [AjaxOnly]
         [ValidateInput(false)]
         public ActionResult GetEBookPage(string id, string page) {
@@ -498,19 +506,19 @@ namespace LeaRun.Application.Web.Controllers {
 
         [HttpGet]
         public ActionResult GetNewsJson(Pagination pagination, string queryJson) {
-            var queryParam = queryJson.ToJObject();
-            if (!queryParam["TypeId"].IsEmpty() && queryParam["TypeId"].ToString() == "5") {
-                queryParam["TypeId"] = 9;
-                var para = "sord=" + pagination.sord + "&sidx=CreateDate&page=" + pagination.page + "&rows=" + pagination.rows + "&queryJson=" + queryParam.ToJson();
-                string url = baseUrl + "Default/GetEBooksJson?" + para;
-                var req = (HttpWebRequest)WebRequest.Create(url);
-                req.Method = "GET";
-                req.ContentType = "application/json";
-                HttpWebResponse response = (HttpWebResponse)req.GetResponse();
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-                var result = reader.ReadToEnd();
-                return Content(result);
-            }
+            //var queryParam = queryJson.ToJObject();
+            //if (!queryParam["TypeId"].IsEmpty() && queryParam["TypeId"].ToString() == "5") {
+            //    queryParam["TypeId"] = 9;
+            //    var para = "sord=" + pagination.sord + "&sidx=CreateDate&page=" + pagination.page + "&rows=" + pagination.rows + "&queryJson=" + queryParam.ToJson();
+            //    string url = baseUrl + "Default/GetEBooksJson?" + para;
+            //    var req = (HttpWebRequest)WebRequest.Create(url);
+            //    req.Method = "GET";
+            //    req.ContentType = "application/json";
+            //    HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+            //    StreamReader reader = new StreamReader(response.GetResponseStream());
+            //    var result = reader.ReadToEnd();
+            //    return Content(result);
+            //}
             var watch = CommonHelper.TimerStart();
             var data = newsBll.GetPageList(pagination, queryJson).ToList();
             foreach (NewsEntity entity in data) {
