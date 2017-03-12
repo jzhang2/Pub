@@ -172,9 +172,9 @@ namespace LeaRun.Application.Web.Controllers {
             var NewsList = SubStringList(newsBll.GetPageList(pagination, "{ TypeId:3,EnabledMark:1 }").ToList(), 57);
             NewsList.ForEach(
                 x => viewModel.NewsEntityThumbUp.Add(CommonHelper.AutoCopy<NewsEntity, NewsEntityThumbUp>(x)));
-            pagination.rows = 6;
+            pagination.rows = 3;
             viewModel.MapNewsList = SubStringList(
-                newsBll.GetPageList(pagination, "{ TypeId:4,EnabledMark:1 }").ToList(), 57);
+                newsBll.GetPageList(pagination, "{ TypeId:4,EnabledMark:1 }").ToList(), 57).Take(3).ToList();
 
             pagination.rows = 10000;
             pagination.sidx = "IsRecommend,CreateDate";

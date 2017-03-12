@@ -12,6 +12,17 @@
 <div id="best-deal">
 <div class="container" style="background: white; padding: 35px 25px;">
 <div style="border-bottom: solid 1px #E6EAED; margin-bottom: 25px; padding-bottom: 10px;">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        @if (Model.Detial.TypeId == 3)
+        {
+            <li><a href="/News">西图动态</a></li>
+        }
+        else if (Model.Detial.TypeId == 4) {
+            <li><a href="/MapCulture">地图文化</a></li>
+        }
+        <li class="active">@Model.Detial.Category</li>
+    </ol>
     <h3 style="margin-bottom: 5px;">@Model.Detial.FullHead</h3>
     <span>@Convert.ToDateTime(Model.Detial.CreateDate).ToString("yyyy-MM-dd HH:mm")</span><span style="margin-left: 10px;">@Model.Detial.AuthorName</span><span class="comments-bar"><i class="thumbs-up"><img src="/images/tup.png" /></i><span id="thumbup">@Model.Detial.ThumbUp</span><i class="icomments"><img src="/images/icomments.png" /></i><span id="commentscount">@Model.Detial.CommentsCount</span></span>
 </div>
