@@ -641,6 +641,7 @@ namespace LeaRun.Application.Web.Controllers {
             return View();
         }
 
+        [HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
         public ActionResult ThumbUp(string NewsId) {
             if (service.GetCount(NewsId, OperatorProvider.Provider.Current().UserId) > 0) {
                 return Error("您已经点过赞了。");
