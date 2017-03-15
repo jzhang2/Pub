@@ -903,6 +903,19 @@ h1, h2, h3, h4, h5, h6, figure {
     .ebook-bookmark {
         float: right; color: lightgray; margin-right: 5px;cursor:pointer
     }
+    .ebook-mark {
+    float: left;
+    cursor: pointer;
+}
+    .markp {
+        margin-bottom: 5px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+    }
+    .markp p{
+        margin-bottom: 5px;
+        cursor: pointer;
+    }
     .ebook-bookmark.booked {
         float: right; color: black; margin-right: 5px;cursor:pointer
     }
