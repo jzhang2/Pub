@@ -132,6 +132,10 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
             try {
                 int totalPagesCount = 0;
                 var ePath = string.Format("/Resource/EBook/{0}/", Guid.NewGuid());
+                if (string.IsNullOrEmpty(newsEntity.FilePath))
+                {
+                    return Error("上传书籍失败，请上传书签文档。");
+                }
                 var import = ImportBook(Server.MapPath("~" + newsEntity.FilePath), ref totalPagesCount, ePath);
                 if (import) {
                     newsEntity.EPath = ePath;

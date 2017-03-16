@@ -53,6 +53,7 @@
         });
         initControl();
         $('#uploadFile1').on('change', uphead);
+        $('#uploadFilem').on('change', upmusic);
     });
     function uphead() {
         $.ajaxFileUpload({
@@ -66,6 +67,21 @@
                 }
                 dialogMsg(data.message, data.type);
                 $('#uploadFile1').on('change', uphead);
+            }
+        });
+    }
+    function upmusic() {
+        $.ajaxFileUpload({
+            url: "/ExtendManage/Books/UploadFile",
+            secureuri: false,
+            fileElementId: 'uploadFilem',
+            dataType: 'json',
+            success: function (data) {
+                if (data.type == 1) {
+                    $("#MusicPath").val(data.resultdata);
+                }
+                dialogMsg(data.message, data.type);
+                $('#uploadFilem').on('change', upmusic);
             }
         });
     }
@@ -136,6 +152,7 @@
             NewsContent: $('#summernote').summernote('code'),
             TypeId: TypeId,
             FilePath: $("#FilePath").val(),
+            MusicPath: $("#MusicPath").val(),
         }
         $.SaveForm({
             url: "../../ExtendManage/Books/SaveBook?keyValue=" + keyValue,
@@ -190,7 +207,11 @@
         <tr>
             <td class="formTitle">下载链接</td>
             <td class="formValue">
-                <input id="BuyLink" type="text" class="form-control" placeholder="请输入下载链接" />
+                <input id="BuyLink" type="text" class="form-control" placeholder="请输入下载链接"/>
+            </td>
+            <td class="formTitle">背景音乐</td>
+            <td class="formValue">
+                <input type="file" name="uploadFilem" id="uploadFilem">(mp3格式)<input type="hidden" id="MusicPath" />
             </td>
         </tr>
         <tr>

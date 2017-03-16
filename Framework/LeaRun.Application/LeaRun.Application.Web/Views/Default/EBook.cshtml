@@ -5,6 +5,8 @@
 <script src="~/Content/scripts/utils/learun-ui.js"></script>
 <script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
 <link href="~/Content/styles/font-awesome.min.css" rel="stylesheet" />
+<script src="~/Content/scripts/jplayer/jquery.jplayer.min.js"></script>
+<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 <div id="best-deal">
     <div class="container ddss" style="background: white; padding: 35px 25px;">
         <div style="text-align: center;">
@@ -25,6 +27,7 @@
                 <div class="btn-group btn-group-sm ebook-btn pull-right" role="group">
                     <button type="button" class="btn ebook-font ebook-peyes">护眼</button>
                     <button type="button" class="btn ebook-font ebook-light">关灯</button>
+                    <button type="button" class="btn ebook-font ebook-music">音乐</button>
                 </div>
             </div>
         </div>
@@ -41,7 +44,7 @@
 <script>
     var pagecount = 0;
     var page = 1;
-    function getpage(p) {
+    function getpage(p, f) {
         page = p;
         $.ajax({
             url: "/Default/GetEBookPage",
@@ -71,6 +74,27 @@
                     }
                     $(".ebook-pager").html(pager);
                     $("html,body").scrollTop($("#best-deal").offset().top);
+                    if (f && data.resultdata.EBook.MusicPath != null && data.resultdata.EBook.MusicPath != "") {
+                        $("#jquery_jplayer_1").jPlayer({
+                            ready: function () {
+                                $(this).jPlayer("setMedia", {
+                                    //title: "Bubble",
+                                    mp3: data.resultdata.EBook.MusicPath
+                                });
+                            },
+                            loop: true,
+                            solution: 'html, flash',
+                            wmode: "window",
+                            swfPath: "/Content/scripts/jplayer",
+                            supplied: "mp3",
+                            useStateClassSkin: true,
+                            autoBlur: false,
+                            smoothPlayBar: true,
+                            keyEnabled: true,
+                            remainingDuration: true,
+                            toggleDuration: true
+                        });
+                    }
                 } else {
                     dialogMsg(data.message, data.type);
                 }
@@ -105,6 +129,16 @@
         });
     }
     $(function () {
+        $(".ebook-music").click(function () {
+            if ($(this).hasClass("active")) {
+                $("#jquery_jplayer_1").jPlayer("pause");
+                $(this).removeClass("active");
+            } else {
+                $("#jquery_jplayer_1").jPlayer("play");
+                $(this).addClass("active");
+            }
+            $(this).siblings().removeClass("active");
+        });
         $(".ebook-peyes").click(function () {
             $(".ebook-light").text("关灯");
             if ($(this).hasClass("active")) {
@@ -148,8 +182,6 @@
                 }
             });
         });
-
-        getpage(1);
         $('body').on('click', function (e) {
             if (!$(e.target).hasClass('ebook-mark')) {
                 $('.ebook-mark').popover('hide');
@@ -181,6 +213,6 @@
                 }
             });
         });
+        getpage(1, true);
     });
-
 </script>
