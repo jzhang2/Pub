@@ -21,6 +21,8 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         /// 类型（1-新闻2-公告3-西图动态4-地图文化5-电子书6-实体书7-业务服务8-关于我们）
         /// </summary>		
         public int? TypeId { get; set; }
+
+        public int? BookTablePage { get; set; }
         /// <summary>
         /// 父级主键
         /// </summary>		

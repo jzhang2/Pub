@@ -153,6 +153,7 @@
             TypeId: TypeId,
             FilePath: $("#FilePath").val(),
             MusicPath: $("#MusicPath").val(),
+            Description: $("#Description").val(),
         }
         $.SaveForm({
             url: "../../ExtendManage/Books/SaveBook?keyValue=" + keyValue,
@@ -185,13 +186,19 @@
         <tr>
             <td class="formTitle">作者<font face="宋体">*</font></td>
             <td class="formValue">
-                <input id="AuthorName" type="text" class="form-control" placeholder="请输入作者" isvalid="yes" checkexpession="NotNull" />
+                <input id="AuthorName" type="text" class="form-control" placeholder="请输入作者" isvalid="yes" checkexpession="NotNull"/>
             </td>
             <td class="formTitle">封面</td>
             <td class="formValue">
                 <div class="file">
-                    <img id="uploadPreview" style="width: 40px; height: 40px;" src="~/Content/images/logo-headere47d5.png" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="NewsImage" />
+                    <img id="uploadPreview" style="width: 40px; height: 40px;" src="~/Content/images/logo-headere47d5.png"/><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="NewsImage"/>
                 </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="formTitle">概述</td>
+            <td class="formValue">
+                <textarea id="Description" class="form-control" style="height: 40px;"></textarea>
             </td>
         </tr>
         <tr>
@@ -211,7 +218,7 @@
             </td>
             <td class="formTitle">背景音乐</td>
             <td class="formValue">
-                <input type="file" name="uploadFilem" id="uploadFilem">(mp3格式)<input type="hidden" id="MusicPath" />
+                <input type="file" name="uploadFilem" id="uploadFilem"><font style="color:red">(mp3格式)</font><input type="hidden" id="MusicPath" />
             </td>
         </tr>
         <tr>

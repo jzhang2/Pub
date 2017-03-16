@@ -64,6 +64,7 @@
     <Compile Include="CustomerManage\ReceivableReportService.cs" />
     <Compile Include="ExtendManage\BannerNewsService.cs" />
     <Compile Include="ExtendManage\BookMarkService.cs" />
+    <Compile Include="ExtendManage\BookTableService.cs" />
     <Compile Include="ExtendManage\CommentsService.cs" />
     <Compile Include="ExtendManage\ContributionService.cs" />
     <Compile Include="ExtendManage\CustomizationService.cs" />

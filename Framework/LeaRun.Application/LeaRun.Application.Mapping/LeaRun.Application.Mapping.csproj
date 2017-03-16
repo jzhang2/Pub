@@ -68,6 +68,7 @@
     <Compile Include="CustomerManage\OrderMap.cs" />
     <Compile Include="ExtendManage\BannerNewsMap.cs" />
     <Compile Include="ExtendManage\BookMarkMap.cs" />
+    <Compile Include="ExtendManage\BookTableMap.cs" />
     <Compile Include="ExtendManage\CommentsMap.cs" />
     <Compile Include="ExtendManage\ContributionMap.cs" />
     <Compile Include="ExtendManage\CustomizationMap.cs" />

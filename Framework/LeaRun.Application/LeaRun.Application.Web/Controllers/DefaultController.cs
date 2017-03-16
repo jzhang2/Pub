@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using CsQuery;
 using LeaRun.Application.Busines.AuthorizeManage;
 using LeaRun.Application.Busines.BaseManage;
 using LeaRun.Application.Busines.CustomerManage;
@@ -28,6 +30,8 @@ using LeaRun.Util;
 using LeaRun.Util.Attributes;
 using LeaRun.Util.Extension;
 using LeaRun.Util.WebControl;
+using Microsoft.Office.Interop.Word;
+using Config = LeaRun.Util.Config;
 
 namespace LeaRun.Application.Web.Controllers {
 
@@ -83,6 +87,7 @@ namespace LeaRun.Application.Web.Controllers {
         public string PageContent { get; set; }
         public string SortContent { get; set; }
         public bool IsBookMark { get; set; }
+        public string CurrentPage { get; set; }
         public List<BookMarkEntity> BookMarkEntities { get; set; }
     }
     public class HomeViewModel {
@@ -135,6 +140,7 @@ namespace LeaRun.Application.Web.Controllers {
         private ThumbUpService service = new ThumbUpService();
         private CustomizationService customizationService = new CustomizationService();
         private BookMarkService bookMarkService = new BookMarkService();
+        private BookTableBLL bookTableBll = new BookTableBLL();
         private string baseUrl = Config.GetValue("EBookSite");
         #endregion
 
@@ -374,9 +380,15 @@ namespace LeaRun.Application.Web.Controllers {
         }
         [AjaxOnly]
         [ValidateInput(false)]
-        public ActionResult GetEBookPage(string id, string page) {
+        public ActionResult GetEBookPage(string id, string page, string toc) {
             try {
                 if (!string.IsNullOrEmpty(id)) {
+                    if (!string.IsNullOrEmpty(toc)) {
+                        var bookTable = bookTableBll.GetList("{NewsId:'" + id + "',Toc:'" + toc + "'}").FirstOrDefault();
+                        if (bookTable != null) {
+                            page = bookTable.Page.ToString();
+                        }
+                    }
                     string url = string.Format(baseUrl + "Default/Default?id=" + id + "&page=" + page);
                     var req = (HttpWebRequest)WebRequest.Create(url);
                     req.Method = "GET";
@@ -391,6 +403,7 @@ namespace LeaRun.Application.Web.Controllers {
                             eBookEntity.IsBookMark = true;
                         }
                     }
+                    eBookEntity.CurrentPage = page;
                     return Success("", eBookEntity);
                 }
                 return Error("获取书籍内容错误。");

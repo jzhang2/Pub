@@ -44,16 +44,16 @@
 <script>
     var pagecount = 0;
     var page = 1;
-    function getpage(p, f) {
-        page = p;
+    function getpage(p, f, toc) {
         $.ajax({
             url: "/Default/GetEBookPage",
-            data: { id: '@ViewContext.RouteData.Values["id"]', page: p },
+            data: { id: '@ViewContext.RouteData.Values["id"]', page: p, toc: toc },
             type: "get",
             dataType: "json",
             async: false,
             success: function (data) {
                 if (data.type == "1") {
+                    page = p = parseInt(data.resultdata.CurrentPage);
                     document.title = data.resultdata.EBook.FullHead;
                     pagecount = data.resultdata.EBook.PageCount;
                     $("#bookname").html(data.resultdata.EBook.FullHead);
@@ -67,10 +67,13 @@
                     }
                     var pager = "";
                     if (p - 1 > 0) {
-                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (p - 1) + ");\">上一章</button>";
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) - 1) + ");\">上一章</button>";
+                    }
+                    if (data.resultdata.EBook.BookTablePage != null && data.resultdata.EBook.BookTablePage != "") {
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage('" + data.resultdata.EBook.BookTablePage + "',false);\">目录</button>";
                     }
                     if (p + 1 < pagecount) {
-                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (p + 1) + ");\">下一章</button>";
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) + 1) + ");\">下一章</button>";
                     }
                     $(".ebook-pager").html(pager);
                     $("html,body").scrollTop($("#best-deal").offset().top);
@@ -96,6 +99,12 @@
                             toggleDuration: true
                         });
                     }
+                    $('[docparttype="Table of Contents"] a').click(function (e) {
+                        e.preventDefault();
+                        var href = $(this).attr("href");
+                        getpage(1, false, href.substring(href.lastIndexOf("#_Toc")));
+                        return false;
+                    });
                 } else {
                     dialogMsg(data.message, data.type);
                 }
