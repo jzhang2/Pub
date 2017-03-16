@@ -27,7 +27,7 @@
                 <div class="btn-group btn-group-sm ebook-btn pull-right" role="group">
                     <button type="button" class="btn ebook-font ebook-peyes">护眼</button>
                     <button type="button" class="btn ebook-font ebook-light">关灯</button>
-                    <button type="button" class="btn ebook-font ebook-music">音乐</button>
+                    <button type="button" class="btn ebook-font ebook-music" style="display:none">音乐</button>
                 </div>
             </div>
         </div>
@@ -75,6 +75,7 @@
                     $(".ebook-pager").html(pager);
                     $("html,body").scrollTop($("#best-deal").offset().top);
                     if (f && data.resultdata.EBook.MusicPath != null && data.resultdata.EBook.MusicPath != "") {
+                        $(".ebook-music").show();
                         $("#jquery_jplayer_1").jPlayer({
                             ready: function () {
                                 $(this).jPlayer("setMedia", {
