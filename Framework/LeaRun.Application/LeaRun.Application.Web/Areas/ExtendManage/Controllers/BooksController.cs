@@ -135,16 +135,25 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
                 if (string.IsNullOrEmpty(keyValue) && string.IsNullOrEmpty(newsEntity.FilePath)) {
                     return Error("上传书籍失败，请上传书签文档。");
                 }
-                var entity = newsBLL.GetEntity(keyValue);
                 var import = true;
+                var entity = new NewsEntity();
+                if (!string.IsNullOrEmpty(keyValue)) {
+                    var book = newsBLL.GetEntity(keyValue);
+                    if (book != null) {
+                        entity = book;
+                    }
+                }
                 if (!string.IsNullOrEmpty(newsEntity.FilePath) && newsEntity.FilePath != entity.FilePath) {
                     import = ImportBook(Server.MapPath("~" + newsEntity.FilePath), ref totalPagesCount, ePath);
+                    if (import) {
+                        newsEntity.PageCount = totalPagesCount;
+                    }
                 }
                 if (import) {
                     if (!string.IsNullOrEmpty(newsEntity.FilePath)) {
                         newsEntity.EPath = newsEntity.FilePath == entity.FilePath ? entity.EPath : ePath;
                     }
-                    newsEntity.PageCount = totalPagesCount;
+
                     newsBLL.SaveForm(keyValue, newsEntity);
                     return Success("操作成功。");
                 }
