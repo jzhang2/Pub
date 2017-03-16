@@ -141,7 +141,9 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
                     import = ImportBook(Server.MapPath("~" + newsEntity.FilePath), ref totalPagesCount, ePath);
                 }
                 if (import) {
-                    newsEntity.EPath = ePath;
+                    if (!string.IsNullOrEmpty(newsEntity.FilePath)) {
+                        newsEntity.EPath = newsEntity.FilePath == entity.FilePath ? entity.EPath : ePath;
+                    }
                     newsEntity.PageCount = totalPagesCount;
                     newsBLL.SaveForm(keyValue, newsEntity);
                     return Success("操作成功。");
