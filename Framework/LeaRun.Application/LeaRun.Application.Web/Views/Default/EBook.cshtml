@@ -147,7 +147,7 @@
                 $("#jquery_jplayer_1").jPlayer("play");
                 $(this).addClass("active");
             }
-            $(this).siblings().removeClass("active");
+            //$(this).siblings().removeClass("active");
         });
         $(".ebook-peyes").click(function () {
             $(".ebook-light").text("关灯");
@@ -158,7 +158,7 @@
                 $("#best-deal").removeClass("ebook-content-light").addClass("ebook-content-peyes");
                 $(this).addClass("active");
             }
-            $(this).siblings().removeClass("active");
+            $(".ebook-light").removeClass("active");
         });
         $(".ebook-light").click(function () {
             if ($(this).hasClass("active")) {
@@ -168,7 +168,7 @@
                 $("#best-deal").removeClass("ebook-content-peyes").addClass("ebook-content-light");
                 $(this).text("开灯").addClass("active");
             }
-            $(this).siblings().removeClass("active");
+            $(".ebook-peyes").removeClass("active");
         });
         $(".fa-bookmark").click(function () {
             $.ajax({
