@@ -54,37 +54,66 @@
         initControl();
         $('#uploadFile1').on('change', uphead);
         $('#uploadFilem').on('change', upmusic);
+        $('#uploadFile').on('change', upfile);
     });
     function uphead() {
         $.ajaxFileUpload({
-            url: "/ExtendManage/Books/UploadFile",
+            url: "/ExtendManage/Books/UploadDocument",
             secureuri: false,
             fileElementId: 'uploadFile1',
             dataType: 'json',
             success: function (data) {
                 if (data.type == 1) {
-                    $("#FilePath").val(data.resultdata);
+                    $("#FilePath").val(data.resultdata.filePath);
+                    $("#FileName").text(data.resultdata.fileName);
                 }
                 dialogMsg(data.message, data.type);
                 $('#uploadFile1').on('change', uphead);
             }
         });
     }
+    $(document).ajaxStart(function () {
+        Loading(true, "正在上传文件...");
+    }).ajaxComplete(function () {
+        Loading(false);
+    }).ajaxError(function () {
+        Loading(false);
+    });
     function upmusic() {
         $.ajaxFileUpload({
-            url: "/ExtendManage/Books/UploadFile",
+            url: "/ExtendManage/Books/UploadDocument",
             secureuri: false,
             fileElementId: 'uploadFilem',
             dataType: 'json',
             success: function (data) {
                 if (data.type == 1) {
-                    $("#MusicPath").val(data.resultdata);
+                    $("#MusicPath").val(data.resultdata.filePath);
+                    $("#MusicName").text(data.resultdata.fileName);
                 }
                 dialogMsg(data.message, data.type);
                 $('#uploadFilem').on('change', upmusic);
             }
         });
     }
+    function upfile() {
+        var f = document.getElementById('uploadFile').files[0];
+        var src = window.URL.createObjectURL(f);
+        document.getElementById('uploadPreview').src = src;
+
+        //上传应用图标
+        $.ajaxFileUpload({
+            url: "/ExtendManage/Books/UploadFile",
+            secureuri: false,
+            fileElementId: 'uploadFile',
+            dataType: 'json',
+            success: function (data) {
+                if (data.type == 1) {
+                    $("#NewsImage").val(data.resultdata);
+                }
+                dialogMsg(data.message, 1);
+            }
+        });
+    };
 
     //初始化控件
     function initControl() {
@@ -108,30 +137,13 @@
                     if (data.NewsImage) {
                         document.getElementById('uploadPreview').src = data.NewsImage;
                     }
+                    $("#FileName").text(data.FileName);
+                    $("#MusicName").text(data.MusicName);
                 }
             });
         } else {
             $("#Category").ComboBoxTreeSetValue(category);
         }
-        $('#uploadFile').change(function () {
-            var f = document.getElementById('uploadFile').files[0];
-            var src = window.URL.createObjectURL(f);
-            document.getElementById('uploadPreview').src = src;
-
-            //上传应用图标
-            $.ajaxFileUpload({
-                url: "/ExtendManage/Books/UploadFile",
-                secureuri: false,
-                fileElementId: 'uploadFile',
-                dataType: 'json',
-                success: function (data) {
-                    if (data.type == 1) {
-                        $("#NewsImage").val(data.resultdata);
-                    }
-                    dialogMsg(data.message, 1);
-                }
-            });
-        });
     }
     //保存表单
     function AcceptClick() {
@@ -153,6 +165,8 @@
             TypeId: TypeId,
             FilePath: $("#FilePath").val(),
             MusicPath: $("#MusicPath").val(),
+            FileName: $("#FileName").text(),
+            MusicName: $("#MusicName").text(),
             Description: $("#Description").val(),
         }
         $.SaveForm({
@@ -186,12 +200,12 @@
         <tr>
             <td class="formTitle">作者<font face="宋体">*</font></td>
             <td class="formValue">
-                <input id="AuthorName" type="text" class="form-control" placeholder="请输入作者" isvalid="yes" checkexpession="NotNull"/>
+                <input id="AuthorName" type="text" class="form-control" placeholder="请输入作者" isvalid="yes" checkexpession="NotNull" />
             </td>
             <td class="formTitle">封面</td>
             <td class="formValue">
                 <div class="file">
-                    <img id="uploadPreview" style="width: 40px; height: 40px;" src="~/Content/images/logo-headere47d5.png"/><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="NewsImage"/>
+                    <img id="uploadPreview" style="width: 40px; height: 40px;" src="~/Content/images/logo-headere47d5.png" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="NewsImage" />
                 </div>
             </td>
         </tr>
@@ -208,17 +222,17 @@
             </td>
             <td class="formTitle">上传书籍</td>
             <td class="formValue">
-                <input type="file" name="uploadFile1" id="uploadFile1"><input type="hidden" id="FilePath" />
+                <input type="file" name="uploadFile1" id="uploadFile1"><span id="FileName"></span><input type="hidden" id="FilePath" />
             </td>
         </tr>
         <tr>
             <td class="formTitle">下载链接</td>
             <td class="formValue">
-                <input id="BuyLink" type="text" class="form-control" placeholder="请输入下载链接"/>
+                <input id="BuyLink" type="text" class="form-control" placeholder="请输入下载链接" />
             </td>
             <td class="formTitle">背景音乐</td>
             <td class="formValue">
-                <input type="file" name="uploadFilem" id="uploadFilem"><font style="color:red">(mp3格式)</font><input type="hidden" id="MusicPath" />
+                <input type="file" name="uploadFilem" id="uploadFilem"><span id="MusicName"></span><font style="color: red">(mp3格式)</font><input type="hidden" id="MusicPath" />
             </td>
         </tr>
         <tr>

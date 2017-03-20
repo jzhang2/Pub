@@ -38,6 +38,8 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         /// </summary>		
         public string FullHead { get; set; }
         public string EPath { get; set; }
+        public string FileName { get; set; }
+        public string MusicName { get; set; }
         /// <summary>
         /// 标题颜色
         /// </summary>		

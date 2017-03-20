@@ -31,7 +31,10 @@ namespace LeaRun.Application.Service.ExtendManage
         {
             var expression = LinqExtensions.True<BookTableEntity>();
             var queryParam = queryJson.ToJObject();
-            //¹«Ë¾Ö÷¼ü
+            if (!queryParam["NewsId"].IsEmpty()) {
+                string NewsId = queryParam["NewsId"].ToString();
+                expression = expression.And(t => t.NewsId.Equals(NewsId));
+            }
             if (!queryParam["Toc"].IsEmpty()) {
                 string Toc = queryParam["Toc"].ToString();
                 expression = expression.And(t => t.Toc.Equals(Toc));
