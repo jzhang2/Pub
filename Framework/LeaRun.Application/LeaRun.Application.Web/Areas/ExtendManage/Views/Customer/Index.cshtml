@@ -1,5 +1,5 @@
-@{;
-  ViewBag.Title = "ÁĞ±íÒ³Ãæ";
+ï»¿@{;
+  ViewBag.Title = "åˆ—è¡¨é¡µé¢";
   Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>;
@@ -7,9 +7,9 @@
         InitialPage();
         GetGrid();
     });
-    //³õÊ¼»¯Ò³Ãæ
+    //åˆå§‹åŒ–é¡µé¢
     function InitialPage() {
-        //resizeÖØÉè²¼¾Ö;
+        //resizeé‡è®¾å¸ƒå±€;
         $(window).resize(function (e) {
             window.setTimeout(function () {
                 $('#gridTable').setGridWidth(($('.gridPanel').width()));
@@ -18,7 +18,7 @@
             e.stopPropagation();
         });
     }
-    //¼ÓÔØ±í¸ñ
+    //åŠ è½½è¡¨æ ¼
     function GetGrid() {
         var selectedRowIndex = 0;
         var $gridTable = $('#gridTable');
@@ -28,18 +28,18 @@
             url: "../../ExtendManage/Customer/GetPageListJson",
             datatype: "json",
             colModel: [
-                { label: 'Ö÷¼ü', name: 'CustomerId', index: 'CustomerId', width: 100, align: 'left', sortable: true, hidden: true },
-                { label: 'ĞÕÃû', name: 'FullName', index: 'FullName', width: 100, align: 'left', sortable: true },
+                { label: 'ä¸»é”®', name: 'CustomerId', index: 'CustomerId', width: 100, align: 'left', sortable: true, hidden: true },
+                { label: 'å§“å', name: 'FullName', index: 'FullName', width: 100, align: 'left', sortable: true },
                 {
-                    label: 'ĞÔ±ğ', name: 'Gender', index: 'Gender', width: 45, align: 'center',
+                    label: 'æ€§åˆ«', name: 'Gender', index: 'Gender', width: 45, align: 'center',
                     formatter: function (cellvalue, options, rowObject) {
-                        return cellvalue == 1 ? "ÄĞ" : "Å®";
+                        return cellvalue == 1 ? "ç”·" : "å¥³";
                     }
                 },
-                { label: 'ÊÖ»ú', name: 'Mobile', index: 'Mobile', width: 150, align: 'center' },
-                { label: 'ÓÊÏä', name: 'Email', index: 'Email', width: 300, align: 'center' },
+                { label: 'æ‰‹æœº', name: 'Mobile', index: 'Mobile', width: 150, align: 'center' },
+                { label: 'é‚®ç®±', name: 'Email', index: 'Email', width: 300, align: 'center' },
                 {
-                    label: "´´½¨Ê±¼ä", name: "CreateDate", index: "CreateDate", width: 140, align: "left",
+                    label: "åˆ›å»ºæ—¶é—´", name: "CreateDate", index: "CreateDate", width: 140, align: "left",
                     formatter: function (cellvalue, options, rowObject) {
                         return formatDate(cellvalue, 'yyyy-MM-dd hh:mm');
                     }
@@ -61,13 +61,13 @@
                 $('#' + this.id).setSelection(selectedRowIndex, false);
             }
         });
-        //²éÑ¯Ìõ¼ş
+        //æŸ¥è¯¢æ¡ä»¶
         $("#queryCondition .dropdown-menu li").click(function () {
             var text = $(this).find('a').html();
             var value = $(this).find('a').attr('data-value');
             $("#queryCondition .dropdown-text").html(text).attr('data-value', value)
         });
-        //²éÑ¯ÊÂ¼ş
+        //æŸ¥è¯¢äº‹ä»¶
         $("#btn_Search").click(function () {
             var queryJson = {
                 condition: $("#queryCondition").find('.dropdown-text').attr('data-value'),
@@ -78,18 +78,18 @@
                 page: 1
             }).trigger('reloadGrid');
         });
-        //²éÑ¯»Ø³µ
+        //æŸ¥è¯¢å›è½¦
         $('#txt_Keyword').bind('keypress', function (event) {
             if (event.keyCode == "13") {
                 $('#btn_Search').trigger("click");
             }
         });
     }
-    //ĞÂÔö
+    //æ–°å¢
     function btn_add() {
         dialogOpen({
             id: 'Form',
-            title: 'Ìí¼Ó»áÔ±',
+            title: 'æ·»åŠ ä¼šå‘˜',
             url: '/ExtendManage/Customer/Form',
             width: '750px',
             height: '300px',
@@ -98,13 +98,13 @@
             }
         });
     }
-    //±à¼­
+    //ç¼–è¾‘
     function btn_edit() {
         var keyValue = $("#gridTable").jqGridRowValue('CustomerId');
         if (checkedRow(keyValue)) {
             dialogOpen({
                 id: 'Form',
-                title: '±à¼­»áÔ±',
+                title: 'ç¼–è¾‘ä¼šå‘˜',
                 url: '/ExtendManage/Customer/Form?keyValue=' + keyValue,
                 width: '750px',
                 height: '300px',
@@ -114,7 +114,7 @@
             })
         }
     }
-    //É¾³ı
+    //åˆ é™¤
     function btn_delete() {
         var keyValue = $("#gridTable").jqGridRowValue('CustomerId');
         if (keyValue) {
@@ -126,16 +126,16 @@
                 }
             })
         } else {
-            dialogMsg('ÇëÑ¡ÔñĞèÒªÉ¾³ıµÄ»áÔ±ĞÅÏ¢£¡', 0);
+            dialogMsg('è¯·é€‰æ‹©éœ€è¦åˆ é™¤çš„ä¼šå‘˜ä¿¡æ¯ï¼', 0);
         }
     }
-    //ÏêÏ¸
+    //è¯¦ç»†
     function btn_detail() {
         var keyValue = $("#gridTable").jqGridRowValue("CustomerId");
         if (checkedRow(keyValue)) {
             dialogOpen({
                 id: "Detail",
-                title: '¿Í»§ĞÅÏ¢',
+                title: 'å®¢æˆ·ä¿¡æ¯',
                 url: '/CustomerManage/Customer/Detail?keyValue=' + keyValue,
                 width: '750px',
                 height: '550px',
@@ -143,51 +143,51 @@
             });
         }
     }
-    //µ¼³ö
+    //å¯¼å‡º
     function btn_export() {
         dialogOpen({
             id: "ExcelIExportDialog",
-            title: 'µ¼³ö¿Í»§Êı¾İ',
-            url: '/Utility/ExcelExportForm?gridId=gridTable&filename=¿Í»§ĞÅÏ¢',
+            title: 'å¯¼å‡ºå®¢æˆ·æ•°æ®',
+            url: '/Utility/ExcelExportForm?gridId=gridTable&filename=å®¢æˆ·ä¿¡æ¯',
             width: "500px",
             height: "380px",
             callBack: function (iframeId) {
                 top.frames[iframeId].AcceptClick();
-            }, btn: ['µ¼³öExcel', '¹Ø±Õ']
+            }, btn: ['å¯¼å‡ºExcel', 'å…³é—­']
         });
     }
-    //ÁªÏµÈË
+    //è”ç³»äºº
     function btn_contact() {
         var keyValue = $("#gridTable").jqGridRowValue('CustomerId');
         var fullName = $("#gridTable").jqGridRowValue('FullName');
         if (keyValue) {
             dialogOpen({
                 id: 'ContactIndex',
-                title: fullName + ' - ÁªÏµÈË',
+                title: fullName + ' - è”ç³»äºº',
                 url: '/CustomerManage/Customer/ContactIndex?customerId=' + keyValue,
                 width: '900px',
                 height: '550px',
                 btn: null
             });
         } else {
-            dialogMsg('ÇëÑ¡Ôñ¿Í»§ĞÅÏ¢£¡', 0);
+            dialogMsg('è¯·é€‰æ‹©å®¢æˆ·ä¿¡æ¯ï¼', 0);
         }
     }
-    //¸ú½ø¼ÇÂ¼
+    //è·Ÿè¿›è®°å½•
     function btn_chancetrail() {
         var keyValue = $("#gridTable").jqGridRowValue('CustomerId');
         var fullName = $("#gridTable").jqGridRowValue('FullName');
         if (keyValue) {
             dialogOpen({
                 id: 'ChanceTrailIndex',
-                title: fullName + ' - ¸ú½ø¼ÇÂ¼',
+                title: fullName + ' - è·Ÿè¿›è®°å½•',
                 url: '/CustomerManage/TrailRecord/Index?objectId=' + keyValue + '&objectSort=2',
                 width: '750px',
                 height: '550px',
                 btn: null
             });
         } else {
-            dialogMsg('ÇëÑ¡ÔñÉÌ»úĞÅÏ¢£¡', 0);
+            dialogMsg('è¯·é€‰æ‹©å•†æœºä¿¡æ¯ï¼', 0);
         }
     }
 </script>
@@ -197,37 +197,37 @@
             <tr>
                 <td>
                     <div id="queryCondition" class="btn-group">
-                        <a class="btn btn-default dropdown-text" data-toggle="dropdown">Ñ¡ÔñÌõ¼ş</a>
+                        <a class="btn btn-default dropdown-text" data-toggle="dropdown">é€‰æ‹©æ¡ä»¶</a>
                         <a class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a data-value="EnCode">¿Í»§±àºÅ</a></li>
-                            <li><a data-value="FullName">¿Í»§Ãû³Æ</a></li>
-                            <li><a data-value="Contact">ÁªÏµÈË</a></li>
-                            <li><a data-value="TraceUserName">¸ú½øÈËÔ±</a></li>
+                            <li><a data-value="EnCode">å®¢æˆ·ç¼–å·</a></li>
+                            <li><a data-value="FullName">å®¢æˆ·åç§°</a></li>
+                            <li><a data-value="Contact">è”ç³»äºº</a></li>
+                            <li><a data-value="TraceUserName">è·Ÿè¿›äººå‘˜</a></li>
                         </ul>
                     </div>
                 </td>
                 <td style="padding-left: 2px;">
-                    <input id="txt_Keyword" type="text" class="form-control" placeholder="ÇëÊäÈëÒª²éÑ¯¹Ø¼ü×Ö" style="width: 200px;" />
+                    <input id="txt_Keyword" type="text" class="form-control" placeholder="è¯·è¾“å…¥è¦æŸ¥è¯¢å…³é”®å­—" style="width: 200px;" />
                 </td>
                 <td style="padding-left: 5px;">
-                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;²éÑ¯</a>
+                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>&nbsp;æŸ¥è¯¢</a>
                 </td>
             </tr>
         </table>
     </div>
     <div class="toolbar">
         <div class="btn-group">
-            <a id="lr-replace" class="btn btn-default" onclick="reload()"><i class="fa fa-refresh"></i>&nbsp;Ë¢ĞÂ</a>
-            <a id="lr-add" class="btn btn-default" onclick="btn_add()"><i class="fa fa-plus"></i>&nbsp;ĞÂÔö</a>
-            <a id="lr-edit" class="btn btn-default" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>&nbsp;±à¼­</a>
-            <a id="lr-delete" class="btn btn-default" onclick="btn_delete()"><i class="fa fa-trash-o"></i>&nbsp;É¾³ı</a>
-            <a id="lr-detail" class="btn btn-default" onclick="btn_detail()"><i class="fa fa-list-alt"></i>&nbsp;ÏêÏ¸</a>
-            <a id="lr-export" class="btn btn-default" onclick="btn_export()"><i class="fa fa-sign-out"></i>&nbsp;µ¼³ö</a>
+            <a id="lr-replace" class="btn btn-default" onclick="reload()"><i class="fa fa-refresh"></i>&nbsp;åˆ·æ–°</a>
+            <a id="lr-add" class="btn btn-default" onclick="btn_add()"><i class="fa fa-plus"></i>&nbsp;æ–°å¢</a>
+            <a id="lr-edit" class="btn btn-default" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>&nbsp;ç¼–è¾‘</a>
+            <a id="lr-delete" class="btn btn-default" onclick="btn_delete()"><i class="fa fa-trash-o"></i>&nbsp;åˆ é™¤</a>
+            <a id="lr-detail" class="btn btn-default" onclick="btn_detail()"><i class="fa fa-list-alt"></i>&nbsp;è¯¦ç»†</a>
+            <a id="lr-export" class="btn btn-default" onclick="btn_export()"><i class="fa fa-sign-out"></i>&nbsp;å¯¼å‡º</a>
         </div>
         <div class="btn-group">
-            <a id="lr-contact" class="btn btn-default" onclick="btn_contact()"><i class="fa fa fa-book"></i>&nbsp;ÁªÏµÈË</a>
-            <a id="lr-chancetrail" class="btn btn-default" onclick="btn_chancetrail()"><i class="fa fa-clock-o"></i>&nbsp;¸ú½ø¼ÇÂ¼</a>
+            <a id="lr-contact" class="btn btn-default" onclick="btn_contact()"><i class="fa fa fa-book"></i>&nbsp;è”ç³»äºº</a>
+            <a id="lr-chancetrail" class="btn btn-default" onclick="btn_chancetrail()"><i class="fa fa-clock-o"></i>&nbsp;è·Ÿè¿›è®°å½•</a>
 
         </div>
         <script>$('.toolbar').authorizeButton()</script>

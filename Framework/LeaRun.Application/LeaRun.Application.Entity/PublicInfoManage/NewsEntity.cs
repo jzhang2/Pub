@@ -21,6 +21,8 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         /// 类型（1-新闻2-公告3-西图动态4-地图文化5-电子书6-实体书7-业务服务8-关于我们）
         /// </summary>		
         public int? TypeId { get; set; }
+
+        public int? BookTablePage { get; set; }
         /// <summary>
         /// 父级主键
         /// </summary>		
@@ -36,6 +38,8 @@ namespace LeaRun.Application.Entity.PublicInfoManage
         /// </summary>		
         public string FullHead { get; set; }
         public string EPath { get; set; }
+        public string FileName { get; set; }
+        public string MusicName { get; set; }
         /// <summary>
         /// 标题颜色
         /// </summary>		

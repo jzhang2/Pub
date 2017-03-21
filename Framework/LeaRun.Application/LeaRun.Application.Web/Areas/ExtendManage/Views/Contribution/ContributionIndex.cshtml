@@ -1,5 +1,5 @@
-@{
-    ViewBag.Title = "ÁĞ±íÒ³Ãæ";
+ï»¿@{
+    ViewBag.Title = "åˆ—è¡¨é¡µé¢";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
@@ -7,9 +7,9 @@
         InitialPage();
         GetGrid();
     });
-    //³õÊ¼»¯Ò³Ãæ
+    //åˆå§‹åŒ–é¡µé¢
     function InitialPage() {
-        //resizeÖØÉè²¼¾Ö;
+        //resizeé‡è®¾å¸ƒå±€;
         $(window).resize(function (e) {
             window.setTimeout(function () {
                 $('#gridTable').setGridWidth(($('.gridPanel').width()));
@@ -18,7 +18,7 @@
             e.stopPropagation();
         });
     }
-    //¼ÓÔØ±í¸ñ
+    //åŠ è½½è¡¨æ ¼
     function GetGrid() {
         var selectedRowIndex = 0;
         var $gridTable = $('#gridTable');
@@ -29,26 +29,26 @@
             datatype: "json",
             colModel: [
                 { label: 'ContributionId', name: 'ContributionId', index: 'ContributionId', width: 100, align: 'left',sortable: true ,hidden: true },
-                { label: '±êÌâ', name: 'Title', index: 'Title', width: 100, align: 'left',sortable: true  },
+                { label: 'æ ‡é¢˜', name: 'Title', index: 'Title', width: 100, align: 'left',sortable: true  },
                 {
-                    label: "¸å¼ş", name: "FileName", index: "FileName", width: 100, align: "center",
+                    label: "ç¨¿ä»¶", name: "FileName", index: "FileName", width: 100, align: "center",
                     formatter: function (cellvalue, options, rowObject) {
                         return '<a style=\"color:#337ab7\" href=\"javascript:;\" onclick=\"btn_download(\'' + rowObject.ContributionId + '\')\" style=\"cursor: pointer;\">' + rowObject.FileName.substring(0, rowObject.FileName.lastIndexOf('.')) + '</a>';
                     }
                 },
-                { label: '±¸×¢', name: 'Description', index: 'Description', width: 100, align: 'left', sortable: true },
+                { label: 'å¤‡æ³¨', name: 'Description', index: 'Description', width: 100, align: 'left', sortable: true },
                 {
-                    label: "×´Ì¬", name: "ContributionStatus", index: "ContributionStatus", width: 100, align: "center",
+                    label: "çŠ¶æ€", name: "ContributionStatus", index: "ContributionStatus", width: 100, align: "center",
                     formatter: function (cellvalue, options, rowObject) {
                         if (cellvalue != null) {
                             return '<span onclick=\"btn_edit(\'' + rowObject.ContributionId + '\')\" class=\"label label-success\" style=\"cursor: pointer;\">' + rowObject.ContributionStatus + '</span>';
                         } else {
-                            return '<span onclick=\"btn_edit(\'' + rowObject.ContributionId + '\')\" class=\"label label-default\" style=\"cursor: pointer;\">Î´´¦Àí</span>';
+                            return '<span onclick=\"btn_edit(\'' + rowObject.ContributionId + '\')\" class=\"label label-default\" style=\"cursor: pointer;\">æœªå¤„ç†</span>';
                         }
                        
                     }
                 },
-                { label: 'Í¶¸åÈÕÆÚ', name: 'CreateDate', index: 'CreateDate', width: 100, align: 'left',sortable: true  },
+                { label: 'æŠ•ç¨¿æ—¥æœŸ', name: 'CreateDate', index: 'CreateDate', width: 100, align: 'left',sortable: true  },
             ],
             viewrecords: true,
             rowNum: 30,
@@ -67,11 +67,11 @@
             }
         });
     }
-    //ĞÂÔö
+    //æ–°å¢
     function btn_add() {
         dialogOpen({
             id: 'Form',
-            title: 'Ìí¼ÓContribution',
+            title: 'æ·»åŠ Contribution',
             url: '/ExtendManage/Contribution/ContributionForm',
             width: 'px',
             height: 'px',
@@ -80,7 +80,7 @@
             }
         });
     }
-    //±à¼­
+    //ç¼–è¾‘
     function btn_edit(keyValue) {
         if (keyValue == undefined) {
             keyValue = $("#gridTable").jqGridRowValue("ContributionId");
@@ -88,7 +88,7 @@
         if (checkedRow(keyValue)) {
             dialogOpen({
                 id: 'Form',
-                title: 'Í¶¸å´¦Àí',
+                title: 'æŠ•ç¨¿å¤„ç†',
                 url: '/ExtendManage/Contribution/Reply?keyValue=' + keyValue,
                 width: '500px',
                 height: '380px',
@@ -98,7 +98,7 @@
             })
         }
     }
-    //É¾³ı
+    //åˆ é™¤
     function btn_delete() {
         var keyValue = $("#gridTable").jqGridRowValue("ContributionId");
         if (keyValue) {
@@ -110,7 +110,7 @@
                 }
             })
         } else {
-            dialogMsg('ÇëÑ¡ÔñĞèÒªÉ¾³ıµÄContribution£¡', 0);
+            dialogMsg('è¯·é€‰æ‹©éœ€è¦åˆ é™¤çš„Contributionï¼', 0);
         }
     }
     function btn_download(keyValue) {
@@ -124,17 +124,17 @@
         <table>
             <tr>
                 <td>
-                    <input id="txt_Keyword" type="text" class="form-control" placeholder="ÇëÊäÈëÒª²éÑ¯¹Ø¼ü×Ö" style="width: 200px;" />
+                    <input id="txt_Keyword" type="text" class="form-control" placeholder="è¯·è¾“å…¥è¦æŸ¥è¯¢å…³é”®å­—" style="width: 200px;" />
                 </td>
                 <td style="padding-left: 5px;">
-                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>²éÑ¯</a>
+                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>æŸ¥è¯¢</a>
                 </td>
             </tr>
         </table>
     </div>
     <div class="toolbar">
         <div class="btn-group">
-            <a id="lr-replace" class="btn btn-default" onclick="reload()"><i class="fa fa-refresh"></i>&nbsp;Ë¢ĞÂ</a>
+            <a id="lr-replace" class="btn btn-default" onclick="reload()"><i class="fa fa-refresh"></i>&nbsp;åˆ·æ–°</a>
         </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using CsQuery;
 using LeaRun.Application.Busines.AuthorizeManage;
 using LeaRun.Application.Busines.BaseManage;
 using LeaRun.Application.Busines.CustomerManage;
@@ -28,6 +30,8 @@ using LeaRun.Util;
 using LeaRun.Util.Attributes;
 using LeaRun.Util.Extension;
 using LeaRun.Util.WebControl;
+using Microsoft.Office.Interop.Word;
+using Config = LeaRun.Util.Config;
 
 namespace LeaRun.Application.Web.Controllers {
 
@@ -83,6 +87,7 @@ namespace LeaRun.Application.Web.Controllers {
         public string PageContent { get; set; }
         public string SortContent { get; set; }
         public bool IsBookMark { get; set; }
+        public string CurrentPage { get; set; }
         public List<BookMarkEntity> BookMarkEntities { get; set; }
     }
     public class HomeViewModel {
@@ -135,6 +140,7 @@ namespace LeaRun.Application.Web.Controllers {
         private ThumbUpService service = new ThumbUpService();
         private CustomizationService customizationService = new CustomizationService();
         private BookMarkService bookMarkService = new BookMarkService();
+        private BookTableBLL bookTableBll = new BookTableBLL();
         private string baseUrl = Config.GetValue("EBookSite");
         #endregion
 
@@ -374,9 +380,15 @@ namespace LeaRun.Application.Web.Controllers {
         }
         [AjaxOnly]
         [ValidateInput(false)]
-        public ActionResult GetEBookPage(string id, string page) {
+        public ActionResult GetEBookPage(string id, string page, string toc) {
             try {
                 if (!string.IsNullOrEmpty(id)) {
+                    if (!string.IsNullOrEmpty(toc)) {
+                        var bookTable = bookTableBll.GetList("{NewsId:'" + id + "',Toc:'" + toc + "'}").FirstOrDefault();
+                        if (bookTable != null) {
+                            page = bookTable.Page.ToString();
+                        }
+                    }
                     string url = string.Format(baseUrl + "Default/Default?id=" + id + "&page=" + page);
                     var req = (HttpWebRequest)WebRequest.Create(url);
                     req.Method = "GET";
@@ -391,6 +403,7 @@ namespace LeaRun.Application.Web.Controllers {
                             eBookEntity.IsBookMark = true;
                         }
                     }
+                    eBookEntity.CurrentPage = page;
                     return Success("", eBookEntity);
                 }
                 return Error("获取书籍内容错误。");
@@ -399,6 +412,35 @@ namespace LeaRun.Application.Web.Controllers {
                 return Error("获取书籍内容错误。");
             }
         }
+
+        [AjaxOnly]
+        [ValidateInput(false)]
+        [HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public ActionResult GetBookMark(string id) {
+            try {
+                if (OperatorProvider.Provider.Current() != null && OperatorProvider.Provider.Current().UserId != null) {
+                    var bookMarkEntities = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, id, "");
+                    return Content(bookMarkEntities.ToJson());
+                }
+                return Error("获取书签错误。");
+            }
+            catch (Exception ee) {
+                return Error("获取书签错误。");
+            }
+        }
+        [AjaxOnly]
+        [ValidateInput(false)]
+        [HandlerFrontLogin(LoginMode.Enforce, LoginType.FrontEnd)]
+        public ActionResult DelBookMark(string id) {
+            try {
+                bookMarkService.RemoveForm(id);
+                return Success("");
+            }
+            catch (Exception ee) {
+                return Error("删除书签错误。");
+            }
+        }
+
 
         public ActionResult Default(string id, string page) {
             try {
@@ -767,6 +809,8 @@ namespace LeaRun.Application.Web.Controllers {
             }
         }
 
+        #region 
+
         [HttpGet]
         public ActionResult GetSecurityCode(string mobileCode) {
             if (!ValidateUtil.IsEmail(mobileCode)) {
@@ -782,7 +826,8 @@ namespace LeaRun.Application.Web.Controllers {
                 entity.CreateDate = DateTime.Now;
                 entity.SecurityCode = CommonHelper.RndNum(4);
                 securityCodeService.SaveForm("", entity);
-                MailHelper.SendEmailByThread(mobileCode, "西安地图出版社注册验证码", "尊敬的用户您好：感谢您注册使用西安地图出版社，您的验证码为" + entity.SecurityCode + "，有效期10分钟。");
+                MailHelper.SendEmailByThread(mobileCode, "西安地图出版社注册验证码",
+                    "尊敬的用户您好：感谢您注册使用西安地图出版社，您的验证码为" + entity.SecurityCode + "，有效期10分钟。");
                 return Success("验证码已发送到您的邮箱。");
             }
             catch (Exception ee) {
@@ -804,9 +849,14 @@ namespace LeaRun.Application.Web.Controllers {
                 var entity = new SecurityCodeEntity();
                 entity.Email = mobileCode;
                 entity.CreateDate = DateTime.Now;
-                entity.SecurityCode = Md5Helper.MD5(CommonHelper.RndNum(4) + mobileCode, 16); ;
+                entity.SecurityCode = Md5Helper.MD5(CommonHelper.RndNum(4) + mobileCode, 16);
+                ;
                 securityCodeService.SaveForm("", entity);
-                MailHelper.SendEmailByThread(mobileCode, "西安地图出版社重置密码", "尊敬的用户您好：感谢您使用西安地图出版社，请点击链接<a href=\"http://" + System.Web.HttpContext.Current.Request.Url.Authority + "/ResetPwd?code=" + entity.SecurityCode + "\" target=\"_blank\">http://" + System.Web.HttpContext.Current.Request.Url.Authority + "/ResetPwd?code=" + entity.SecurityCode + "</a>重置密码，有效期10分钟。");
+                MailHelper.SendEmailByThread(mobileCode, "西安地图出版社重置密码",
+                    "尊敬的用户您好：感谢您使用西安地图出版社，请点击链接<a href=\"http://" + System.Web.HttpContext.Current.Request.Url.Authority +
+                    "/ResetPwd?code=" + entity.SecurityCode + "\" target=\"_blank\">http://" +
+                    System.Web.HttpContext.Current.Request.Url.Authority + "/ResetPwd?code=" + entity.SecurityCode +
+                    "</a>重置密码，有效期10分钟。");
                 return Success("重置密码邮件已发送到您的邮箱。");
             }
             catch (Exception ee) {
@@ -814,6 +864,8 @@ namespace LeaRun.Application.Web.Controllers {
             }
 
         }
+
+        #endregion
 
     }
 }

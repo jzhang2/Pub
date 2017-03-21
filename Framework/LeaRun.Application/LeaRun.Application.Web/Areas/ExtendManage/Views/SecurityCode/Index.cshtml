@@ -1,5 +1,5 @@
-@{
-    ViewBag.Title = "ÁĞ±íÒ³Ãæ";
+ï»¿@{
+    ViewBag.Title = "åˆ—è¡¨é¡µé¢";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
@@ -7,9 +7,9 @@
         InitialPage();
         GetGrid();
     });
-    //³õÊ¼»¯Ò³Ãæ
+    //åˆå§‹åŒ–é¡µé¢
     function InitialPage() {
-        //resizeÖØÉè²¼¾Ö;
+        //resizeé‡è®¾å¸ƒå±€;
         $(window).resize(function (e) {
             window.setTimeout(function () {
                 $('#gridTable').setGridWidth(($('.gridPanel').width()));
@@ -18,7 +18,7 @@
             e.stopPropagation();
         });
     }
-    //¼ÓÔØ±í¸ñ
+    //åŠ è½½è¡¨æ ¼
     function GetGrid() {
         var selectedRowIndex = 0;
         var $gridTable = $('#gridTable');
@@ -37,11 +37,11 @@
             }
         });
     }
-    //ĞÂÔö
+    //æ–°å¢
     function btn_add() {
         dialogOpen({
             id: 'Form',
-            title: 'Ìí¼ÓSecurityCode',
+            title: 'æ·»åŠ SecurityCode',
             url: '/ExtendManage/SecurityCode/Form',
             width: 'px',
             height: 'px',
@@ -50,13 +50,13 @@
             }
         });
     }
-    //±à¼­
+    //ç¼–è¾‘
     function btn_edit() {
         var keyValue = $("#gridTable").jqGridRowValue("SecurityId");
         if (checkedRow(keyValue)) {
             dialogOpen({
                 id: 'Form',
-                title: '±à¼­SecurityCode',
+                title: 'ç¼–è¾‘SecurityCode',
                 url: '/ExtendManage/SecurityCode/Form?keyValue=' + keyValue,
                 width: 'px',
                 height: 'px',
@@ -66,7 +66,7 @@
             })
         }
     }
-    //É¾³ı
+    //åˆ é™¤
     function btn_delete() {
         var keyValue = $("#gridTable").jqGridRowValue("SecurityId");
         if (keyValue) {
@@ -78,7 +78,7 @@
                 }
             })
         } else {
-            dialogMsg('ÇëÑ¡ÔñĞèÒªÉ¾³ıµÄSecurityCode£¡', 0);
+            dialogMsg('è¯·é€‰æ‹©éœ€è¦åˆ é™¤çš„SecurityCodeï¼', 0);
         }
     }
 </script>
@@ -87,20 +87,20 @@
         <table>
             <tr>
                 <td>
-                    <input id="txt_Keyword" type="text" class="form-control" placeholder="ÇëÊäÈëÒª²éÑ¯¹Ø¼ü×Ö" style="width: 200px;" />
+                    <input id="txt_Keyword" type="text" class="form-control" placeholder="è¯·è¾“å…¥è¦æŸ¥è¯¢å…³é”®å­—" style="width: 200px;" />
                 </td>
                 <td style="padding-left: 5px;">
-                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>²éÑ¯</a>
+                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>æŸ¥è¯¢</a>
                 </td>
             </tr>
         </table>
     </div>
     <div class="toolbar">
         <div class="btn-group">
-            <a id="lr-replace" class="btn btn-default" onclick="reload()"><i class="fa fa-refresh"></i>&nbsp;Ë¢ĞÂ</a>
-            <a id="lr-add" class="btn btn-default" onclick="btn_add()"><i class="fa fa-plus"></i>&nbsp;ĞÂÔö</a>
-            <a id="lr-edit" class="btn btn-default" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>&nbsp;±à¼­</a>
-            <a id="lr-delete" class="btn btn-default" onclick="btn_delete()"><i class="fa fa-trash-o"></i>&nbsp;É¾³ı</a>
+            <a id="lr-replace" class="btn btn-default" onclick="reload()"><i class="fa fa-refresh"></i>&nbsp;åˆ·æ–°</a>
+            <a id="lr-add" class="btn btn-default" onclick="btn_add()"><i class="fa fa-plus"></i>&nbsp;æ–°å¢</a>
+            <a id="lr-edit" class="btn btn-default" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>&nbsp;ç¼–è¾‘</a>
+            <a id="lr-delete" class="btn btn-default" onclick="btn_delete()"><i class="fa fa-trash-o"></i>&nbsp;åˆ é™¤</a>
         </div>
     </div>
 </div>

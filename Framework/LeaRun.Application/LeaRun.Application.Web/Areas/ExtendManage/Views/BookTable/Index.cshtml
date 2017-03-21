@@ -13,7 +13,7 @@
         $(window).resize(function (e) {
             window.setTimeout(function () {
                 $('#gridTable').setGridWidth(($('.gridPanel').width()));
-                $('#gridTable').setGridHeight($(window).height() - 108.5);
+                $('#gridTable').setGridHeight($(window).height() - 136.5);
             }, 200);
             e.stopPropagation();
         });
@@ -24,11 +24,24 @@
         var $gridTable = $('#gridTable');
         $gridTable.jqGrid({
             autowidth: true,
-            height: $(window).height() - 108.5,
-            url: "../../ExtendManage/SuggestionAnswer/GetListJson",
+            height: $(window).height() - 136.5,
+            url: "../../ExtendManage/BookTable/GetPageListJson",
             datatype: "json",
             colModel: [
+                { label: 'BookTableId', name: 'BookTableId', index: 'BookTableId', width: 100, align: 'left',sortable: true ,hidden: true },
+                { label: 'Page', name: 'Page', index: 'Page', width: 100, align: 'left',sortable: true  },
+                { label: 'Toc', name: 'Toc', index: 'Toc', width: 100, align: 'left',sortable: true  },
+                { label: '新闻主键', name: 'NewsId', index: 'NewsId', width: 100, align: 'left',sortable: true  },
             ],
+            viewrecords: true,
+            rowNum: 30,
+            rowList: [30, 50, 100],
+            pager: "#gridPager",
+            sortname: '',
+            sortorder: 'desc',
+            rownumbers: true,
+            shrinkToFit: false,
+            gridview: true,
             onSelectRow: function () {
                 selectedRowIndex = $('#' + this.id).getGridParam('selrow');
             },
@@ -41,8 +54,8 @@
     function btn_add() {
         dialogOpen({
             id: 'Form',
-            title: '添加SuggestionAnswer',
-            url: '/ExtendManage/SuggestionAnswer/SuggestionAnswerForm',
+            title: '添加BookTable',
+            url: '/ExtendManage/BookTable/Form',
             width: 'px',
             height: 'px',
             callBack: function (iframeId) {
@@ -52,12 +65,12 @@
     }
     //编辑
     function btn_edit() {
-        var keyValue = $("#gridTable").jqGridRowValue("AnswerId");
+        var keyValue = $("#gridTable").jqGridRowValue("BookTableId");
         if (checkedRow(keyValue)) {
             dialogOpen({
                 id: 'Form',
-                title: '编辑SuggestionAnswer',
-                url: '/ExtendManage/SuggestionAnswer/SuggestionAnswerForm?keyValue=' + keyValue,
+                title: '编辑BookTable',
+                url: '/ExtendManage/BookTable/Form?keyValue=' + keyValue,
                 width: 'px',
                 height: 'px',
                 callBack: function (iframeId) {
@@ -68,17 +81,17 @@
     }
     //删除
     function btn_delete() {
-        var keyValue = $("#gridTable").jqGridRowValue("AnswerId");
+        var keyValue = $("#gridTable").jqGridRowValue("BookTableId");
         if (keyValue) {
             $.RemoveForm({
-                url: '../../ExtendManage/SuggestionAnswer/RemoveForm',
+                url: '../../ExtendManage/BookTable/RemoveForm',
                 param: { keyValue: keyValue },
                 success: function (data) {
                     $('#gridTable').trigger('reloadGrid');
                 }
             })
         } else {
-            dialogMsg('请选择需要删除的SuggestionAnswer！', 0);
+            dialogMsg('请选择需要删除的BookTable！', 0);
         }
     }
 </script>
@@ -106,4 +119,5 @@
 </div>
 <div class="gridPanel">
     <table id="gridTable"></table>
+    <div id="gridPager"></div>
 </div>

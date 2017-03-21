@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "投稿处理";
+    ViewBag.Title = "表单页面";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
@@ -9,13 +9,10 @@
     });
     //初始化控件
     function initControl() {
-        $("#ContributionStatus").ComboBox({
-            description: "==请选择==",
-        });
         //获取表单
         if (!!keyValue) {
             $.SetForm({
-                url: "../../ExtendManage/Contribution/GetFormJson",
+                url: "../../ExtendManage/BookTable/GetFormJson",
                 param: { keyValue: keyValue },
                 success: function (data) {
                     $("#form1").SetWebControls(data);
@@ -30,7 +27,7 @@
         }
         var postData = $("#form1").GetWebControls(keyValue);
         $.SaveForm({
-            url: "../../ExtendManage/Contribution/SaveReply?keyValue=" + keyValue,
+            url: "../../ExtendManage/BookTable/SaveForm?keyValue=" + keyValue,
             param: postData,
             loading: "正在保存数据...",
             success: function () {
@@ -42,27 +39,29 @@
 <div style="margin-top: 20px; margin-right: 30px;">
     <table class="form">
         <tr>
-            <td class="formTitle">处理结果</td>
+            <td class="formTitle">BookTableId</td>
             <td class="formValue">
-                <div id="ContributionStatus" type="select" class="ui-select">
-                    <ul>
-                        <li data-value="审稿">审稿</li>
-                        <li data-value="退稿">退稿</li>
-                        <li data-value="退改">退改</li>
-                        <li data-value="三审">三审</li>
-                        <li data-value="排版/封面设计">排版/封面设计</li>
-                        <li data-value="三校">三校</li>
-                        <li data-value="出版">出版</li>
-                    </ul>
-                </div>
+                <input id="BookTableId" type="text" class="form-control"  />
             </td>
         </tr>
         <tr>
-            <td class="formTitle">备注</td>
+            <td class="formTitle">Page</td>
             <td class="formValue">
-                <textarea id="Reply" class="form-control" style="height: 120px;"></textarea>
+                <input id="Page" type="text" class="form-control"  />
             </td>
         </tr>
-
+        <tr>
+            <td class="formTitle">Toc</td>
+            <td class="formValue">
+                <input id="Toc" type="text" class="form-control"  />
+            </td>
+        </tr>
+        <tr>
+            <td class="formTitle">新闻主键</td>
+            <td class="formValue">
+                <input id="NewsId" type="text" class="form-control"  />
+            </td>
+        </tr>
+       
     </table>
 </div>

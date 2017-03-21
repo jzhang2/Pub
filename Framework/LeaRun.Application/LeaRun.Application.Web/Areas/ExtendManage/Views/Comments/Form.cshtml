@@ -1,5 +1,5 @@
-@{
-    ViewBag.Title = "±íµ¥Ò³Ãæ";
+ï»¿@{
+    ViewBag.Title = "è¡¨å•é¡µé¢";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
@@ -7,9 +7,9 @@
     $(function () {
         initControl();
     });
-    //³õÊ¼»¯¿Ø¼ş
+    //åˆå§‹åŒ–æ§ä»¶
     function initControl() {
-        //»ñÈ¡±íµ¥
+        //è·å–è¡¨å•
         if (!!keyValue) {
             $.SetForm({
                 url: "../../ExtendManage/Comments/GetFormJson",
@@ -20,7 +20,7 @@
             })
         }
     }
-    //±£´æ±íµ¥;
+    //ä¿å­˜è¡¨å•;
     function AcceptClick() {
         if (!$('#form1').Validform()) {
             return false;
@@ -29,7 +29,7 @@
         $.SaveForm({
             url: "../../ExtendManage/Comments/SaveForm?keyValue=" + keyValue,
             param: postData,
-            loading: "ÕıÔÚ±£´æÊı¾İ...",
+            loading: "æ­£åœ¨ä¿å­˜æ•°æ®...",
             success: function () {
                 $.currentIframe().$("#gridTable").trigger("reloadGrid");
             }
@@ -45,19 +45,19 @@
             </td>
         </tr>
         <tr>
-            <td class="formTitle">¿Í»§Ö÷¼ü</td>
+            <td class="formTitle">å®¢æˆ·ä¸»é”®</td>
             <td class="formValue">
                 <input id="CustomerId" type="text" class="form-control"  />
             </td>
         </tr>
         <tr>
-            <td class="formTitle">¿Í»§Ö÷¼ü</td>
+            <td class="formTitle">å®¢æˆ·ä¸»é”®</td>
             <td class="formValue">
                 <input id="ReplyCustomerId" type="text" class="form-control"  />
             </td>
         </tr>
         <tr>
-            <td class="formTitle">ĞÂÎÅÖ÷¼ü</td>
+            <td class="formTitle">æ–°é—»ä¸»é”®</td>
             <td class="formValue">
                 <input id="NewsId" type="text" class="form-control"  />
             </td>
@@ -75,7 +75,7 @@
             </td>
         </tr>
         <tr>
-            <td class="formTitle">´´½¨ÈÕÆÚ</td>
+            <td class="formTitle">åˆ›å»ºæ—¥æœŸ</td>
             <td class="formValue">
                 <input id="CreateDate" type="text" class="form-control"  />
             </td>

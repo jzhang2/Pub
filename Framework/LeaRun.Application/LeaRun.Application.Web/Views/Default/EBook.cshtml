@@ -1,58 +1,59 @@
 ﻿@{
     ViewBag.navIndex = -1;
-    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    Layout = "~/Views/Shared/_LayoutEBook.cshtml";
 }
+<script src="~/Content/scripts/utils/learun-ui.js"></script>
 <script src="~/Content/scripts/plugins/dialog/dialog.js"></script>
 <link href="~/Content/styles/font-awesome.min.css" rel="stylesheet" />
-<div>
-    <img src="~/images/baneer1.png" class="img-responsive" />
-</div>
+<script src="~/Content/scripts/jplayer/jquery.jplayer.min.js"></script>
+<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 <div id="best-deal">
-    <div class="container" style="background: white; padding: 35px 25px;">
+    <div class="container ddss" style="background: white; padding: 35px 25px;">
         <div style="text-align: center;">
-            <h3 style="margin-bottom: 20px;" id="title">
-                <span id="bookname"></span><i class="fa fa-bookmark ebook-bookmark" title="加入书签"></i>
+            <h3 style="margin-bottom: 20px;text-align: center" id="title">
+                <i class="fa fa-book ebook-mark" title="书签"></i><span id="bookname"></span><i class="fa fa-bookmark ebook-bookmark" title="加入书签"></i>
             </h3>
         </div>
         <div class="row" style="margin-bottom: 20px;">
             <div class="col-md-6 col-sm-6 col-xs-6">
                 <div class="btn-group btn-group-sm ebook-btn pull-left" role="group">
-                    <button type="button" class="btn">字体:</button>
-                    <button type="button" class="btn ebook-font" onclick="changesize(this,'ebook-content-large')">大</button>
-                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-normal')">中</button>
-                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-small')">小</button>
+                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-large')">字体:大</button>
+                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-normal')">字体:中</button>
+                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-small')">字体:小</button>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
                 <div class="btn-group btn-group-sm ebook-btn pull-right" role="group">
                     <button type="button" class="btn ebook-font ebook-peyes">护眼</button>
                     <button type="button" class="btn ebook-font ebook-light">关灯</button>
+                    <button type="button" class="btn ebook-font ebook-music active m-play" style="display: none">音乐:开</button>
+                    <button type="button" class="btn ebook-font ebook-music" style="display:none">音乐:关</button>
                 </div>
             </div>
         </div>
         <div class="ebook-content-normal" id="ebook-content">
 
         </div>
-        <div class="row" style="text-align: center;">
+        <div class="row" style="text-align: center; margin-top: 20px;">
             <div class="btn-group btn-group-sm ebook-btn ebook-pager" role="group">
             </div>
         </div>
-        <input id="sortcontent" type="hidden"/>
+        <input id="sortcontent" type="hidden" />
     </div>
 </div>
 <script>
     var pagecount = 0;
     var page = 1;
-    function getpage(p) {
-        page = p;
+    function getpage(p, f, toc) {
         $.ajax({
             url: "/Default/GetEBookPage",
-            data: { id: '@ViewContext.RouteData.Values["id"]', page: p },
+            data: { id: '@ViewContext.RouteData.Values["id"]', page: p, toc: toc },
             type: "get",
             dataType: "json",
             async: false,
             success: function (data) {
                 if (data.type == "1") {
+                    page = p = parseInt(data.resultdata.CurrentPage);
                     document.title = data.resultdata.EBook.FullHead;
                     pagecount = data.resultdata.EBook.PageCount;
                     $("#bookname").html(data.resultdata.EBook.FullHead);
@@ -60,19 +61,50 @@
                     $("#ebook-content img").addClass("img-responsive");
                     $("#sortcontent").val(data.resultdata.SortContent);
                     if (data.resultdata.IsBookMark) {
-                        $("#title i").attr("title", "删除书签").addClass("booked");
+                        $("#title i.ebook-bookmark").attr("title", "删除书签").addClass("booked");
                     } else {
-                        $("#title i").attr("title", "加入书签").removeClass("booked");
+                        $("#title i.ebook-bookmark").attr("title", "加入书签").removeClass("booked");
                     }
                     var pager = "";
                     if (p - 1 > 0) {
-                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (p - 1) + ");\">上一章</button>";
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) - 1) + ");\">上一页</button>";
+                    }
+                    if (data.resultdata.EBook.BookTablePage != null && data.resultdata.EBook.BookTablePage != "") {
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage('" + data.resultdata.EBook.BookTablePage + "',false);\">目录</button>";
                     }
                     if (p + 1 < pagecount) {
-                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (p + 1) + ");\">下一章</button>";
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) + 1) + ");\">下一页</button>";
                     }
                     $(".ebook-pager").html(pager);
                     $("html,body").scrollTop($("#best-deal").offset().top);
+                    if (f && data.resultdata.EBook.MusicPath != null && data.resultdata.EBook.MusicPath != "") {
+                        $(".ebook-music").show();
+                        $("#jquery_jplayer_1").jPlayer({
+                            ready: function () {
+                                $(this).jPlayer("setMedia", {
+                                    //title: "Bubble",
+                                    mp3: data.resultdata.EBook.MusicPath
+                                }).jPlayer("play");
+                            },
+                            loop: true,
+                            solution: 'html, flash',
+                            wmode: "window",
+                            swfPath: "/Content/scripts/jplayer",
+                            supplied: "mp3",
+                            useStateClassSkin: true,
+                            autoBlur: false,
+                            smoothPlayBar: true,
+                            keyEnabled: true,
+                            remainingDuration: true,
+                            toggleDuration: true
+                        });
+                    }
+                    $('[docparttype="Table of Contents"] a').click(function (e) {
+                        e.preventDefault();
+                        var href = $(this).attr("href");
+                        getpage(1, false, href.substring(href.lastIndexOf("#_Toc")));
+                        return false;
+                    });
                 } else {
                     dialogMsg(data.message, data.type);
                 }
@@ -83,7 +115,39 @@
         $("#ebook-content").removeClass("ebook-content-small").removeClass("ebook-content-large").removeClass("ebook-content-normal").addClass(fs);
         $(obj).addClass("active").siblings().removeClass("active");
     }
+    function getmark(page) {
+        getpage(page);
+        $('.ebook-mark').popover('hide');
+    }
+    function delmark(obj, id, p) {
+        $.ajax({
+            url: "/Default/DelBookMark",
+            data: { id: id },
+            type: "get",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.type == "1") {
+                    $(obj).parent().parent().remove();
+                    if (page == p) {
+                        $("#title i.ebook-bookmark").attr("title", "加入书签").removeClass("booked");
+                    }
+                } else {
+                    dialogMsg(data.message, data.type);
+                }
+            }
+        });
+    }
     $(function () {
+        $(".ebook-music").click(function () {
+            if ($(this).hasClass("m-play")) {
+                $("#jquery_jplayer_1").jPlayer("play");
+            } else {
+                $("#jquery_jplayer_1").jPlayer("pause");
+            }
+            $(".ebook-music").removeClass("active");
+            $(this).addClass("active");
+        });
         $(".ebook-peyes").click(function () {
             $(".ebook-light").text("关灯");
             if ($(this).hasClass("active")) {
@@ -93,7 +157,7 @@
                 $("#best-deal").removeClass("ebook-content-light").addClass("ebook-content-peyes");
                 $(this).addClass("active");
             }
-            $(this).siblings().removeClass("active");
+            $(".ebook-light").removeClass("active");
         });
         $(".ebook-light").click(function () {
             if ($(this).hasClass("active")) {
@@ -103,9 +167,9 @@
                 $("#best-deal").removeClass("ebook-content-peyes").addClass("ebook-content-light");
                 $(this).text("开灯").addClass("active");
             }
-            $(this).siblings().removeClass("active");
+            $(".ebook-peyes").removeClass("active");
         });
-        $(".fa-bookmark").click(function() {
+        $(".fa-bookmark").click(function () {
             $.ajax({
                 url: "/Default/SaveBookMark",
                 data: { id: '@ViewContext.RouteData.Values["id"]', page: page, sortcontent: $("#sortcontent").val() },
@@ -115,9 +179,11 @@
                 success: function (data) {
                     if (data.type == "1") {
                         if (data.message == "0") {
-                            $("#title i").attr("title","加入书签").removeClass("booked");
+                            dialogMsg("删除书签", data.type);
+                            $("#title i.ebook-bookmark").attr("title", "加入书签").removeClass("booked");
                         } else {
-                            $("#title i").attr("title", "删除书签").addClass("booked");
+                            dialogMsg("加入书签", data.type);
+                            $("#title i.ebook-bookmark").attr("title", "删除书签").addClass("booked");
                         }
                     } else {
                         dialogMsg(data.message, data.type);
@@ -125,7 +191,37 @@
                 }
             });
         });
-        getpage(1);
+        $('body').on('click', function (e) {
+            if (!$(e.target).hasClass('ebook-mark')) {
+                $('.ebook-mark').popover('hide');
+            }
+        });
+        $('.ebook-mark').click(function (e) {
+            $.ajax({
+                url: "/Default/GetBookMark",
+                data: { id: '@ViewContext.RouteData.Values["id"]' },
+                type: "get",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if (data.length > 0) {
+                        var html = "";
+                        for (var i = 0; i < data.length; i++) {
+                            html += '<div class="markp"><p onclick="getmark(' + data[i].Page + ');">第' + data[i].Page + '页：' + data[i].PageContent + '</p><p style="text-align:right"><span>' + data[i].CreateDate + '</span>    <a href="javascript:;" onclick="delmark(this,\'' + data[i].BookMarkId + '\',\'' + data[i].Page + '\')">删除</a></p></div>';
+                        }
+                        $('.ebook-mark').popover({
+                            trigger: 'manual',
+                            placement: 'bottom',
+                            html: true,
+                            template: '<div class="popover"><div class="popover-title"></div><div class="popover-content"></div></div>'
+                        });
+                        $('.ebook-mark').data('bs.popover').options.content = html;
+                        $('.ebook-mark').popover('show');
+                        $('.popover').css({ 'left': $('.ebook-mark').offset().left + 'px', 'maxWidth': $('.ebook-mark').parent().parent().width() });
+                    }
+                }
+            });
+        });
+        getpage(1, true);
     });
-
 </script>

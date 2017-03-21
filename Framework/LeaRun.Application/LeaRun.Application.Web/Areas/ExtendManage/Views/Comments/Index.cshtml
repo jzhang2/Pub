@@ -1,5 +1,5 @@
-@{
-    ViewBag.Title = "ÁĞ±íÒ³Ãæ";
+ï»¿@{
+    ViewBag.Title = "åˆ—è¡¨é¡µé¢";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 <script>
@@ -7,9 +7,9 @@
         InitialPage();
         GetGrid();
     });
-    //³õÊ¼»¯Ò³Ãæ
+    //åˆå§‹åŒ–é¡µé¢
     function InitialPage() {
-        //resizeÖØÉè²¼¾Ö;
+        //resizeé‡è®¾å¸ƒå±€;
         $(window).resize(function (e) {
             window.setTimeout(function () {
                 $('#gridTable').setGridWidth(($('.gridPanel').width()));
@@ -18,7 +18,7 @@
             e.stopPropagation();
         });
     }
-    //¼ÓÔØ±í¸ñ
+    //åŠ è½½è¡¨æ ¼
     function GetGrid() {
         var selectedRowIndex = 0;
         var $gridTable = $('#gridTable');
@@ -29,12 +29,12 @@
             datatype: "json",
             colModel: [
                 { label: 'CommentsId', name: 'CommentsId', index: 'CommentsId', width: 100, align: 'left',sortable: true  },
-                { label: '¿Í»§Ö÷¼ü', name: 'CustomerId', index: 'CustomerId', width: 100, align: 'left',sortable: true  },
-                { label: '¿Í»§Ö÷¼ü', name: 'ReplyCustomerId', index: 'ReplyCustomerId', width: 100, align: 'left',sortable: true  },
-                { label: 'ĞÂÎÅÖ÷¼ü', name: 'NewsId', index: 'NewsId', width: 100, align: 'left',sortable: true  },
+                { label: 'å®¢æˆ·ä¸»é”®', name: 'CustomerId', index: 'CustomerId', width: 100, align: 'left',sortable: true  },
+                { label: 'å®¢æˆ·ä¸»é”®', name: 'ReplyCustomerId', index: 'ReplyCustomerId', width: 100, align: 'left',sortable: true  },
+                { label: 'æ–°é—»ä¸»é”®', name: 'NewsId', index: 'NewsId', width: 100, align: 'left',sortable: true  },
                 { label: 'ParentId', name: 'ParentId', index: 'ParentId', width: 100, align: 'left',sortable: true  },
                 { label: 'Comments', name: 'Comments', index: 'Comments', width: 100, align: 'left',sortable: true  },
-                { label: '´´½¨ÈÕÆÚ', name: 'CreateDate', index: 'CreateDate', width: 100, align: 'left',sortable: true  },
+                { label: 'åˆ›å»ºæ—¥æœŸ', name: 'CreateDate', index: 'CreateDate', width: 100, align: 'left',sortable: true  },
             ],
             viewrecords: true,
             rowNum: 30,
@@ -53,11 +53,11 @@
             }
         });
     }
-    //ĞÂÔö
+    //æ–°å¢
     function btn_add() {
         dialogOpen({
             id: 'Form',
-            title: 'Ìí¼ÓComments',
+            title: 'æ·»åŠ Comments',
             url: '/ExtendManage/Comments/Form',
             width: 'px',
             height: 'px',
@@ -66,13 +66,13 @@
             }
         });
     }
-    //±à¼­
+    //ç¼–è¾‘
     function btn_edit() {
         var keyValue = $("#gridTable").jqGridRowValue("CommentsId");
         if (checkedRow(keyValue)) {
             dialogOpen({
                 id: 'Form',
-                title: '±à¼­Comments',
+                title: 'ç¼–è¾‘Comments',
                 url: '/ExtendManage/Comments/Form?keyValue=' + keyValue,
                 width: 'px',
                 height: 'px',
@@ -82,7 +82,7 @@
             })
         }
     }
-    //É¾³ı
+    //åˆ é™¤
     function btn_delete() {
         var keyValue = $("#gridTable").jqGridRowValue("CommentsId");
         if (keyValue) {
@@ -94,7 +94,7 @@
                 }
             })
         } else {
-            dialogMsg('ÇëÑ¡ÔñĞèÒªÉ¾³ıµÄComments£¡', 0);
+            dialogMsg('è¯·é€‰æ‹©éœ€è¦åˆ é™¤çš„Commentsï¼', 0);
         }
     }
 </script>
@@ -103,20 +103,20 @@
         <table>
             <tr>
                 <td>
-                    <input id="txt_Keyword" type="text" class="form-control" placeholder="ÇëÊäÈëÒª²éÑ¯¹Ø¼ü×Ö" style="width: 200px;" />
+                    <input id="txt_Keyword" type="text" class="form-control" placeholder="è¯·è¾“å…¥è¦æŸ¥è¯¢å…³é”®å­—" style="width: 200px;" />
                 </td>
                 <td style="padding-left: 5px;">
-                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>²éÑ¯</a>
+                    <a id="btn_Search" class="btn btn-primary"><i class="fa fa-search"></i>æŸ¥è¯¢</a>
                 </td>
             </tr>
         </table>
     </div>
     <div class="toolbar">
         <div class="btn-group">
-            <a id="lr-replace" class="btn btn-default" onclick="reload()"><i class="fa fa-refresh"></i>&nbsp;Ë¢ĞÂ</a>
-            <a id="lr-add" class="btn btn-default" onclick="btn_add()"><i class="fa fa-plus"></i>&nbsp;ĞÂÔö</a>
-            <a id="lr-edit" class="btn btn-default" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>&nbsp;±à¼­</a>
-            <a id="lr-delete" class="btn btn-default" onclick="btn_delete()"><i class="fa fa-trash-o"></i>&nbsp;É¾³ı</a>
+            <a id="lr-replace" class="btn btn-default" onclick="reload()"><i class="fa fa-refresh"></i>&nbsp;åˆ·æ–°</a>
+            <a id="lr-add" class="btn btn-default" onclick="btn_add()"><i class="fa fa-plus"></i>&nbsp;æ–°å¢</a>
+            <a id="lr-edit" class="btn btn-default" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>&nbsp;ç¼–è¾‘</a>
+            <a id="lr-delete" class="btn btn-default" onclick="btn_delete()"><i class="fa fa-trash-o"></i>&nbsp;åˆ é™¤</a>
         </div>
     </div>
 </div>

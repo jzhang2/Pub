@@ -7,13 +7,18 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using CsQuery;
 using LeaRun.Application.Busines.PublicInfoManage;
 using LeaRun.Application.Code;
 using LeaRun.Application.Entity.BaseManage;
+using LeaRun.Application.Entity.ExtendManage;
 using LeaRun.Application.Entity.PublicInfoManage;
+using LeaRun.Application.Web.Controllers;
+using LeaRun.Data.Repository;
 using LeaRun.Util;
 using LeaRun.Util.WebControl;
 using Microsoft.Office.Interop.Word;
+using Config = LeaRun.Util.Config;
 
 namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
     public class FileInfo {
@@ -22,7 +27,7 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
     }
     public class BooksController : MvcControllerBase {
         private NewsBLL newsBLL = new NewsBLL();
-
+        private string baseUrl = Config.GetValue("EBookSite");
         #region 视图功能
         /// <summary>
         /// 新闻管理
@@ -127,47 +132,98 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
         [HttpPost]
         [AjaxOnly]
         [ValidateInput(false)]
-        public ActionResult SaveBook(string keyValue, NewsEntity newsEntity)
-        {
+        public ActionResult SaveBook(string keyValue, NewsEntity newsEntity) {
             var result = "";
-            try
-            {
-                string url = string.Format("http://localhost:8010/Resource/EBook/yy2.html");
-                var req = (HttpWebRequest)WebRequest.Create(url);
-                req.Method = "GET";
-                req.ContentType = "application/x-www-form-urlencoded;charset=gb2312";
-                HttpWebResponse response = (HttpWebResponse)req.GetResponse();
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-                result = reader.ReadToEnd();
-            }
-            catch (Exception)
-            {
-            }
-            
-            int totalPagesCount = 0;
-            var ePath = string.Format("/Resource/EBook/{0}/", Guid.NewGuid());
-            var import = ImportBook(Server.MapPath("~" + newsEntity.FilePath), ref totalPagesCount, ePath);
-            if (import) {
-                newsEntity.EPath = ePath;
-                newsEntity.PageCount = totalPagesCount;
-                newsBLL.SaveForm(keyValue, newsEntity);
-                return Success("操作成功。");
-            }
-            else {
-                return Error("上传书籍失败，请检查文档是否正确。");
-            }
+            try {
+                int totalPagesCount = 1;
+                var ePath = string.Format("/Resource/EBook/{0}/", Guid.NewGuid());
+                if (string.IsNullOrEmpty(keyValue) && string.IsNullOrEmpty(newsEntity.FilePath)) {
+                    return Error("上传书籍失败，请上传书签文档。");
+                }
+                var import = true;
+                var entity = new NewsEntity();
+                if (!string.IsNullOrEmpty(keyValue)) {
+                    newsEntity.Modify(keyValue);
+                    var book = newsBLL.GetEntity(keyValue);
+                    if (book != null) {
+                        entity = book;
+                    }
+                }
+                else {
+                    newsEntity.Create();
+                }
 
+                var tableList = new List<BookTableEntity>();
+                if (!string.IsNullOrEmpty(newsEntity.FilePath) && newsEntity.FilePath != entity.FilePath) {
+                    import = ImportBook(Server.MapPath("~" + newsEntity.FilePath), ref totalPagesCount, ePath);
+                    if (import) {
+                        newsEntity.PageCount = totalPagesCount;
+                        for (int i = 1; i <= newsEntity.PageCount; i++) {
+                            string url = string.Format(baseUrl + ePath + i + ".html");
+                            var dom = CQ.CreateFromUrl(url);
+                            var table = dom.Select("[docparttype='Table of Contents'] a");
+                            if (tableList.Count == 0 && table.Length > 0) {
+                                newsEntity.BookTablePage = i;
+                                tableList.AddRange(table.Select(domObject => new BookTableEntity() { BookTableId = Guid.NewGuid().ToString(), Toc = domObject["href"], NewsId = newsEntity.NewsId }));
+                            }
+
+                            foreach (BookTableEntity key in tableList) {
+                                var mark = dom.Select("a[name='" + key.Toc.Replace("#", "") + "']");
+                                if (mark.Length > 0) {
+                                    key.Page = i;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (import) {
+                    if (!string.IsNullOrEmpty(newsEntity.FilePath)) {
+                        newsEntity.EPath = newsEntity.FilePath == entity.FilePath ? entity.EPath : ePath;
+                    }
+                    IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
+                    try {
+                        if (!string.IsNullOrEmpty(keyValue)) {
+                            db.Update(newsEntity);
+                            if (tableList.Count > 0) {
+                                db.Delete<BookTableEntity>(t => t.NewsId == newsEntity.NewsId);
+                                db.Insert(tableList);
+                            }
+                        }
+                        else {
+                            db.Insert(newsEntity);
+                            if (tableList.Count > 0) {
+                                db.Insert(tableList);
+                            }
+                        }
+                        db.Commit();
+                        return Success("操作成功。");
+                    }
+                    catch (Exception) {
+                        db.Rollback();
+                        throw;
+                    }
+                }
+                else {
+                    return Error("上传书籍失败，请检查文档是否正确。");
+                }
+            }
+            catch (Exception ee) {
+                return Error(ee.Message);
+            }
         }
 
         public bool ImportBook(object path, ref int totalPagesCount, string ePath) {
+            Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+            object missObj = Missing.Value;
+            object saveChanges = WdSaveOptions.wdDoNotSaveChanges;
             try {
                 string fullPath = Server.MapPath("~" + ePath);
                 Directory.CreateDirectory(fullPath);
 
-                object missObj = Missing.Value;
+
                 object ReadOnly = false;
                 object Visible = false;
-                Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+
                 Microsoft.Office.Interop.Word.Document doc = app.Documents.Open(ref path, ref missObj, ref ReadOnly,
                     ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj,
                     ref missObj, ref Visible, ref missObj, ref missObj, ref missObj, ref missObj);
@@ -186,7 +242,6 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
                 object Start;
                 object End;
                 object what = WdGoToItem.wdGoToPage;
-                object saveChanges = WdSaveOptions.wdDoNotSaveChanges;
                 object which = WdGoToDirection.wdGoToFirst;
                 do {
                     doc.Activate();
@@ -235,12 +290,54 @@ namespace LeaRun.Application.Web.Areas.ExtendManage.Controllers {
                         }
                     }
                 } while (pageNumber <= totalPagesCount);
-
                 app.Quit(ref saveChanges, ref missObj, ref missObj);
                 return true;
             }
             catch (Exception ex) {
-                return false;
+                app.Quit(ref saveChanges, ref missObj, ref missObj);
+                throw ex;
+            }
+        }
+
+        public bool ImportFullBook(object path, ref int totalPagesCount, string ePath) {
+            Microsoft.Office.Interop.Word.Application app = new Microsoft.Office.Interop.Word.Application();
+            object missObj = Missing.Value;
+            object saveChanges = WdSaveOptions.wdDoNotSaveChanges;
+            try {
+                string fullPath = Server.MapPath("~" + ePath);
+                Directory.CreateDirectory(fullPath);
+
+
+                object ReadOnly = false;
+                object Visible = false;
+
+                Microsoft.Office.Interop.Word.Document doc = app.Documents.Open(ref path, ref missObj, ref ReadOnly,
+                    ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj,
+                    ref missObj, ref Visible, ref missObj, ref missObj, ref missObj, ref missObj);
+
+                doc.Activate();
+
+                object fileFormat = WdSaveFormat.wdFormatHTML;
+
+                object newDocName = Server.MapPath("~" + ePath + 1 + ".html");
+                doc.Fields.Update();
+                doc.WebOptions.Encoding = Microsoft.Office.Core.MsoEncoding.msoEncodingUTF8;
+                doc.SaveAs(ref newDocName, ref fileFormat, ref missObj, ref missObj, ref missObj, ref missObj,
+                        ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj, ref missObj,
+                        ref missObj, ref missObj, ref missObj);
+                ((Microsoft.Office.Interop.Word._Document)doc).Close(ref saveChanges, ref missObj, ref missObj);
+
+                try {
+                    app.Documents.Close(ref saveChanges, ref missObj, ref missObj);
+                }
+                catch (Exception) {
+                }
+                app.Quit(ref saveChanges, ref missObj, ref missObj);
+                return true;
+            }
+            catch (Exception ex) {
+                app.Quit(ref saveChanges, ref missObj, ref missObj);
+                throw ex;
             }
         }
 

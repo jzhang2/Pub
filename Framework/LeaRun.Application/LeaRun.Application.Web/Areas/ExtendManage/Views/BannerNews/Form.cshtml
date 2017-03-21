@@ -1,5 +1,5 @@
-@{
-    ViewBag.Title = "±íµ¥Ò³Ãæ";
+ï»¿@{
+    ViewBag.Title = "è¡¨å•é¡µé¢";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
@@ -7,9 +7,9 @@
     $(function () {
         initControl();
     });
-    //³õÊ¼»¯¿Ø¼ş
+    //åˆå§‹åŒ–æ§ä»¶
     function initControl() {
-        //»ñÈ¡±íµ¥
+        //è·å–è¡¨å•
         if (!!keyValue) {
             $.SetForm({
                 url: "../../ExtendManage/BannerNews/GetFormJson",
@@ -27,7 +27,7 @@
             var src = window.URL.createObjectURL(f);
             document.getElementById('uploadPreview').src = src;
 
-            //ÉÏ´«Ó¦ÓÃÍ¼±ê
+            //ä¸Šä¼ åº”ç”¨å›¾æ ‡
             $.ajaxFileUpload({
                 url: "/ExtendManage/Books/UploadFile",
                 secureuri: false,
@@ -42,7 +42,7 @@
             });
         });
     }
-    //±£´æ±íµ¥;
+    //ä¿å­˜è¡¨å•;
     function AcceptClick() {
         if (!$('#form1').Validform()) {
             return false;
@@ -51,7 +51,7 @@
         $.SaveForm({
             url: "../../ExtendManage/BannerNews/SaveForm?keyValue=" + keyValue,
             param: postData,
-            loading: "ÕıÔÚ±£´æÊı¾İ...",
+            loading: "æ­£åœ¨ä¿å­˜æ•°æ®...",
             success: function () {
                 $.currentIframe().$("#gridTable").trigger("reloadGrid");
             }
@@ -61,19 +61,19 @@
 <div style="margin-top: 20px; margin-right: 30px;">
     <table class="form">
         <tr>
-            <td class="formTitle">±êÌâ</td>
+            <td class="formTitle">æ ‡é¢˜</td>
             <td class="formValue">
                 <input id="Title" type="text" class="form-control"  />
             </td>
         </tr>
         <tr>
-            <td class="formTitle">Á´½Ó</td>
+            <td class="formTitle">é“¾æ¥</td>
             <td class="formValue">
                 <input id="URL" type="text" class="form-control"  />
             </td>
         </tr>
         <tr>
-            <td class="formTitle">Í¼Æ¬</td>
+            <td class="formTitle">å›¾ç‰‡</td>
             <td class="formValue">
                 <div class="file">
                     <img id="uploadPreview" style="width: 40px; height: 40px;" src="~/Content/images/logo-headere47d5.png" /><input type="file" name="uploadFile" id="uploadFile"><input type="hidden" id="ImgPath" />
@@ -81,7 +81,7 @@
             </td>
         </tr>
         <tr>
-            <td class="formTitle">ÃèÊö</td>
+            <td class="formTitle">æè¿°</td>
             <td class="formValue">
                 <textarea id="Description" class="form-control" style="height: 120px;"></textarea>
             </td>
