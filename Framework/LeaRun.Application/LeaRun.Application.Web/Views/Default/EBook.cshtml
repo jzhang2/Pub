@@ -17,17 +17,17 @@
         <div class="row" style="margin-bottom: 20px;">
             <div class="col-md-6 col-sm-6 col-xs-6">
                 <div class="btn-group btn-group-sm ebook-btn pull-left" role="group">
-                    <button type="button" class="btn">字体:</button>
-                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-large')">大</button>
-                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-normal')">中</button>
-                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-small')">小</button>
+                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-large')">字体:大</button>
+                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-normal')">字体:中</button>
+                    <button type="button" class="btn ebook-font" onclick="changesize(this, 'ebook-content-small')">字体:小</button>
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
                 <div class="btn-group btn-group-sm ebook-btn pull-right" role="group">
                     <button type="button" class="btn ebook-font ebook-peyes">护眼</button>
                     <button type="button" class="btn ebook-font ebook-light">关灯</button>
-                    <button type="button" class="btn ebook-font ebook-music" style="display:none">音乐</button>
+                    <button type="button" class="btn ebook-font ebook-music active m-play" style="display: none">音乐:开</button>
+                    <button type="button" class="btn ebook-font ebook-music" style="display:none">音乐:关</button>
                 </div>
             </div>
         </div>
@@ -67,13 +67,13 @@
                     }
                     var pager = "";
                     if (p - 1 > 0) {
-                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) - 1) + ");\">上一章</button>";
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) - 1) + ");\">上一页</button>";
                     }
                     if (data.resultdata.EBook.BookTablePage != null && data.resultdata.EBook.BookTablePage != "") {
                         pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage('" + data.resultdata.EBook.BookTablePage + "',false);\">目录</button>";
                     }
                     if (p + 1 < pagecount) {
-                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) + 1) + ");\">下一章</button>";
+                        pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) + 1) + ");\">下一页</button>";
                     }
                     $(".ebook-pager").html(pager);
                     $("html,body").scrollTop($("#best-deal").offset().top);
@@ -84,7 +84,7 @@
                                 $(this).jPlayer("setMedia", {
                                     //title: "Bubble",
                                     mp3: data.resultdata.EBook.MusicPath
-                                });
+                                }).jPlayer("play");
                             },
                             loop: true,
                             solution: 'html, flash',
@@ -140,14 +140,13 @@
     }
     $(function () {
         $(".ebook-music").click(function () {
-            if ($(this).hasClass("active")) {
-                $("#jquery_jplayer_1").jPlayer("pause");
-                $(this).removeClass("active");
-            } else {
+            if ($(this).hasClass("m-play")) {
                 $("#jquery_jplayer_1").jPlayer("play");
-                $(this).addClass("active");
+            } else {
+                $("#jquery_jplayer_1").jPlayer("pause");
             }
-            //$(this).siblings().removeClass("active");
+            $(".ebook-music").removeClass("active");
+            $(this).addClass("active");
         });
         $(".ebook-peyes").click(function () {
             $(".ebook-light").text("关灯");

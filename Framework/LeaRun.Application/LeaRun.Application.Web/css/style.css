@@ -480,10 +480,18 @@ h1, h2, h3, h4, h5, h6, figure {
         -ms-border-radius: 0;
         border-radius: 0;
         font-size: 8px !important;
-        padding: 5px 10px !important;
+        padding: 5px !important;
     }
 }
 
+@media only screen and (max-device-width: 320px){
+    .ebook-btn button {
+        -ms-border-radius: 0;
+        border-radius: 0;
+        font-size: 6px !important;
+        padding: 4px !important;
+    }
+}
 @media screen and (max-width: 768px) {
     .right-content {
         background: white;

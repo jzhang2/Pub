@@ -1,5 +1,5 @@
-@{
-    ViewBag.Title = "»Ø¸´ÁôÑÔ";
+ï»¿@{
+    ViewBag.Title = "å›å¤ç•™è¨€";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
 <script>
@@ -7,9 +7,9 @@
     $(function () {
         initControl();
     });
-    //³õÊ¼»¯¿Ø¼ş
+    //åˆå§‹åŒ–æ§ä»¶
     function initControl() {
-        //»ñÈ¡±íµ¥
+        //è·å–è¡¨å•
         if (!!keyValue) {
             $.SetForm({
                 url: "../../ExtendManage/Suggestion/GetFormJson",
@@ -27,7 +27,7 @@
             })
         }
     }
-    //±£´æ±íµ¥;
+    //ä¿å­˜è¡¨å•;
     function AcceptClick() {
         if (!$('#form1').Validform()) {
             return false;
@@ -35,7 +35,7 @@
         $.SaveForm({
             url: "../../ExtendManage/Suggestion/SaveReply",
             param: { keyValue: keyValue, reply: $("#Reply").val() },
-            loading: "ÕıÔÚ±£´æÊı¾İ...",
+            loading: "æ­£åœ¨ä¿å­˜æ•°æ®...",
             success: function () {
                 $.currentIframe().$("#gridTable").trigger("reloadGrid");
             }
@@ -45,19 +45,19 @@
 <div style="margin-top: 20px; margin-right: 30px;">
     <table class="form">
         <tr>
-            <td class="formTitle">ÁôÑÔ±êÌâ</td>
+            <td class="formTitle">ç•™è¨€æ ‡é¢˜</td>
             <td class="formValue">
                 <input id="Title" disabled="disabled" type="text" class="form-control" />
             </td>
         </tr>
         <tr>
-            <td class="formTitle">ÁôÑÔÄÚÈİ</td>
+            <td class="formTitle">ç•™è¨€å†…å®¹</td>
             <td class="formValue">
                 <textarea disabled="disabled" id="Contents" class="form-control" style="height: 80px;"></textarea>
             </td>
         </tr>
         <tr>
-            <td class="formTitle">»Ø¸´</td>
+            <td class="formTitle">å›å¤</td>
             <td class="formValue">
                 <textarea id="Reply" class="form-control" style="height: 80px;"></textarea>
             </td>
