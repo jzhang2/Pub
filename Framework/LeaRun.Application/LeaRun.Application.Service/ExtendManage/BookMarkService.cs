@@ -63,13 +63,16 @@ namespace LeaRun.Application.Service.ExtendManage {
             }
         }
 
-        public List<BookMarkEntity> GetList(string userId, string newsId, string page) {
+        public List<BookMarkEntity> GetList(string userId, string newsId, string page,string type) {
             var expression = LinqExtensions.True<BookMarkEntity>();
             if (!string.IsNullOrEmpty(newsId)) {
                 expression = expression.And(t => t.NewsId.Equals(newsId));
             }
             if (!string.IsNullOrEmpty(page)) {
                 expression = expression.And(t => t.Page.ToString() == page);
+            }
+            if (!string.IsNullOrEmpty(type)) {
+                expression = expression.And(t => t.Type.ToString() == type);
             }
             return this.BaseRepository().IQueryable(expression).OrderBy(t => t.Page).ToList();
         }

@@ -10,7 +10,7 @@
 <div id="best-deal">
     <div class="container ddss" style="background: white; padding: 35px 25px;">
         <div style="text-align: center;">
-            <h3 style="margin-bottom: 20px;text-align: center" id="title">
+            <h3 style="margin-bottom: 20px; text-align: center" id="title">
                 <i class="fa fa-book ebook-mark" title="书签"></i><span id="bookname"></span><i class="fa fa-bookmark ebook-bookmark" title="加入书签"></i>
             </h3>
         </div>
@@ -27,7 +27,7 @@
                 <div class="btn-group btn-group-sm ebook-btn pull-right" role="group">
                     <button type="button" class="btn ebook-font ebook-peyes">护眼</button>
                     <button type="button" class="btn ebook-font ebook-light">关灯</button>
-                    <button type="button" class="btn ebook-font ebook-music active" style="display: none">音乐:开</button>
+                    <button type="button" class="btn ebook-font ebook-music" style="display: none">音乐:关</button>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
                                 $(this).jPlayer("setMedia", {
                                     //title: "Bubble",
                                     mp3: data.resultdata.EBook.MusicPath
-                                }).jPlayer("play");
+                                })//.jPlayer("play");
                             },
                             loop: true,
                             solution: 'html, flash',
@@ -98,6 +98,9 @@
                             remainingDuration: true,
                             toggleDuration: true
                         });
+                    }
+                    if (f && data.resultdata.LastRead != null) {
+                        $('<a href="javascript:;" onclick="getpage(\'' + data.resultdata.LastRead.Page + '\', false))">跳转到最后阅读位置</a>').insertAfter("#title").hide(3000);
                     }
                     $('[docparttype="Table of Contents"] a').click(function (e) {
                         e.preventDefault();

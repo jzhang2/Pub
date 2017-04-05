@@ -54,6 +54,11 @@ namespace LeaRun.Application.Web
                 defaults: new { controller = "Default", action = "PBook", id = UrlParameter.Optional }
             );
             routes.MapRoute(
+                name: "BDetail",
+                url: "BDetail/{id}",
+                defaults: new { controller = "Default", action = "BDetail", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                 name: "MyAccount",
                 url: "MyAccount/{id}",
                 defaults: new { controller = "Default", action = "MyAccount", id = UrlParameter.Optional }

@@ -1519,6 +1519,7 @@
     <Content Include="Views\Default\EBook.cshtml" />
     <Content Include="Views\Default\Default.cshtml" />
     <Content Include="Views\Shared\_LayoutEBook.cshtml" />
+    <Content Include="Views\Default\BDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

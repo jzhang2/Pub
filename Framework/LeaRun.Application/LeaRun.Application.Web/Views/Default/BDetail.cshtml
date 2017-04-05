@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "图书详情";
+    ViewBag.navIndex = 3;
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+@model LeaRun.Application.Web.Controllers.HomeViewModel
+
+<div>
+    <img src="~/images/baneer1.png" class="img-responsive" />
+</div>
+<div id="best-deal" class="fh5co-agents">
+    <div class="container" style="background: white; padding-top: 45px;">
+        <div class="row">
+            <div class="col-md-5">
+                <div style="border: solid 1px #EEEEEE; text-align: center; padding: 10px 0;" class="aligncenter">
+                    <img class="img-responsive" src="@(!string.IsNullOrEmpty(Model.CurrentArticle.NewsImage)?Model.CurrentArticle.NewsImage:"~/images/详情.png")" />
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="book-title">
+                    <h4>书名：@Model.CurrentArticle.FullHead</h4>
+                    <h4>作者：@Model.CurrentArticle.AuthorName</h4>
+                    <h4>阅读次数：@Model.CurrentArticle.PV</h4>
+                    <h4>概述：</h4>
+                    <p>@Model.CurrentArticle.Description</p>
+                    <a href="/Ebook/@Model.CurrentArticle.NewsId" class="btn btn-default sendver" style="float: none">点击阅读</a>
+                </div>
+            </div>
+        </div>
+        <div class="book-content">
+            <ul class="nav nav-pills">
+                <li class="active"><a href="javascript:;">图书简介</a></li>
+            </ul>
+            <div>
+                @Html.Raw(HttpUtility.HtmlDecode(Model.CurrentArticle.NewsContent))
+            </div>
+        </div>
+    </div>
+</div>

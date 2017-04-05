@@ -26,6 +26,9 @@ namespace LeaRun.Application.Entity.ExtendManage
         /// </summary>
         /// <returns></returns>
         public int? Page { get; set; }
+
+        public int? Type { get; set; }
+
         /// <summary>
         /// PageContent
         /// </summary>

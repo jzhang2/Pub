@@ -89,6 +89,7 @@ namespace LeaRun.Application.Web.Controllers {
         public bool IsBookMark { get; set; }
         public string CurrentPage { get; set; }
         public List<BookMarkEntity> BookMarkEntities { get; set; }
+        public BookMarkEntity LastRead { get; set; }
     }
     public class HomeViewModel {
         public List<NewsEntity> NewsList = new List<NewsEntity>();
@@ -239,6 +240,15 @@ namespace LeaRun.Application.Web.Controllers {
         }
 
         public ActionResult PBook(string id) {
+            var viewModel = new HomeViewModel();
+            if (!string.IsNullOrEmpty(id)) {
+                viewModel.CurrentArticle = newsBll.GetEntity(id);
+                viewModel.CurrentArticle.PV = viewModel.CurrentArticle.PV + 1;
+                newsBll.SaveForm(viewModel.CurrentArticle.NewsId, viewModel.CurrentArticle);
+            }
+            return View(viewModel);
+        }
+        public ActionResult BDetail(string id) {
             var viewModel = new HomeViewModel();
             if (!string.IsNullOrEmpty(id)) {
                 viewModel.CurrentArticle = newsBll.GetEntity(id);
@@ -398,9 +408,25 @@ namespace LeaRun.Application.Web.Controllers {
                     var result = reader.ReadToEnd();
                     var eBookEntity = new JavaScriptSerializer().Deserialize<EBookEntity>(result);
                     if (OperatorProvider.Provider.Current() != null && OperatorProvider.Provider.Current().UserId != null) {
-                        eBookEntity.BookMarkEntities = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, eBookEntity.EBook.NewsId, "");
+                        eBookEntity.BookMarkEntities = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, eBookEntity.EBook.NewsId, "", "1");
                         if (eBookEntity.BookMarkEntities != null && !string.IsNullOrEmpty(page) && eBookEntity.BookMarkEntities.Any(t => t.Page.ToString() == page)) {
                             eBookEntity.IsBookMark = true;
+                        }
+                        eBookEntity.LastRead = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, eBookEntity.EBook.NewsId, "", "2").FirstOrDefault();
+                        if (null != eBookEntity.LastRead) {
+                            if (Convert.ToInt32(page) > 1) {
+                                eBookEntity.LastRead.Page = Convert.ToInt32(page);
+                                bookMarkService.SaveForm(eBookEntity.LastRead.BookMarkId, eBookEntity.LastRead);
+                            }
+                        }
+                        else {
+                            eBookEntity.LastRead = new BookMarkEntity {
+                                CustomerId = OperatorProvider.Provider.Current().UserId,
+                                Page = Convert.ToInt32(page),
+                                NewsId = id,
+                                Type = 2
+                            };
+                            bookMarkService.SaveForm("", eBookEntity.LastRead);
                         }
                     }
                     eBookEntity.CurrentPage = page;
@@ -419,7 +445,7 @@ namespace LeaRun.Application.Web.Controllers {
         public ActionResult GetBookMark(string id) {
             try {
                 if (OperatorProvider.Provider.Current() != null && OperatorProvider.Provider.Current().UserId != null) {
-                    var bookMarkEntities = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, id, "");
+                    var bookMarkEntities = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, id, "", "1");
                     return Content(bookMarkEntities.ToJson());
                 }
                 return Error("获取书签错误。");
@@ -488,7 +514,7 @@ namespace LeaRun.Application.Web.Controllers {
         public ActionResult SaveBookMark(string id, string page, string sortcontent) {
             try {
                 if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(page)) {
-                    var bookMarks = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, id, page);
+                    var bookMarks = bookMarkService.GetList(OperatorProvider.Provider.Current().UserId, id, page, "1");
                     var bookMark = bookMarks.FirstOrDefault(t => t.Page.ToString() == page);
                     if (bookMark != null) {
                         bookMarkService.RemoveForm(bookMark.BookMarkId);
@@ -498,7 +524,8 @@ namespace LeaRun.Application.Web.Controllers {
                         var entity = new BookMarkEntity {
                             NewsId = id,
                             Page = Convert.ToInt32(page),
-                            PageContent = sortcontent
+                            PageContent = sortcontent,
+                            Type = 1
                         };
                         bookMarkService.SaveForm("", entity);
                         return Success("1");
