@@ -44,6 +44,14 @@
 <script>
     var pagecount = 0;
     var page = 1;
+    function gopage() {
+        var gp = $(".gpinput").val();
+        if (gp < 1 || gp > pagecount) {
+            dialogMsg("请输入正确的页码！", 2);
+        } else {
+            getpage(gp);
+        }
+    }
     function getpage(p, f, toc) {
         $.ajax({
             url: "/Default/GetEBookPage",
@@ -65,7 +73,66 @@
                     } else {
                         $("#title i.ebook-bookmark").attr("title", "加入书签").removeClass("booked");
                     }
-                    var pager = "";
+                    var mpager = "";
+                    var pager = "<div class=\"m-pager\">";
+                    mpager += '<ul class="pagination pagination-sm">';
+                    if (data.resultdata.EBook.BookTablePage != null && data.resultdata.EBook.BookTablePage != "") {
+                        mpager += "<li><a href=\"javascript:;\" onclick=\"getpage('" + data.resultdata.EBook.BookTablePage + "',false);\">目录</a></li>";
+                    }
+                    if (p > 1) {
+                        mpager += '<li><a href="javascript:;" onclick="getpage(\'' + (parseInt(p) - 1) + '\');"><<</a></li>';
+                    }
+                    if (pagecount > 7) {
+                        if (p >= 5) {
+                            mpager += '<li><a href="javascript:;" onclick="getpage(1);">1...</a></li>';
+                            if (p + 5 <= pagecount) {
+                                for (var z = 2; z > 0; z--) {
+                                    if (p - z > 0) {
+                                        mpager += '<li><a href="javascript:;" onclick="getpage(\'' + (parseInt(p) - z) + '\');">' + (parseInt(p) - z) + '</a></li>';
+                                    }
+                                }
+                                mpager += '<li><a href="javascript:;" class="active" onclick="getpage(\'' + p + '\');">' + p + '</a></li>';
+                                for (var y = 1; y < 3; y++) {
+                                    mpager += '<li><a href="javascript:;" onclick="getpage(\'' + (parseInt(p) + y) + '\');">' + (parseInt(p) + y) + '</a></li>';
+                                }
+                                mpager += '<li><a href="javascript:;" onclick="getpage(\'' + pagecount + '\');">...' + pagecount + '</a></li>';
+                            } else {
+                                for (var x = 4; x >= 0; x--) {
+                                    if (p == (pagecount - x)) {
+                                        mpager += '<li><a href="javascript:;" class="active" onclick="getpage(\'' + (pagecount - x) + '\');">' + (pagecount - x) + '</a></li>';
+                                    } else {
+                                        mpager += '<li><a href="javascript:;" onclick="getpage(\'' + (pagecount - x) + '\');">' + (pagecount - x) + '</a></li>';
+                                    }
+                                }
+                            }
+                        } else {
+                            for (var i = 1; i < 6; i++) {
+                                if (p == i) {
+                                    mpager += '<li><a href="javascript:;" class="active" onclick="getpage(\'' + i + '\');">' + i + '</a></li>';
+                                } else {
+                                    mpager += '<li><a href="javascript:;" onclick="getpage(\'' + i + '\');">' + i + '</a></li>';
+                                }
+                            }
+                            mpager += '<li><a href="javascript:;" onclick="getpage(\'' + pagecount + '\');">...' + pagecount + '</a></li>';
+                        }
+                    } else {
+                        for (var k = 1; k <= pagecount; k++) {
+                            if (p == k) {
+                                mpager += '<li><a href="javascript:;" class="active" onclick="getpage(\'' + k + '\');">' + k + '</a></li>';
+                            } else {
+                                mpager += '<li><a href="javascript:;" onclick="getpage(\'' + k + '\');">' + k + '</a></li>';
+                            }
+                        }
+                    }
+                    if (p < pagecount) {
+                        mpager += '<li><a href="javascript:;" onclick="getpage(\'' + (parseInt(p) + 1) + '\');">>></a></li>';
+                    }
+                    if (pagecount > 7) {
+                        mpager += '<li><input class="ui-pg-input gpinput" style="padding: 0;margin: 0;float: left; width: 40px; border: 1px solid #ddd; height: 29.19px; padding: 2px 5px;"/></li>';
+                        mpager += '<li><a href="javascript:;" onclick="gopage();">GO</a></li>';
+                    }
+                    mpager += '</ul>';
+
                     if (p - 1 > 0) {
                         pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) - 1) + ");\">上一页</button>";
                     }
@@ -75,7 +142,8 @@
                     if (p + 1 < pagecount) {
                         pager += "<button type=\"button\" class=\"btn ebook-font\" onclick=\"getpage(" + (parseInt(p) + 1) + ");\">下一页</button>";
                     }
-                    $(".ebook-pager").html(pager);
+                    pager += "</div>";
+                    $(".ebook-pager").html(pager + mpager);
                     $("html,body").scrollTop($("#best-deal").offset().top);
                     if (f && data.resultdata.EBook.MusicPath != null && data.resultdata.EBook.MusicPath != "") {
                         $(".ebook-music").show();

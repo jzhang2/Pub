@@ -1067,6 +1067,7 @@
     <Content Include="css\bootstrap.css" />
     <Content Include="css\flexslider.css" />
     <Content Include="css\icomoon.css" />
+    <Content Include="css\estyle.css" />
     <Content Include="css\style.css" />
     <Content Include="css\VarelaRound.css" />
     <Content Include="favicon.ico" />
