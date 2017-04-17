@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-5">
                 <div style="border: solid 1px #EEEEEE; text-align: center; padding: 10px 0;" class="aligncenter">
-                    <img class="img-responsive" src="~/images/详情.png" />
+                    <img class="img-responsive" src="@(!string.IsNullOrEmpty(Model.CurrentArticle.NewsImage)?Model.CurrentArticle.NewsImage:"~/images/详情.png")" />
                 </div>
             </div>
             <div class="col-md-7">
