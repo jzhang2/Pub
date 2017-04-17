@@ -1330,7 +1330,7 @@ h1, h2, h3, h4, h5, h6, figure {
     min-height: 110px;
     word-wrap: break-word;
     word-break: normal;
-
+    word-break:break-all;
 }
 
 .fh5co-agent p {
@@ -1340,6 +1340,12 @@ h1, h2, h3, h4, h5, h6, figure {
 .fh5co-property .fh5co-property-innter.books {
     padding: 30px 30px 30px 30px;
     min-height: 239px;
+}
+.footer-descri {
+    font-size: 12px;
+}
+.footer-descri p {
+    margin-bottom: 5px;
 }
 
 .fh5co-property .fh5co-property-specification.books {
@@ -2034,6 +2040,8 @@ h1, h2, h3, h4, h5, h6, figure {
 
 #fh5co-footer h1 {
     color: #00CBFF;
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 
 #fh5co-footer h3 {
