@@ -109,8 +109,11 @@ namespace LeaRun.Application.Busines.AuthorizeManage
                 if (!string.IsNullOrEmpty(item.UrlAddress))
                 {
                     string[] url = item.UrlAddress.Split('?');
-                    if (item.ModuleId == moduleId && url[0] == action)
-                    {
+                    //if (item.ModuleId == moduleId && url[0] == action)
+                    //{
+                    //    return true;
+                    //}
+                    if (item.ModuleId == moduleId) {
                         return true;
                     }
                 }
